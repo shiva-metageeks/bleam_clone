@@ -4,10 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "_moduleAliases": {
-    "@src": "dist/"
+    "@src": "dist"
   },
   "scripts": {
-    "start": "node build/index",
+    "start": "node dist/index",
     "build": "tsc -p .",
     "dev": " tsc-watch --onSuccess \"npm start\""
   },

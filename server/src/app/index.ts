@@ -2,10 +2,11 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import express from 'express';
-import { Tweet } from '@src/app/tweet';
-import { Context } from '@src/types';
-import JWTService from '@src/services/jwt';
-import connectDB from '@src/clients/db';
+// import { Tweet } from '@src/app/tweet';
+import { Context } from '@src/types/types';
+// import JWTService from '@src/services/jwt';
+import connectDB from '../clients/db';
+import { User } from '@src/app/user';
 
 export async function initServer() {
     const app = express();
@@ -13,22 +14,22 @@ export async function initServer() {
 
     const graphqlServer = new ApolloServer<Context>({
         typeDefs: `
-            ${Tweet.types}
+            ${User.types}
 
-            type Query {
-            ${Tweet.queries}
+             type Query {
+
             }
 
             type Mutation {
-                ${Tweet.mutations}
+                ${User.mutations}
             }
             `,
         resolvers: {
             Query: {
-                ...Tweet.resolvers.queries
+                
             },
             Mutation: {
-                ...Tweet.resolvers.mutations,
+                ...User.resolvers.mutations,
             },
         },
     });
@@ -41,7 +42,7 @@ export async function initServer() {
             let user = null;
             if (token) {
                 try {
-                    user = JWTService.verifyToken(token);
+                    // user = JWTService.verifyToken(token);
                 } catch (e) {
                     console.error('Invalid token', e);
                 }
