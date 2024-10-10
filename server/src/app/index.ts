@@ -17,7 +17,7 @@ export async function initServer() {
             ${User.types}
 
              type Query {
-
+                ${User.queries}
             }
 
             type Mutation {
@@ -26,7 +26,7 @@ export async function initServer() {
             `,
         resolvers: {
             Query: {
-                
+                ...User.resolvers.queries,
             },
             Mutation: {
                 ...User.resolvers.mutations,
@@ -52,5 +52,3 @@ export async function initServer() {
     }));
     return app;
 }
-
-const app = express();

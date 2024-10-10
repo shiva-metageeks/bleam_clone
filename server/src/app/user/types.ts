@@ -1,4 +1,5 @@
 export const types = `#graphql
+
      input CreateUserInput {
         name: String!
         username: String!
@@ -9,7 +10,7 @@ export const types = `#graphql
     }
 
     type User {
-        id: ID!
+        _id: ID!
         username: String!
         name: String!
         email: String!

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { ICompetition } from "./competition";
 import { ITask } from "./task";
 
@@ -10,8 +11,14 @@ interface ISocialMedia {
     socialRefreshToken: string;
 }
 
+interface IUserTask {
+    task: ITask | mongoose.Types.ObjectId;
+    status: string;
+    competition: ICompetition | mongoose.Types.ObjectId;
+}
+
 export interface IUser {
-    _id: string;
+    _id?: string;
     username: string;
     name: string;
     email: string;
@@ -19,10 +26,10 @@ export interface IUser {
     bio: string;
     globalRank: number;
     points: number;
-    socialMedia: ISocialMedia;
+    socialMedia: ISocialMedia[];
     coverPicture: string;
     joinedCompetitions: ICompetition[];
     competitionCompleted: ICompetition[];
-    taskCompleted: ITask[];
+    tasks: IUserTask[];
     phoneNumber: string;
 }

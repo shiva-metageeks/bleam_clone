@@ -3,16 +3,11 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { IUser } from "@src/types/user";
 
-const SALT_ROUNDS = 10;
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret"; // Ensure you use environment variables for production
 
 // Define the user schema
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
   {
-    _id: {
-      type: String,
-      default: "",
-    },
     name: {
       type: String,
       required: true,
@@ -72,7 +67,7 @@ const userSchema = new Schema(
         ref: "Competition",
       },
     ],
-    task: [
+    tasks: [
       {
         task: {
           type: Schema.Types.ObjectId,
