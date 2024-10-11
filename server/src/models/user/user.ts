@@ -41,7 +41,7 @@ const userSchema = new Schema<IUser>(
       type: Number,
       default: 0,
     },
-    points: {
+    platformPoints: {
       type: Number,
       default: 0,
     },
@@ -56,33 +56,11 @@ const userSchema = new Schema<IUser>(
       },
     ],
     joinedCompetitions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Competition",
-      },
+      { type: Schema.Types.ObjectId, ref: "UserCompetition" },
     ],
-    competitionCompleted: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Competition",
-      },
-    ],
+   
     tasks: [
-      {
-        task: {
-          type: Schema.Types.ObjectId,
-          ref: "Task",
-        },
-        status: {
-          type: String,
-          enum: ["completed", "not completed"],
-          default: "not completed",
-        },
-        competition: {
-          type: Schema.Types.ObjectId,
-          ref: "Competition",
-        },
-      },
+      { type: Schema.Types.ObjectId, ref: "UserTask" },
     ],
   },
   { timestamps: true }

@@ -6,18 +6,19 @@ const taskSchema = new Schema<ITask>(
     taskId: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
+    image: { type: String },
     tags: [{ type: String }],
     type: { type: String, required: true },
-    competition: { type: Schema.Types.ObjectId, ref: "Competition" },
     creator: { type: Schema.Types.ObjectId, ref: "Brand" },
+    competition :{ type: Schema.Types.ObjectId, ref: "Competition", required: true },
     status: { type: String, enum: ["active", "inactive"], default: "active" },
+    participant: [{ type: Schema.Types.ObjectId, ref: "UserTask", required: true, unique: true }],
     visitLink: { type: String },
     twitter: {
       tweetLink: { type: String },
       tweetText: { type: String },
       tweetMedia: { type: String },
       userFollow: { type: String },
-
     },
     discord: {
       channelLink: { type: String },
@@ -42,16 +43,7 @@ const taskSchema = new Schema<ITask>(
       }],
       correctAnswer: { type: String, required: true },
     },
-    startDate: { type: Date, required: true },
-    endDate: { type: Date, required: true },
     reward: { type: Number, required: true },
-    submission: {
-      submissionLink: { type: String },
-      submissionDate: { type: Date },
-      submissionText: { type: String },
-      submissionMedia: { type: String },
-      submissionNumber: { type: Number },
-    },
   },
   {
     timestamps: true,

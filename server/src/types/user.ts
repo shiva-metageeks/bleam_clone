@@ -25,11 +25,10 @@ export interface IUser {
     profileImageUrl: string;
     bio: string;
     globalRank: number;
-    points: number;
+    platformPoints: number;
     socialMedia: ISocialMedia[];
     coverPicture: string;
-    joinedCompetitions: ICompetition[];
-    competitionCompleted: ICompetition[];
+    joinedCompetitions: { competition: ICompetition, completed: boolean }[];
     tasks: IUserTask[];
-    phoneNumber: string;
+    phoneNumber?: string;
 }

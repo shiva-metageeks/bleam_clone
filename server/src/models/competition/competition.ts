@@ -8,11 +8,7 @@ const competitionSchema = new Schema<ICompetition>({
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     creator: { type: Types.ObjectId, ref: "Brand", required: true },
-    participants: [{
-        user:{ type: Types.ObjectId, ref: "User" },
-        pointsEarned: { type: Number, required: true },
-        rank: { type: Number, required: true },
-    }],
+    participants: [{ type: Types.ObjectId, ref: "UserCompetition" }],
     tasks: [{ type: Types.ObjectId, ref: "Task" }],
     giveaways: [
         {
