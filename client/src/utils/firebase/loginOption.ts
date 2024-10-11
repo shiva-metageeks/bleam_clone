@@ -1,4 +1,4 @@
-import { signInWithPhoneNumber, RecaptchaVerifier,signInWithEmailAndPassword,GoogleAuthProvider, signInWithPopup, signOut,TwitterAuthProvider } from 'firebase/auth';
+import { FacebookAuthProvider,signInWithPhoneNumber, RecaptchaVerifier,signInWithEmailAndPassword,GoogleAuthProvider, signInWithPopup, signOut,TwitterAuthProvider } from 'firebase/auth';
 import { auth } from '@/utils/firebase/config';
 
 declare global {
@@ -81,6 +81,20 @@ export const googleLogin = async () => {
     return user;
   } catch (error:any    ) {
     console.error('Error signing in with Google:', error.message);
+    return ErrorHandler(error);
+  }
+};
+
+const facebookProvider = new FacebookAuthProvider();
+
+export const facebookLogin = async () => {
+  try {
+    const result = await signInWithPopup(auth, facebookProvider);
+    const user = result.user;
+    console.log('User signed in with Facebook:', user);
+    return user;
+  } catch (error:any) {
+    console.error('Error signing in with Facebook:', error.message);
     return ErrorHandler(error);
   }
 };

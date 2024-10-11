@@ -1,8 +1,10 @@
 "use client"
 import React from "react";
-import { googleLogin,twitterLogin } from "@/utils/firebase/loginOption";
+import { googleLogin,twitterLogin,facebookLogin } from "@/utils/firebase/loginOption";
 import { FcGoogle } from "react-icons/fc";
 import { FaXTwitter } from "react-icons/fa6";
+import { FaLinkedin,FaFacebook } from "react-icons/fa";
+import Image from "next/image";
 
 const LoginPage = () => {
 
@@ -23,22 +25,41 @@ const LoginPage = () => {
             console.error('Error signing in with Twitter:', error.message);
         }
     }
+
+    const handleFacebookLogin = async () => {
+        try {
+            const user = await facebookLogin();
+            console.log('User signed in with Facebook:', user);
+        } catch (error:any) {
+            console.error('Error signing in with Facebook:', error.message);
+        }
+    }
+
+    const handleLinkedinLogin = async () => {
+        try {
+            // const user = await linkedinLogin();
+            // console.log('User signed in with LinkedIn:', user);
+        } catch (error:any) {
+            console.error('Error signing in with LinkedIn:', error.message);
+        }
+    }
+
   return (
-    <div className="w-full flex justify-center items-center min-h-screen text-black">
-      <section className="sm:w-1/2 h-full w-full bg-white p-2">
-      <div className="flex justify-start items-center uppercase font-bold text-xl px-4 py-2" >HyPd</div>
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0 ">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
+    <div className="w-full flex sm:flex-row flex-col-reverse justify-center items-center min-h-screen text-black">
+      <section className="sm:w-1/2 w-full h-[100vh] bg-white">
+      <div className="flex justify-start items-center uppercase font-bold text-md px-4 py-2" >HyPd</div>
+        <div className="flex flex-col items-center justify-center mx-4 p-6">
+          <div className="w-full bg-white sm:max-w-md">
+            <div className="space-y-2 md:space-y-4">
+              <h1 className="text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                 Log in 
               </h1>
-              <div className="text-sm text-gray-500 mb-2">Welcome back! Please enter your details</div>
-              <form className="space-y-4 md:space-y-6" action="#">
-                <div>
+              <div className="text-xs text-gray-500">Welcome back! Please enter your details</div>
+              <form className="space-y-2 md:space-y-4" action="#">
+                <div className="flex flex-col">
                   <label
                     htmlFor="email"
-                    className="block mb-2 text-sm font-semibold text-[#344054]"
+                    className="block mb-1 text-xs font-semibold text-[#344054]"
                   >
                     Email
                   </label>
@@ -46,7 +67,7 @@ const LoginPage = () => {
                     type="email"
                     name="email"
                     id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    className="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 "
                     placeholder="Enter your email"
                     required
                   />
@@ -54,7 +75,7 @@ const LoginPage = () => {
                 <div>
                   <label
                     htmlFor="password"
-                    className="block mb-2 text-sm font-semibold text-[#344054]"
+                    className="block mb-2 text-xs font-semibold text-[#344054]"
                   >
                     Password
                   </label>
@@ -63,7 +84,7 @@ const LoginPage = () => {
                     name="password"
                     id="password"
                     placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    className="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 "
                     required
                   />
                 </div>
@@ -96,7 +117,7 @@ const LoginPage = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full text-white font-semibold bg-gradient-to-r from-[#FF4E50] to-[#F9D423] rounded-lg text-sm px-5 py-2.5 text-center "
+                  className="w-full text-white font-semibold bg-gradient-to-r from-[#FF4E50] to-[#F9D423] rounded-lg text-sm px-4 py-2 text-center "
                 >
                   Sign in
                 </button>
@@ -118,12 +139,26 @@ const LoginPage = () => {
                   >
                    <FaXTwitter className="text-black" />
                   </button>
+                  <button
+                    type="button"
+                    className="px-4 py-2 rounded-lg border border-gray-300"
+                    onClick={()=>{handleFacebookLogin()}}
+                  >
+                  <FaFacebook className="text-blue-600" />
+                  </button>
+                  <button
+                    type="button"
+                    className="px-4 py-2 rounded-lg border border-gray-300"
+                    onClick={()=>{handleLinkedinLogin()}}
+                  >
+                  <FaLinkedin className="text-blue-600" />
+                  </button>
                 </div>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                <p className="text-sm font-light text-black">
                   Don’t have an account yet?{" "}
                   <a
                     href="#"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    className="font-medium text-blue-800 hover:underline"
                   >
                     Sign up
                   </a>
@@ -133,8 +168,10 @@ const LoginPage = () => {
           </div>
         </div>
       </section>
-      <section className="sm:w-1/2 h-full w-full bg-gray-50">
-        <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="loginBanner" className="bg-cover object-cover bg-center h-full w-full" />
+      <section className="sm:w-1/2 h-[40vh] sm:h-[100vh] w-full bg-white">
+      <div className="relative w-full h-full p-8">
+        <Image src="/images/loginBanner.png" alt="loginBanner" fill={true} className="bg-cover "/>
+      </div>
       </section>
     </div>
   );
