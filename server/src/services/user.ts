@@ -9,9 +9,13 @@ class UserService {
     public static getUsers() {
         return User.find();
     }
+    public static getUser(identifier: string) {
+        return User.findOne({ $or: [{ username: identifier }, { email: identifier }] });
+    }
     public static getUserById(id: string) {
         return User.findById(id);
     }
+
 }
 
 export default UserService;

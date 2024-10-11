@@ -1,6 +1,6 @@
 import { types } from "./types"
 import {resolvers} from "./resolvers"
-import { mutations } from "./mutations"
+import { mutations } from "./mutation"
 import { queries } from "./queries" 
 
-export const User = { types, resolvers, mutations, queries}
+export const Task = { types, resolvers, mutations, queries}

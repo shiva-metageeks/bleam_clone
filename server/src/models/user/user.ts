@@ -3,16 +3,11 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { IUser } from "@src/types/user";
 
-const SALT_ROUNDS = 10;
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret"; // Ensure you use environment variables for production
 
 // Define the user schema
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
   {
-    _id: {
-      type: String,
-      default: "",
-    },
     name: {
       type: String,
       required: true,
@@ -46,7 +41,7 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
-    points: {
+    platformPoints: {
       type: Number,
       default: 0,
     },
@@ -61,33 +56,11 @@ const userSchema = new Schema(
       },
     ],
     joinedCompetitions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Competition",
-      },
+      { type: Schema.Types.ObjectId, ref: "UserCompetition" },
     ],
-    competitionCompleted: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Competition",
-      },
-    ],
-    task: [
-      {
-        task: {
-          type: Schema.Types.ObjectId,
-          ref: "Task",
-        },
-        status: {
-          type: String,
-          enum: ["completed", "not completed"],
-          default: "not completed",
-        },
-        competition: {
-          type: Schema.Types.ObjectId,
-          ref: "Competition",
-        },
-      },
+   
+    tasks: [
+      { type: Schema.Types.ObjectId, ref: "UserTask" },
     ],
   },
   { timestamps: true }

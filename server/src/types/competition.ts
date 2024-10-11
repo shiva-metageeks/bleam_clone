@@ -16,7 +16,6 @@ export interface IGiveaway {
     giveawayName: string;
 }
 
-
 export interface ICompetition {
     _id: string;
     name: string;
@@ -28,6 +27,12 @@ export interface ICompetition {
     participants: IParticipant[];
     tasks: ITask[];
     giveaways: IGiveaway[];
-    rank: number;
+}
+
+export interface IUserCompetition {
+    user: IUser;
+    competition: ICompetition;
     pointsEarned: number;
+    rank: number;
+    completed: "completed" | "not completed";
 }

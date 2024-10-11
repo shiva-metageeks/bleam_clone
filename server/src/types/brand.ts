@@ -4,3 +4,10 @@ export interface IBrand {
     logo: string;
     description: string;
 }
+
+export interface IBrandInput {
+    name: string;
+    logo: string;
+    description: string;
+}
+

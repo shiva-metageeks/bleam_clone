@@ -2,38 +2,59 @@ import { ICompetition } from "./competition";
 import { IBrand } from "./brand";
 import { IUser } from "./user";
 
+
+export interface IUserTask {
+    user: IUser;
+    task: ITask;
+    competition: ICompetition;
+    status: string;
+}
+
+export interface IUserTaskSubmission {
+    user: IUser;
+    task: ITask;
+    competition: ICompetition;
+    type: string;
+    quizScore?: number;
+    pollAnswer?: string;
+    submission?: {
+        submissionText?: string;
+        submissionMedia?: string;
+    }
+}
+
 export interface ITask {
     _id: string;
     taskId: string;
     name: string;
     description: string;
-    image: string;
-    startDate: Date;
-    endDate: Date;
+    image?: string;
+    tags?: string[];
     type: string;
-    competition: ICompetition;
     creator: IBrand;
+    competition: ICompetition;
     status: string;
-    visitLink: string;
-    twitter: {
+    participant: IUser[];
+    visitLink?: string;
+    twitter?: {
         tweetLink: string;
         tweetText: string;
         tweetMedia: string;
     }
-    discord: {
+    discord?: {
         channelLink: string;
     }
-    telegram: {
+    telegram?: {
         channelLink: string;
     }
-    quiz: [
+    quiz?: [
         {
             question: string;
             options: string[];
             correctAnswer: string;
         }
     ]
-    poll: {
+    poll?: {
         question: string;
         options: [
             {
@@ -44,13 +65,4 @@ export interface ITask {
         correctAnswer: string;
     },
     reward: number;
-    participants: IUser[];
-    tags: string[];
-    submission: {
-        submissionLink: string;
-        submissionDate: Date;
-        submissionText: string;
-        submissionMedia: string;
-        submissionNumber: number;
-    }
 }
