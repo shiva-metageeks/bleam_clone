@@ -1,9 +1,12 @@
 import UserService from "@src/services/user";
-import { CreateUserInput } from "@src/types/types";
-
+import { Context, CreateUserInput } from "@src/types/types";
+import JWTService from "@src/services/jwt";
 
 const queries = {
-    getUser: async (parent: any, { identifier }: { identifier: string }) => {
+    getUser: async (parent: any, { identifier }: { identifier: string }, context: Context) => {
+        if (!context.user) {
+            throw new Error("User not authenticated");
+        }
         const user = await UserService.getUser(identifier);
         return user;
     },
@@ -17,7 +20,8 @@ const queries = {
 const mutations = {
     createUser: async (parent: any, { payload }: { payload: CreateUserInput }) => {
         const user = await UserService.createUser(payload);
-        return user;
+        const token = await JWTService.generateTokenForUser(user);
+        return token;
     },
 }
 

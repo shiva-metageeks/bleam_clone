@@ -4,7 +4,7 @@ import cors from 'cors';
 import express from 'express';
 // import { Tweet } from '@src/app/tweet';
 import { Context } from '@src/types/types';
-// import JWTService from '@src/services/jwt';
+import JWTService from '@src/services/jwt';
 import connectDB from '../clients/db';
 import { User } from '@src/app/user';
 
@@ -42,7 +42,7 @@ export async function initServer() {
             let user = null;
             if (token) {
                 try {
-                    // user = JWTService.verifyToken(token);
+                    user = JWTService.verifyToken(token);
                 } catch (e) {
                     console.error('Invalid token', e);
                 }

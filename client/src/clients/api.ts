@@ -4,7 +4,7 @@ const isClient = typeof window !== 'undefined';
 
 const getToken = () => {
     if (isClient) {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('hypd_token');
         return token ? `Bearer ${token}` : "";
     }
     return "";

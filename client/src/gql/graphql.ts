@@ -17,10 +17,9 @@ export type Scalars = {
 };
 
 export type CreateUserInput = {
-  bio?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
+  firebaseUid: Scalars['String']['input'];
   name: Scalars['String']['input'];
-  profileImageUrl?: InputMaybe<Scalars['String']['input']>;
   username: Scalars['String']['input'];
 };
 

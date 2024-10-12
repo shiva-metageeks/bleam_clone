@@ -1,4 +1,4 @@
-import { FacebookAuthProvider,signInWithPhoneNumber, RecaptchaVerifier,signInWithEmailAndPassword,GoogleAuthProvider, signInWithPopup, signOut,TwitterAuthProvider } from 'firebase/auth';
+import { FacebookAuthProvider,signInWithPhoneNumber, RecaptchaVerifier,signInWithEmailAndPassword,GoogleAuthProvider, signInWithPopup, signOut,TwitterAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/utils/firebase/config';
 
 declare global {
@@ -55,6 +55,18 @@ export const emailPasswordLogin = async (email: string, password: string) => {
     return ErrorHandler(error);
   }
 };
+
+export const emailPasswordSignUp = async (email: string, password: string) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log('User signed up:', user);
+    return user;
+  } catch (error:any) {
+    console.error('Error signing up with email and password:', error.message);
+    return ErrorHandler(error);
+  }
+}
 
 const twitterProvider = new TwitterAuthProvider();
 

@@ -12,6 +12,10 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
+    firebaseUid: {
+      type: String,
+      required: true,
+    },
     bio: {
       type: String,
       default: "",

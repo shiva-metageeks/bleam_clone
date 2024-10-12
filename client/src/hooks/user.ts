@@ -16,13 +16,11 @@ export const useCreateUser = () => {
             toast.success("User created successfully")
             toast.success('created', { id: '1' })
         },
-
     })
-    return mutation
+    return mutation;
 }
 
 export const useGetUser = (identifier: string) => {
-    
     const query = useQuery({
         queryKey: ["user"],
         queryFn: () => graphqlClient.request(getUserQuery, { identifier }),

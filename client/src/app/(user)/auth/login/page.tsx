@@ -1,12 +1,17 @@
 "use client"
-import React from "react";
-import { googleLogin,twitterLogin,facebookLogin } from "@/utils/firebase/loginOption";
+import React, { useState } from "react";
+import { googleLogin,twitterLogin,facebookLogin, emailPasswordLogin } from "@/utils/firebase/loginOption";
 import { FcGoogle } from "react-icons/fc";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedin,FaFacebook } from "react-icons/fa";
 import Image from "next/image";
+import Link from "next/link";
 
 const LoginPage = () => {
+  const [loginForm,setLoginForm] = useState({
+    email:"",
+    password:""
+  })
 
     const handleGoogleLogin = async () => {
         try {
@@ -14,6 +19,15 @@ const LoginPage = () => {
             console.log('User signed in with Google:', user);
         } catch (error:any) {
             console.error('Error signing in with Google:', error.message);
+        }
+    }
+
+    const handleEmailPasswordLogin = async () => {
+        try {
+            const user = await emailPasswordLogin(loginForm.email,loginForm.password);
+            console.log('User signed in with Email and Password:', user);
+        } catch (error:any) {
+            console.error('Error signing in with Email and Password:', error.message);
         }
     }
 
@@ -44,16 +58,18 @@ const LoginPage = () => {
         }
     }
 
+
+
   return (
     <div className="w-full flex sm:flex-row flex-col-reverse justify-center items-center min-h-screen text-black">
       <section className="sm:w-1/2 w-full h-[100vh] bg-white">
       <div className="flex justify-start items-center uppercase font-bold text-md px-4 py-2" >HyPd</div>
-        <div className="flex flex-col items-center justify-center mx-4 p-6">
+        <div className="flex flex-col items-center justify-center mx-8 p-6">
           <div className="w-full bg-white sm:max-w-md">
             <div className="space-y-2 md:space-y-4">
-              <h1 className="text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
+              <div className="text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl">
                 Log in 
-              </h1>
+              </div>
               <div className="text-xs text-gray-500">Welcome back! Please enter your details</div>
               <form className="space-y-2 md:space-y-4" action="#">
                 <div className="flex flex-col">
@@ -67,6 +83,8 @@ const LoginPage = () => {
                     type="email"
                     name="email"
                     id="email"
+                    value={loginForm.email}
+                    onChange={(e)=>{setLoginForm({...loginForm,email:e.target.value})}}
                     className="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 "
                     placeholder="Enter your email"
                     required
@@ -83,40 +101,24 @@ const LoginPage = () => {
                     type="password"
                     name="password"
                     id="password"
+                    value={loginForm.password}
+                    onChange={(e)=>{setLoginForm({...loginForm,password:e.target.value})}}
                     placeholder="••••••••"
                     className="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 "
                     required
                   />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-start">
-                    <div className="flex items-center">
-                      <input
-                        id="terms"
-                        aria-describedby="terms"
-                        type="checkbox"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 "
-                        required
-                      />
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <label
-                        htmlFor="remember"
-                        className="text-black"
-                      >
-                        I agree with with Terms & Condition
-                      </label>
-                    </div>
-                  </div>
-                  <a
+                <div className="flex justify-end items-center">
+                  <Link
                     href="#"
                     className="text-sm text-end font-medium text-nowrap text-[#f37d29] hover:underline"
                   >
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
                 <button
                   type="submit"
+                  onClick={()=>{handleEmailPasswordLogin()}}
                   className="w-full text-white font-semibold bg-gradient-to-r from-[#FF4E50] to-[#F9D423] rounded-lg text-sm px-4 py-2 text-center "
                 >
                   Sign in
@@ -156,12 +158,12 @@ const LoginPage = () => {
                 </div>
                 <p className="text-sm font-light text-black">
                   Don’t have an account yet?{" "}
-                  <a
-                    href="#"
+                  <Link
+                    href="/auth/signup"
                     className="font-medium text-blue-800 hover:underline"
                   >
                     Sign up
-                  </a>
+                  </Link>
                 </p>
               </form>
             </div>
@@ -169,7 +171,7 @@ const LoginPage = () => {
         </div>
       </section>
       <section className="sm:w-1/2 h-[40vh] sm:h-[100vh] w-full bg-white">
-      <div className="relative w-full h-full p-8">
+      <div className="relative w-full h-full py-8 pr-8">
         <Image src="/images/loginBanner.png" alt="loginBanner" fill={true} className="bg-cover "/>
       </div>
       </section>

@@ -15,7 +15,6 @@ class UserService {
     public static getUserById(id: string) {
         return User.findById(id);
     }
-
 }
 
 export default UserService;

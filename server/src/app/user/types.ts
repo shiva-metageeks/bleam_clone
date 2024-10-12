@@ -4,9 +4,7 @@ export const types = `#graphql
         name: String!
         username: String!
         email: String!
-        bio: String
-        profileImageUrl: String
-        
+        firebaseUid: String!
     }
 
     type User {
@@ -18,5 +16,6 @@ export const types = `#graphql
         bio: String
         globalRank: Int
         points: Int
+        
     }
 `

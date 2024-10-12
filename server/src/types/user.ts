@@ -19,6 +19,7 @@ interface IUserTask {
 
 export interface IUser {
     _id?: string;
+    firebaseUid: string;
     username: string;
     name: string;
     email: string;

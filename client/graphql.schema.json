@@ -27,19 +27,23 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "bio",
+            "name": "email",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "email",
+            "name": "firebaseUid",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -65,18 +69,6 @@
                 "name": "String",
                 "ofType": null
               }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "profileImageUrl",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
