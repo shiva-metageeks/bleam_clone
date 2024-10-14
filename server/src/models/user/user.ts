@@ -10,25 +10,25 @@ const userSchema = new Schema<IUser>(
   {
     name: {
       type: String,
-      required: true,
+    },
+    username: {
+      type: String,
     },
     firebaseUid: {
       type: String,
       required: true,
+      unique: true,
     },
     bio: {
       type: String,
       default: "",
     },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     email: {
       type: String,
-      required: true,
-      unique: true,
+    },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
     },
     phoneNumber: {
       type: String,

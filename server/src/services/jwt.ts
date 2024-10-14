@@ -5,13 +5,14 @@ const JWT_SECRET = "mysecretkey";
 class JWTService {
 
     public static async generateTokenForUser(user: JWTUser): Promise<string> {
-
+        console.log("user",user);
         const payload: JWTUser = {
             id: user?.id,
             firebaseUid: user?.firebaseUid
         }
 
         const token = JWT.sign(payload, JWT_SECRET as string, { algorithm: "HS256" });
+        console.log("token",token);
         return token;
     }
 

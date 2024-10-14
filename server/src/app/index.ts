@@ -42,12 +42,13 @@ export async function initServer() {
     app.use('/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(graphqlServer, {
         context: async ({ req }: { req: any }) => {
             const authHeader = req.headers.authorization || '';
+            console.log("authHeader", authHeader);
             const token = authHeader.startsWith('Bearer ') ? authHeader.split('Bearer ')[1] : null;
             let user = null;
             if (token) {
                 try {
                     console.log("token", token);
-                    const decodedToken = JWTService.verifyToken(token);
+                    const decodedToken = JWTService.verifyToken(token as string);
                     if (!decodedToken) {
                         throw new Error('Invalid token');
                     }
