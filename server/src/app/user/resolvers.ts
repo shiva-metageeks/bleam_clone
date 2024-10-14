@@ -5,9 +5,9 @@ import JWTService from "@src/services/jwt";
 
 const queries = {
     getUser: async (parent: any, { identifier }: { identifier: string }, context: Context) => {
-        if (!context.user) {
-            throw new Error("User not authenticated");
-        }
+        // if (!context.user) {
+        //     throw new Error("User not authenticated");
+        // }
         const user = await UserService.getUser(identifier);
         return user;
     },

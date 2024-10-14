@@ -24,6 +24,8 @@ const SignUpPage = () => {
 
   const {data:users} = useGetUser("shivam@7011");
 
+  
+
   console.log("users",users);
 
   const handleEmailPasswordSignUp = async (
