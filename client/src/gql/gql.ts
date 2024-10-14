@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "#graphql\n    mutation createUser($payload: CreateUserInput) {\n        createUser(payload: $payload)\n    }  ": types.CreateUserDocument,
     "#graphql\n    mutation updateUser($payload: UpdateUserInput) {\n        updateUser(payload: $payload){\n            name,\n            bio\n        }\n    }  ": types.UpdateUserDocument,
-    "#graphql\n    query getUser($identifier: String!) {\n        getUser(identifier: $identifier) {\n            username\n            name\n            email\n            profileImageUrl\n            bio\n        }\n    }\n    ": types.GetUserDocument,
+    "#graphql\n    query GetUser($identifier: String!) {\n        getUser(identifier: $identifier) {\n           \n            name\n            \n        }\n    }\n    ": types.GetUserDocument,
     "#graphql\n    query getCurrentUser {\n        getCurrentUser {\n            username\n            name\n            email\n            profileImageUrl\n            bio\n        }\n    }\n    ": types.GetCurrentUserDocument,
 };
 
@@ -44,7 +44,7 @@ export function graphql(source: "#graphql\n    mutation updateUser($payload: Upd
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "#graphql\n    query getUser($identifier: String!) {\n        getUser(identifier: $identifier) {\n            username\n            name\n            email\n            profileImageUrl\n            bio\n        }\n    }\n    "): (typeof documents)["#graphql\n    query getUser($identifier: String!) {\n        getUser(identifier: $identifier) {\n            username\n            name\n            email\n            profileImageUrl\n            bio\n        }\n    }\n    "];
+export function graphql(source: "#graphql\n    query GetUser($identifier: String!) {\n        getUser(identifier: $identifier) {\n           \n            name\n            \n        }\n    }\n    "): (typeof documents)["#graphql\n    query GetUser($identifier: String!) {\n        getUser(identifier: $identifier) {\n           \n            name\n            \n        }\n    }\n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -39,11 +39,12 @@ export const useUpdateUser = () => {
 }
 
 export const useGetUser = (identifier: string) => {
+    console.log("identifier",identifier);
     const query = useQuery({
         queryKey: ["user"],
         queryFn: () => graphqlClient.request(getUserQuery, { identifier }),
     })
-    return query;
+     return { ...query, user: query.data?.getUser };
 }
 
 export const useGetCurrentUser = () => {
