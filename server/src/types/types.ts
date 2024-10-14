@@ -3,13 +3,8 @@ export type Context = {
 };
 
 export type JWTUser = {
+    id: string;
     firebaseUid: string;
 }
 
-export type CreateUserInput = {
-    name: string
-    firebaseUid: string
-    username: string
-    email: string
-}
 

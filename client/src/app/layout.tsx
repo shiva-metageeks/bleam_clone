@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
 import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
-import ReactQueryProvider from "./providers/queryClientProvider";
+import ReactQueryProvider from "@/app/providers/queryClientProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",

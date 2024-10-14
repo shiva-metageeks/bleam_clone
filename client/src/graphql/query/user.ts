@@ -14,3 +14,17 @@ export const getUserQuery = graphql(
     }
     `
 )
+
+export const getCurrentUserQuery = graphql(
+    `#graphql
+    query getCurrentUser {
+        getCurrentUser {
+            username
+            name
+            email
+            profileImageUrl
+            bio
+        }
+    }
+    `
+)

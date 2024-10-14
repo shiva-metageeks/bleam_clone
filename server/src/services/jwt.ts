@@ -7,6 +7,7 @@ class JWTService {
     public static async generateTokenForUser(user: JWTUser): Promise<string> {
 
         const payload: JWTUser = {
+            id: user?.id,
             firebaseUid: user?.firebaseUid
         }
 

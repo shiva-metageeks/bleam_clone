@@ -31,3 +31,22 @@ body {
     text-wrap: balance;
   }
 }
+
+/* global.css or any custom CSS file */
+::-webkit-scrollbar {
+  width: 6px; /* Adjust the width */
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff; /* Background of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f37b0c; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded scrollbar thumb */
+  border: 2px solid transparent; /* Optionally, add border */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f5ab0c; /* Hover effect for scrollbar thumb */
+}

@@ -2,6 +2,22 @@ import mongoose from "mongoose";
 import { ICompetition } from "./competition";
 import { ITask } from "./task";
 
+export type CreateUserInput = {
+    name: string
+    firebaseUid: string
+    username: string
+    email: string
+}
+
+export type UpdateUserInput = {
+    name: string
+    username: string
+    email: string
+    profileImageUrl: string
+    bio: string
+    phoneNumber: string
+}
+
 interface ISocialMedia {
     socialApp: string;
     socialId: string;

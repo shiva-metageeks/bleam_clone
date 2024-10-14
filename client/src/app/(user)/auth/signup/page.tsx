@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { FaXTwitter } from "react-icons/fa6";
@@ -11,7 +11,7 @@ import {
   twitterLogin,
 } from "@/utils/firebase/loginOption";
 import Link from "next/link";
-import { useCreateUser } from "@/hooks/user";
+import { useCreateUser, useGetUser } from "@/hooks/user";
 
 const SignUpPage = () => {
   const [signUpForm, setSignUpForm] = useState({
@@ -22,6 +22,10 @@ const SignUpPage = () => {
   });
   const { mutate: createUser, data } = useCreateUser();
 
+  const {data:users} = useGetUser("shivam@7011");
+
+  console.log("users",users);
+
   const handleEmailPasswordSignUp = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -31,6 +35,8 @@ const SignUpPage = () => {
         signUpForm.email,
         signUpForm.password
       );
+      console.log("user",user);
+      console.log("signUpForm",signUpForm);
       if (user) {
         createUser({
           name: signUpForm.name,
@@ -78,6 +84,7 @@ const SignUpPage = () => {
       console.error("Error signing up with Facebook:", error.message);
     }
   };
+
   return (
     <div className="w-full flex sm:flex-row flex-col-reverse justify-center items-center min-h-screen text-black">
       <section className="sm:w-2/3 h-[40vh] sm:h-[100vh] w-full">

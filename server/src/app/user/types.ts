@@ -7,6 +7,13 @@ export const types = `#graphql
         firebaseUid: String!
     }
 
+    input UpdateUserInput {
+        name: String
+        email: String
+        profileImageUrl: String
+        bio: String
+    }
+
     type User {
         _id: ID!
         username: String!
