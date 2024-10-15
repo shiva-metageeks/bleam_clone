@@ -5,6 +5,7 @@ import express from 'express';
 import { Context } from '@src/types/types';
 import connectDB from '@src/clients/db';
 import { User } from '@src/app/user';
+import {Task} from '@src/app/task';
 import UserModel from '@src/models/user/user';
 import envConfig from '@src/utils/imports/env';
 import JWTService from '@src/services/jwt';
@@ -19,25 +20,30 @@ export async function initServer() {
         typeDefs: `
             ${User.types}
             ${Competition.types}
+            ${Task.types}
 
-             type Query {
+            type Query {
                 ${User.queries}
                 ${Competition.queries}
+                ${Task.queries}
             }
 
             type Mutation {
                 ${User.mutations}
                 ${Competition.mutations}
+                ${Task.mutations}
             }
             `,
         resolvers: {
             Query: {
                 ...User.resolvers.queries,
                 ...Competition.resolvers.queries,
+                ...Task.resolvers.queries,
             },
             Mutation: {
                 ...User.resolvers.mutations,
                 ...Competition.resolvers.mutations,
+                ...Task.resolvers.mutations,
             },
         },
     });
