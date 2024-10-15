@@ -38,27 +38,34 @@ const SignUpPage = () => {
     }
     setLoaders({...loaders,signUp:true});
     try {
-      const user = await emailPasswordSignUp(
-        signUpForm.email,
-        signUpForm.password
-      );
-      console.log("user",user);
-      console.log("signUpForm",signUpForm);
+      const user = await emailPasswordSignUp(signUpForm.email, signUpForm.password);
       if (user) {
-       createUser({
-          email: signUpForm.email,
-          firebaseUid: user.uid,
-        });
+        createUser(
+          {
+            email: signUpForm.email,
+            firebaseUid: user.uid,
+          },
+          {
+            onSuccess: (data) => {
+              if (data?.createUser) {
+                localStorage.setItem("_hyped_token", data.createUser as string);
+                router.push("/profile");
+              }
+            },
+            onError: (error) => {
+              console.error("Error creating user:", error);
+              toast.error("Failed to create user. Please try again.");
+            },
+            onSettled: () => {
+              setLoaders({ ...loaders, signUp: false });
+            },
+          }
+        );
       }
-      console.log("data",data);
-      if(data?.createUser){
-        localStorage.setItem("_hyped_token",data?.createUser as string);
-        router.push("/profile");
-      }
-      
-      setLoaders({...loaders,signUp:false});
     } catch (error: any) {
       console.error("Error signing up with Email and Password:", error.message);
+      toast.error("Sign up failed. Please try again.");
+      setLoaders({ ...loaders, signUp: false });
     }
   };
 
@@ -70,19 +77,28 @@ const SignUpPage = () => {
     try {
       const user = await googleLogin();
       console.log("User signed up with Google:", user);
-      if(user){
-        createUser({
-          email: user.email,
-          name: user.displayName,
-          profileImageUrl: user.photoURL,
-          firebaseUid: user.uid,
-          isEmailVerified: user.emailVerified,
-        });
-      }
-      console.log("data",data);
-      if(data?.createUser){
-        localStorage.setItem("_hyped_token",data?.createUser as string);
-        router.push("/profile");
+      if (user) {
+        createUser(
+          {
+            email: user.email,
+            name: user.displayName,
+            profileImageUrl: user.photoURL,
+            firebaseUid: user.uid,
+            isEmailVerified: user.emailVerified,
+          },
+          {
+            onSuccess: (data) => {
+              if (data?.createUser) {
+                localStorage.setItem("_hyped_token", data.createUser as string);
+                router.push("/profile");
+              }
+            },
+            onError: (error) => {
+              console.error("Error creating user:", error);
+              toast.error("Failed to create user. Please try again.");
+            },
+          }
+        );
       }
     } catch (error: any) {
       console.error("Error signing up with Google:", error.message);
