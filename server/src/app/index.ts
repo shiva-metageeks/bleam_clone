@@ -10,6 +10,7 @@ import UserModel from '@src/models/user/user';
 import envConfig from '@src/utils/imports/env';
 import JWTService from '@src/services/jwt';
 import { Competition } from '@src/app/competition';
+import { taskCategories } from '@src/app/taskCategories';
 const {MONGO_URI} =envConfig
 
 export async function initServer() {
@@ -21,29 +22,33 @@ export async function initServer() {
             ${User.types}
             ${Competition.types}
             ${Task.types}
+            ${taskCategories.types}
 
             type Query {
                 ${User.queries}
                 ${Competition.queries}
                 ${Task.queries}
-            }
-
+                ${taskCategories.queries}
+    }
             type Mutation {
                 ${User.mutations}
                 ${Competition.mutations}
                 ${Task.mutations}
+                ${taskCategories.mutations}
             }
-            `,
+        `,
         resolvers: {
             Query: {
                 ...User.resolvers.queries,
                 ...Competition.resolvers.queries,
                 ...Task.resolvers.queries,
+                ...taskCategories.resolvers.queries,
             },
             Mutation: {
                 ...User.resolvers.mutations,
                 ...Competition.resolvers.mutations,
                 ...Task.resolvers.mutations,
+                ...taskCategories.resolvers.mutations,
             },
         },
     });
