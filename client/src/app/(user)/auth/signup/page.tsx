@@ -12,6 +12,8 @@ import {
 } from "@/utils/firebase/loginOption";
 import Link from "next/link";
 import { useCreateUser, useGetUser } from "@/hooks/user";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const SignUpPage = () => {
   const [signUpForm, setSignUpForm] = useState({
@@ -20,18 +22,21 @@ const SignUpPage = () => {
     password: "",
     term: false,
   });
-  const { mutate: createUser, data } = useCreateUser();
-
-  const {data:users} = useGetUser("shivam@7011");
-
-  
-
-  console.log("users",users);
+  const [loaders,setLoaders] = useState({
+    signUp:false
+  });
+  const { mutate: createUser, data} = useCreateUser();
+  const router = useRouter();
 
   const handleEmailPasswordSignUp = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
+    if(!signUpForm.term){
+      toast.error("Please accept terms and conditions");
+      return;
+    }
+    setLoaders({...loaders,signUp:true});
     try {
       const user = await emailPasswordSignUp(
         signUpForm.email,
@@ -40,40 +45,73 @@ const SignUpPage = () => {
       console.log("user",user);
       console.log("signUpForm",signUpForm);
       if (user) {
-        createUser({
-          name: signUpForm.name,
-          username: signUpForm.name,
+       createUser({
           email: signUpForm.email,
           firebaseUid: user.uid,
         });
       }
-
       console.log("data",data);
-      // if (!hypdToken?.createUser) {
-      //   console.log("No hypdToken:User not created");
-      //   return;
-      // }
-      // console.log("User signed up with Email and Password:", user);
-      // console.log("hypdToken", hypdToken?.createUser);
-      // localStorage.setItem("hypd_token", hypdToken?.createUser as string);
+      if(data?.createUser){
+        localStorage.setItem("_hyped_token",data?.createUser as string);
+        router.push("/profile");
+      }
+      
+      setLoaders({...loaders,signUp:false});
     } catch (error: any) {
       console.error("Error signing up with Email and Password:", error.message);
     }
   };
 
   const handleGoogleSignUp = async () => {
+    if(!signUpForm.term){
+      toast.error("Please accept terms and conditions");
+      return;
+    }
     try {
       const user = await googleLogin();
       console.log("User signed up with Google:", user);
+      if(user){
+        createUser({
+          email: user.email,
+          name: user.displayName,
+          profileImageUrl: user.photoURL,
+          firebaseUid: user.uid,
+          isEmailVerified: user.emailVerified,
+        });
+      }
+      console.log("data",data);
+      if(data?.createUser){
+        localStorage.setItem("_hyped_token",data?.createUser as string);
+        router.push("/profile");
+      }
     } catch (error: any) {
       console.error("Error signing up with Google:", error.message);
     }
   };
 
   const handleTwitterSignUp = async () => {
+    if(!signUpForm.term){
+      toast.error("Please accept terms and conditions");
+      return;
+    }
     try {
       const user = await twitterLogin();
       console.log("User signed up with Twitter:", user);
+
+      if(user){
+        createUser({
+          email: user.email,
+          name: user.displayName,
+          profileImageUrl: user.photoURL,
+          firebaseUid: user.uid,
+          isEmailVerified: user.emailVerified,
+        });
+      }
+
+      if(data?.createUser){
+        localStorage.setItem("_hyped_token",data?.createUser as string);
+        router.push("/profile");
+      }
     } catch (error: any) {
       console.error("Error signing up with Twitter:", error.message);
     }
@@ -136,26 +174,6 @@ const SignUpPage = () => {
                 Welcome! Please enter your details
               </div>
               <form className="space-y-2 md:space-y-4" action="#">
-                <div className="flex flex-col gap-2 mb-2">
-                  <label
-                    htmlFor="name"
-                    className="text-xs font-semibold text-[#344054]"
-                  >
-                    Name*
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    placeholder="Enter your name"
-                    className="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 "
-                    required
-                    value={signUpForm.name}
-                    onChange={(e) => {
-                      setSignUpForm({ ...signUpForm, name: e.target.value });
-                    }}
-                  />
-                </div>
                 <div className="flex flex-col mb-2">
                   <label
                     htmlFor="email"
@@ -237,7 +255,7 @@ const SignUpPage = () => {
                   }}
                   className="w-full text-white font-semibold bg-gradient-to-r from-[#FF4E50] to-[#F9D423] rounded-lg text-sm px-4 py-2 text-center "
                 >
-                  Getting Started
+                {loaders.signUp ? "Loading..." : "Getting Started"}
                 </button>
                 <div className="flex justify-center flex-col">
                   <div className="text-gray-500 text-center ">OR</div>

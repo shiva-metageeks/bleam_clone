@@ -7,6 +7,13 @@ export const createUserMutation = graphql(
     }  `   
 )
 
+export const loginUserMutation = graphql(
+    `#graphql
+    mutation loginUser($payload: LoginUserInput) {
+        loginUser(payload: $payload)
+    }  `
+)
+
 export const updateUserMutation = graphql(
     `#graphql
     mutation updateUser($payload: UpdateUserInput) {

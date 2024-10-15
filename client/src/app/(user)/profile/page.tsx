@@ -8,7 +8,7 @@ import { useGetCurrentUser } from "@/hooks/user";
 const { FaInstagram, FaTwitter, FaFacebook, FaLinkedin, FaDiscord, FaTelegram } = icons;
 
 const ProfilePage = () => {
-  const { data: user } = useGetCurrentUser();
+  const {user} = useGetCurrentUser();
   console.log("user",user);
   return (
     <div className="w-full min-h-screen bg-white text-black">
@@ -17,16 +17,16 @@ const ProfilePage = () => {
           <div className="flex flex-col justify-center items-center bg-white text-black rounded-sm p-4 shadow-md ">
             <div className="flex justify-center items-center">
               <Image
-                src="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"
+                src={user?.profileImageUrl as string}
                 className="rounded-full"
                 alt="profile"
                 width={200}
                 height={200}
               />
             </div>
-
-            <div className="text-lg font-bold">John Doe</div>
-            <div className="text-zinc-700 text-sm mb-4">@johnDoe</div>
+            <div className="text-lg font-bold">{user?.name}</div>
+            <div className="text-zinc-700 text-sm mb-4">{user?.email}</div>
+            <p className="text-zinc-700 text-sm mb-4">{user?.bio}</p>
             <EditUserPage />
             <div className="flex justify-center items-center gap-4 mb-4">
               <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full">

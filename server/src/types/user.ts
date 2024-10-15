@@ -3,19 +3,24 @@ import { ICompetition } from "./competition";
 import { ITask } from "./task";
 
 export type CreateUserInput = {
-    name: string
     firebaseUid: string
-    username: string
-    email: string
+    email?: string
+    isEmailVerified?: boolean;
+    name?: string;
+    profileImageUrl?: string;
+}
+
+export type LoginUserInput = {
+    firebaseUid: string
 }
 
 export type UpdateUserInput = {
-    name: string
-    username: string
-    email: string
-    profileImageUrl: string
-    bio: string
-    phoneNumber: string
+    name?: string
+    username?: string
+    email?: string
+    profileImageUrl?: string
+    bio?: string
+    phoneNumber?: string
 }
 
 interface ISocialMedia {
@@ -36,16 +41,17 @@ interface IUserTask {
 export interface IUser {
     _id?: string;
     firebaseUid: string;
-    username: string;
-    name: string;
-    email: string;
-    profileImageUrl: string;
-    bio: string;
-    globalRank: number;
-    platformPoints: number;
-    socialMedia: ISocialMedia[];
-    coverPicture: string;
-    joinedCompetitions: { competition: ICompetition, completed: boolean }[];
-    tasks: IUserTask[];
+    username?: string;
+    name?: string;
+    email?: string;
+    profileImageUrl?: string;
+    bio?: string;
+    globalRank?: number;
+    platformPoints?: number;
+    socialMedia?: ISocialMedia[];
+    coverPicture?: string;
+    joinedCompetitions?: { competition: ICompetition, completed: boolean }[];
+    tasks?: IUserTask[];
     phoneNumber?: string;
+    isEmailVerified?: boolean;
 }

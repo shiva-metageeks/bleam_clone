@@ -1,9 +1,14 @@
 export const types = `#graphql
 
-     input CreateUserInput {
-        name: String!
-        username: String!
-        email: String!
+    input CreateUserInput {
+        email: String
+        name: String
+        profileImageUrl: String
+        firebaseUid: String!
+        isEmailVerified: Boolean
+    }
+    
+    input LoginUserInput {
         firebaseUid: String!
     }
 
@@ -16,13 +21,13 @@ export const types = `#graphql
 
     type User {
         _id: ID!
-        username: String!
-        name: String!
-        email: String!
+        name: String
+        username: String
+        email: String
         profileImageUrl: String
         bio: String
         globalRank: Int
         points: Int
-        
+        isEmailVerified: Boolean
     }
-`
+`;

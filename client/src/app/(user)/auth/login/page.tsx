@@ -6,16 +6,26 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedin,FaFacebook } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
+import { useLoginUser } from "@/hooks/user";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+  const router = useRouter();
+  const {mutate:loginUser,data} = useLoginUser();
   const [loginForm,setLoginForm] = useState({
     email:"",
     password:""
   })
-
     const handleGoogleLogin = async () => {
         try {
             const user = await googleLogin();
+            loginUser({firebaseUid:user.uid});
+            console.log("data",data);
+            if(data?.loginUser){
+                console.log("token",data.loginUser);
+                localStorage.setItem("_hypd_token",data.loginUser as string);
+                router.push("/profile");
+            }
             console.log('User signed in with Google:', user);
         } catch (error:any) {
             console.error('Error signing in with Google:', error.message);
@@ -26,6 +36,12 @@ const LoginPage = () => {
         try {
             const user = await emailPasswordLogin(loginForm.email,loginForm.password);
             console.log('User signed in with Email and Password:', user);
+            loginUser({firebaseUid:user.uid});
+            if(data?.loginUser){
+                console.log("token",data.loginUser);
+                localStorage.setItem("_hypd_token",data.loginUser as string);
+                router.push("/profile");
+            }
         } catch (error:any) {
             console.error('Error signing in with Email and Password:', error.message);
         }
@@ -35,6 +51,12 @@ const LoginPage = () => {
         try {
             const user = await twitterLogin();
             console.log('User signed in with Twitter:', user);
+            loginUser({firebaseUid:user.uid});
+            if(data?.loginUser){
+                console.log("token",data.loginUser);
+                localStorage.setItem("_hypd_token",data.loginUser as string);
+                router.push("/profile");
+            }
         } catch (error:any) {
             console.error('Error signing in with Twitter:', error.message);
         }
@@ -42,8 +64,13 @@ const LoginPage = () => {
 
     const handleFacebookLogin = async () => {
         try {
-            const user = await facebookLogin();
-            console.log('User signed in with Facebook:', user);
+            // const user = await facebookLogin();
+            // console.log('User signed in with Facebook:', user);
+            // loginUser({firebaseUid:user.uid});
+            // if(token){
+            //     console.log("token",token);
+            //     localStorage.setItem("_hypd_token",token as string);
+            // }
         } catch (error:any) {
             console.error('Error signing in with Facebook:', error.message);
         }
@@ -57,8 +84,6 @@ const LoginPage = () => {
             console.error('Error signing in with LinkedIn:', error.message);
         }
     }
-
-
 
   return (
     <div className="w-full flex sm:flex-row flex-col-reverse justify-center items-center min-h-screen text-black">
