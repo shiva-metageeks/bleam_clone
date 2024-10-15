@@ -1,11 +1,11 @@
 "use client";
-import Navbar from "@/components/navbar/userNavbar";
+import UserNavbar from "@/components/navbar/userNavbar";
 import Link from "next/link";
 const LandingPage = () => {
   return (
     <div className="h-screen bg">
       <div className="sm:w-[70%] w-full m-auto">
-        <Navbar />
+        <UserNavbar />
         <div className="py-24 ">
           <div className="flex gap-8 justify-center items-center">
             <img src="/images/Group 2.png" alt="" className="w-32 h-10" />

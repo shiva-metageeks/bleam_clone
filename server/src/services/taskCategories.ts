@@ -3,7 +3,6 @@ import { CreateTaskCategory, UpdateTaskCategory } from "@src/types/task";
 
 class TaskCategoryService {
     public static async createTaskCategory(payload: CreateTaskCategory) {
-        console.log("payload", payload);
         const taskCategory = await TaskCategory.create(payload);
         return taskCategory;
     }

@@ -16,6 +16,35 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Competition = {
+  __typename?: 'Competition';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  imageUrl?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+};
+
+export type CreateCompetitionInput = {
+  description: Scalars['String']['input'];
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type CreateTaskCategory = {
+  description: Scalars['String']['input'];
+  image?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type CreateTaskInput = {
+  description: Scalars['String']['input'];
+  media?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  reward: Scalars['Int']['input'];
+  taskId: Scalars['String']['input'];
+  type: Scalars['String']['input'];
+};
+
 export type CreateUserInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   firebaseUid: Scalars['String']['input'];
@@ -30,9 +59,28 @@ export type LoginUserInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createCompetition?: Maybe<Competition>;
+  createTask?: Maybe<Task>;
+  createTaskCategory?: Maybe<TaskCategory>;
   createUser?: Maybe<Scalars['String']['output']>;
   loginUser?: Maybe<Scalars['String']['output']>;
+  updateTaskCategory?: Maybe<TaskCategory>;
   updateUser?: Maybe<User>;
+};
+
+
+export type MutationCreateCompetitionArgs = {
+  payload?: InputMaybe<CreateCompetitionInput>;
+};
+
+
+export type MutationCreateTaskArgs = {
+  payload?: InputMaybe<CreateTaskInput>;
+};
+
+
+export type MutationCreateTaskCategoryArgs = {
+  payload?: InputMaybe<CreateTaskCategory>;
 };
 
 
@@ -46,15 +94,40 @@ export type MutationLoginUserArgs = {
 };
 
 
+export type MutationUpdateTaskCategoryArgs = {
+  payload?: InputMaybe<UpdateTaskCategory>;
+};
+
+
 export type MutationUpdateUserArgs = {
   payload?: InputMaybe<UpdateUserInput>;
 };
 
 export type Query = {
   __typename?: 'Query';
+  getCompetition?: Maybe<Competition>;
+  getCompetitions?: Maybe<Array<Maybe<Competition>>>;
   getCurrentUser?: Maybe<User>;
+  getTask?: Maybe<Task>;
+  getTaskCategories?: Maybe<Array<Maybe<TaskCategory>>>;
+  getTaskCategory?: Maybe<TaskCategory>;
   getUser?: Maybe<User>;
   getUserById?: Maybe<User>;
+};
+
+
+export type QueryGetCompetitionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetTaskArgs = {
+  taskId: Scalars['ID']['input'];
+};
+
+
+export type QueryGetTaskCategoryArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -65,6 +138,31 @@ export type QueryGetUserArgs = {
 
 export type QueryGetUserByIdArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type Task = {
+  __typename?: 'Task';
+  description: Scalars['String']['output'];
+  media?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  reward: Scalars['Int']['output'];
+  taskId: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+};
+
+export type TaskCategory = {
+  __typename?: 'TaskCategory';
+  _id?: Maybe<Scalars['ID']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+export type UpdateTaskCategory = {
+  _id: Scalars['ID']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateUserInput = {

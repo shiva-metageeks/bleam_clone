@@ -2,13 +2,15 @@
 import { useState } from "react";
 import { icons, nextImports } from "@/utils/imports/config";
 import { useGetCurrentUser } from "@/hooks/user";
+import { userLogout } from "@/utils/helper/logout";
 const { IoIosArrowDown } = icons;
 const { Link, Image } = nextImports;
+import { useRouter } from "next/navigation";
 
 const UserNavbar = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const { data: currentUser } = useGetCurrentUser();
-  console.log("currentUser", currentUser);
+  const router = useRouter();
+  const { user } = useGetCurrentUser();
   return (
     <div className="w-full pt-2">
       <nav className="w-full bg-pink-50 py-5 px-6 rounded-full flex items-center justify-center ">
@@ -45,12 +47,12 @@ const UserNavbar = () => {
               </Link>
             </div>
           </div>
-          {currentUser ? (
+          {user ? (
             <div className=" flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
               <div className="relative">
                 <button
                   type="button"
-                  className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-2 ring-orange-500 focus:ring-orange-500"
+                  className="flex text-sm bg-gray-800 rounded-full md:me-0 ring-2 focus:ring-2 ring-orange-500 focus:ring-orange-500"
                   id="user-menu-button"
                   aria-expanded="false"
                   data-dropdown-toggle="user-dropdown"
@@ -62,7 +64,7 @@ const UserNavbar = () => {
                     className={`w-8 h-8 rounded-full ${
                       isProfileMenuOpen ? "opacity-70" : "opacity-100"
                     }`}
-                    src="/images/logo.png"
+                    src={user.profileImageUrl as string}
                     width={50}
                     height={50}
                     alt="user photo"
@@ -75,31 +77,31 @@ const UserNavbar = () => {
                   id="user-dropdown"
                 >
                 <div className="px-4 py-3">
-                  <Link href="/profile" >
+                  <div className="flex flex-col justify-center items-center">
                     <span className="block text-sm text-gray-900 ">
-                      Bonnie Green
+                      {user.name}
                     </span>
-                    <span className="block text-sm  text-gray-500 truncate">
-                      name@flowbite.com
+                    <span className="block text-xs font-bold text-zinc-900 truncate">
+                      {user.email}
                     </span>
-                  </Link>
+                  </div>
                   </div>
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        href="/profile"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                       >
-                        Dashboard
-                      </a>
+                        Profile
+                      </Link>
                     </li>
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        href="/competitions"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                       >
-                        Settings
-                      </a>
+                        My Competitions
+                      </Link>
                     </li>
                     <li>
                       <a
@@ -110,12 +112,14 @@ const UserNavbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                    <div className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" >
+                      <button
+                        onClick={() => userLogout({ redirectTo: "/", router })}
+                        className="block "
                       >
-                        Sign out
-                      </a>
+                        Logout
+                      </button>
+                      </div>
                     </li>
                   </ul>
                 </div>
@@ -148,15 +152,14 @@ const UserNavbar = () => {
           ) : (
             <div className="flex space-x-8">
               <Link
-                href="/auth/login"
+                href="/auth/user/login"
                 className="hover:text-orange-500 font-semibold"
               >
                 Login
               </Link>
-              <Link href="/auth/signUp">
-                <span className="px-4 py-2 shadow-lg rounded-full bg-gradient-to-r from-orange-400 to-yellow-500 text-white hover:opacity-90">
+              <Link href="/auth/user/signUp" 
+              className="px-4 py-2 shadow-lg rounded-full bg-gradient-to-r from-orange-400 to-yellow-500 text-white hover:opacity-90">
                   Sign Up
-                </span>
               </Link>
             </div>
           )}
