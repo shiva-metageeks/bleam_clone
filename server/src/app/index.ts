@@ -11,6 +11,7 @@ import envConfig from '@src/utils/imports/env';
 import JWTService from '@src/services/jwt';
 import { Competition } from '@src/app/competition';
 import { taskCategories } from '@src/app/taskCategories';
+import { Aws } from '@src/app/aws';
 const {MONGO_URI} =envConfig
 
 export async function initServer() {
@@ -29,6 +30,7 @@ export async function initServer() {
                 ${Competition.queries}
                 ${Task.queries}
                 ${taskCategories.queries}
+                ${Aws.awsQueries}
     }
             type Mutation {
                 ${User.mutations}
@@ -43,6 +45,7 @@ export async function initServer() {
                 ...Competition.resolvers.queries,
                 ...Task.resolvers.queries,
                 ...taskCategories.resolvers.queries,
+                ...Aws.resolvers.queries,
             },
             Mutation: {
                 ...User.resolvers.mutations,
