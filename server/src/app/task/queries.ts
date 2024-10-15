@@ -1,3 +1,3 @@
 export const queries = `#graphql
-    getTask(taskId: ID!): Task
+    getTask(taskId: ID!): String
 `

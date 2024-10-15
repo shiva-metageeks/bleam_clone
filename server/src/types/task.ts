@@ -66,3 +66,12 @@ export interface ITask {
     },
     reward: number;
 }
+
+export interface CreateTaskInput {
+    name: string;
+    taskId: string;
+    description: string;
+    points: number;
+    media?: string;
+    type: string;
+}

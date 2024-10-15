@@ -52,4 +52,4 @@ const taskSchema = new Schema<ITask>(
 
 const Task = model<ITask>("Task", taskSchema);
 
-export { Task };
+export default Task;

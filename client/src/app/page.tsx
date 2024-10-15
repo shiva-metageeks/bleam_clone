@@ -2,7 +2,7 @@
 import { useGetUser } from '@/hooks/user';
 import React, { useState } from 'react'
 
-const page = () => {
+const Page = () => {
   const {user} = useGetUser("shivam@7011");
   console.log("users",user);
   return (
@@ -12,4 +12,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

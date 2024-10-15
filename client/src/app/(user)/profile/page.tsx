@@ -7,7 +7,7 @@ import { useGetCurrentUser } from "@/hooks/user";
 
 const { FaInstagram, FaTwitter, FaFacebook, FaLinkedin, FaDiscord, FaTelegram } = icons;
 
-const profilePage = () => {
+const ProfilePage = () => {
   const { data: user } = useGetCurrentUser();
   console.log("user",user);
   return (
@@ -134,4 +134,4 @@ const profilePage = () => {
   );
 };
 
-export default profilePage;
+export default ProfilePage;
