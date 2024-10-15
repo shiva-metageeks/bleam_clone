@@ -6,6 +6,7 @@ import express from 'express';
 import { Context } from '@src/types/types';
 import connectDB from '../clients/db';
 import { User } from '@src/app/user';
+import {Task} from '@src/app/task';
 import UserModel from '@src/models/user/user';
 import admin from '@src/services/firebaseAdmin';
 import envConfig from '@src/utils/imports/env';
@@ -19,21 +20,26 @@ export async function initServer() {
     const graphqlServer = new ApolloServer<Context>({
         typeDefs: `
             ${User.types}
+            ${Task.types}
 
-             type Query {
+            type Query {
                 ${User.queries}
+                ${Task.queries}
             }
 
             type Mutation {
                 ${User.mutations}
+                ${Task.mutations}
             }
             `,
         resolvers: {
             Query: {
                 ...User.resolvers.queries,
+                ...Task.resolvers.queries,
             },
             Mutation: {
                 ...User.resolvers.mutations,
+                ...Task.resolvers.mutations,
             },
         },
     });
@@ -42,7 +48,7 @@ export async function initServer() {
     app.use('/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(graphqlServer, {
         context: async ({ req }: { req: any }) => {
             const authHeader = req.headers.authorization || '';
-            console.log("authHeader", authHeader);
+            // console.log("authHeader", authHeader);
             const token = authHeader.startsWith('Bearer ') ? authHeader.split('Bearer ')[1] : null;
             let user = null;
             if (token) {

@@ -31,8 +31,8 @@ export interface ITask {
     image?: string;
     tags?: string[];
     type: string;
-    creator: IBrand;
-    competition: ICompetition;
+    creator?: IBrand;
+    competition?: ICompetition;
     status: string;
     participant: IUser[];
     visitLink?: string;
@@ -71,7 +71,7 @@ export interface CreateTaskInput {
     name: string;
     taskId: string;
     description: string;
-    points: number;
+    reward: number;
     media?: string;
     type: string;
 }

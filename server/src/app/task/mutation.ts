@@ -1,4 +1,4 @@
 
 export const mutations = `#graphql
-    createTask(payload: String): String
+    createTask(payload: CreateTaskInput): Task
 `
