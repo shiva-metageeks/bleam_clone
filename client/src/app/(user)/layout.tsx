@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/user/navbar/navbar";
+import UserNavbar from "@/components/navbar/userNavbar";
 
 export default function UserLayout({
   children,
@@ -7,7 +7,7 @@ export default function UserLayout({
 }>) {
   return (
     <div className="bg-white">
-      <Navbar />
+      <UserNavbar />
       {children}
     </div>
   );
