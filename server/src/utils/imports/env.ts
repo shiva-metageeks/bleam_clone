@@ -17,6 +17,10 @@ const envConfig = {
     FIREBASE_CLIENT_ID: process.env.FIREBASE_CLIENT_ID as string,
     FIREBASE_CLIENT_X509_CERT_URL: process.env.FIREBASE_CLIENT_X509_CERT_URL as string,
     FIREBASE_UNIVERSE_DOMAIN: process.env.FIREBASE_UNIVERSE_DOMAIN as string,
+    AWS_ACCESS_KEY: process.env.AWS_ACCESS_KEY as string,
+    AWS_SECRET_KEY: process.env.AWS_SECRET_KEY as string,
+    AWS_REGION: process.env.AWS_REGION as string,
+    AWS_BUCKET: process.env.AWS_BUCKET as string,
 
 }
 
