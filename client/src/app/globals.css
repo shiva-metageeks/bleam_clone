@@ -2,34 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply bg-[#FFF] text-[#101828];
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.bg {
+  background-image: url('/images/pattern.png');
+  background-position: start;
+  background-repeat: no-repeat;
+
+  background-size: cover;
+  background-size: 100%;
+ 
+  
 }
 
 /* global.css or any custom CSS file */
@@ -42,11 +27,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #f37b0c; /* Color of the scrollbar thumb */
+  background-color: #c1c0bf; /* Color of the scrollbar thumb */
   border-radius: 10px; /* Rounded scrollbar thumb */
   border: 2px solid transparent; /* Optionally, add border */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #f5ab0c; /* Hover effect for scrollbar thumb */
+  background: #b5b3b3; /* Hover effect for scrollbar thumb */
 }

@@ -1,21 +1,22 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { graphqlClient } from "@/clients/api"
-import { createUserMutation, updateUserMutation } from "@/graphql/mutation/user"
+import { createUserMutation, loginUserMutation, updateUserMutation } from "@/graphql/mutation/user"
 import { getCurrentUserQuery, getUserQuery } from "@/graphql/query/user"
-import { CreateUserInput, UpdateUserInput } from "@/gql/graphql"
+import { CreateUserInput, UpdateUserInput, LoginUserInput } from "@/gql/graphql"
 import { toast } from "react-hot-toast"
-import { DocumentNode } from 'graphql'
 
 export const useCreateUser = () => {
     const queryClient = useQueryClient();
     const mutation = useMutation({
         mutationFn: (payload: CreateUserInput) => graphqlClient.request(createUserMutation, { payload }),
-        onMutate: (payload) => toast.loading(`Creating user`),
+        onMutate: (payload) => toast.loading("Creating user",{id:"1"}),
         onSuccess: async (payload) => {
             await queryClient.invalidateQueries({ queryKey: ["user"] })
-            toast.success("User created successfully")
-            toast.success('created', { id: '1' })
+            toast.success("User created successfully",{id:"1"});
         },
+        onError: (error) => {
+            toast.error("User created failed",{id:"1"});
+        }
     })
     return mutation;
 }
@@ -38,6 +39,22 @@ export const useUpdateUser = () => {
     return mutation;
 }
 
+export const useLoginUser = () => {
+    const queryClient = useQueryClient();
+    const mutation = useMutation({
+        mutationFn: (payload: LoginUserInput) => graphqlClient.request(loginUserMutation, { payload }),
+        onMutate: (payload) => toast.loading("Logging in user",{id:"1"}),
+        onSuccess: async (payload) => {
+            await queryClient.invalidateQueries({ queryKey: ["user"] })
+            toast.success("User logged in successfully",{id:"1"});
+        },
+        onError: (error) => {
+            toast.error("User logged in failed",{id:"1"});
+        }
+    })
+    return mutation;
+}
+
 export const useGetUser = (identifier: string) => {
     console.log("identifier",identifier);
     const query = useQuery({
@@ -50,7 +67,8 @@ export const useGetUser = (identifier: string) => {
 export const useGetCurrentUser = () => {
     const query = useQuery({
         queryKey: ["currentUser"],
-        queryFn: () => graphqlClient.request(getCurrentUserQuery as DocumentNode),
+        queryFn: () => graphqlClient.request(getCurrentUserQuery),
     })
-    return query;
+    console.log(query);
+    return { ...query, user: query.data?.getCurrentUser};
 }

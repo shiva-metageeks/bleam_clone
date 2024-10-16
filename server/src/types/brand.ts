@@ -1,13 +1,22 @@
+import { ITask } from "./task";
+import { ICompetition } from "./competition";
+
 export interface IBrand {
-    _id: string;
+    _id?: string;
     name: string;
-    logo: string;
-    description: string;
+    email: string;
+    isEmailVerified?: boolean;
+    profileImageUrl: string;
+    bio: string;
+    tasks: ITask[];
+    firebaseUid: string;
+    competitions: ICompetition[];
 }
 
-export interface IBrandInput {
+export interface CreateBrandInput {
     name: string;
-    logo: string;
-    description: string;
+    email: string;
+    profileImageUrl: string;
+    firebaseUid: string;
+    bio: string;
 }
-

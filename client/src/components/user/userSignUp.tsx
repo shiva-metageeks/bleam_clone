@@ -1,92 +1,27 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { FcGoogle } from "react-icons/fc";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaLinkedin, FaFacebook } from "react-icons/fa";
-import {
-  emailPasswordSignUp,
-  facebookLogin,
-  googleLogin,
-  twitterLogin,
-} from "@/utils/firebase/loginOption";
 import Link from "next/link";
-import { useCreateUser, useGetUser } from "@/hooks/user";
+import { icons } from "@/utils/imports/config";
+import { signUpFormType, signUpLoaderType } from "@/types/user/user";
+const { FcGoogle, FaXTwitter, FaFacebook, FaLinkedin } = icons;
 
-const SignUpPage = () => {
-  const [signUpForm, setSignUpForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    term: false,
-  });
-  const { mutate: createUser, data } = useCreateUser();
-
-  const {data:users} = useGetUser("shivam@7011");
-
-  
-
-  console.log("users",users);
-
-  const handleEmailPasswordSignUp = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
-    try {
-      const user = await emailPasswordSignUp(
-        signUpForm.email,
-        signUpForm.password
-      );
-      console.log("user",user);
-      console.log("signUpForm",signUpForm);
-      if (user) {
-        createUser({
-          name: signUpForm.name,
-          username: signUpForm.name,
-          email: signUpForm.email,
-          firebaseUid: user.uid,
-        });
-      }
-
-      console.log("data",data);
-      // if (!hypdToken?.createUser) {
-      //   console.log("No hypdToken:User not created");
-      //   return;
-      // }
-      // console.log("User signed up with Email and Password:", user);
-      // console.log("hypdToken", hypdToken?.createUser);
-      // localStorage.setItem("hypd_token", hypdToken?.createUser as string);
-    } catch (error: any) {
-      console.error("Error signing up with Email and Password:", error.message);
-    }
-  };
-
-  const handleGoogleSignUp = async () => {
-    try {
-      const user = await googleLogin();
-      console.log("User signed up with Google:", user);
-    } catch (error: any) {
-      console.error("Error signing up with Google:", error.message);
-    }
-  };
-
-  const handleTwitterSignUp = async () => {
-    try {
-      const user = await twitterLogin();
-      console.log("User signed up with Twitter:", user);
-    } catch (error: any) {
-      console.error("Error signing up with Twitter:", error.message);
-    }
-  };
-
-  const handleFacebookSignUp = async () => {
-    try {
-      const user = await facebookLogin();
-    } catch (error: any) {
-      console.error("Error signing up with Facebook:", error.message);
-    }
-  };
-
+const UserSignUp = ({
+  signUpForm,
+  setSignUpForm,
+  loaders,
+  handleEmailPasswordSignUp,
+  handleGoogleSignUp,
+  handleTwitterSignUp,
+  handleFacebookSignUp,
+}: {
+  signUpForm: signUpFormType;
+  setSignUpForm: React.Dispatch<React.SetStateAction<signUpFormType>>;
+  loaders: signUpLoaderType;
+  handleEmailPasswordSignUp: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<void>;
+  handleGoogleSignUp: () => void;
+  handleTwitterSignUp: () => void;
+  handleFacebookSignUp: () => void;
+}) => {
   return (
     <div className="w-full flex sm:flex-row flex-col-reverse justify-center items-center min-h-screen text-black">
       <section className="sm:w-2/3 h-[40vh] sm:h-[100vh] w-full">
@@ -136,26 +71,6 @@ const SignUpPage = () => {
                 Welcome! Please enter your details
               </div>
               <form className="space-y-2 md:space-y-4" action="#">
-                <div className="flex flex-col gap-2 mb-2">
-                  <label
-                    htmlFor="name"
-                    className="text-xs font-semibold text-[#344054]"
-                  >
-                    Name*
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    placeholder="Enter your name"
-                    className="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 "
-                    required
-                    value={signUpForm.name}
-                    onChange={(e) => {
-                      setSignUpForm({ ...signUpForm, name: e.target.value });
-                    }}
-                  />
-                </div>
                 <div className="flex flex-col mb-2">
                   <label
                     htmlFor="email"
@@ -232,12 +147,10 @@ const SignUpPage = () => {
                 </div>
                 <button
                   type="submit"
-                  onClick={(e) => {
-                    handleEmailPasswordSignUp(e);
-                  }}
+                  onClick={handleEmailPasswordSignUp}
                   className="w-full text-white font-semibold bg-gradient-to-r from-[#FF4E50] to-[#F9D423] rounded-lg text-sm px-4 py-2 text-center "
                 >
-                  Getting Started
+                  {loaders.signUp ? "Loading..." : "Getting Started"}
                 </button>
                 <div className="flex justify-center flex-col">
                   <div className="text-gray-500 text-center ">OR</div>
@@ -295,4 +208,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default UserSignUp;

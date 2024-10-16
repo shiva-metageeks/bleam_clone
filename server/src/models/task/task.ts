@@ -10,7 +10,7 @@ const taskSchema = new Schema<ITask>(
     tags: [{ type: String }],
     type: { type: String, required: true },
     creator: { type: Schema.Types.ObjectId, ref: "Brand" },
-    competition :{ type: Schema.Types.ObjectId, ref: "Competition", required: true },
+    competition :{ type: Schema.Types.ObjectId, ref: "Competition"},
     status: { type: String, enum: ["active", "inactive"], default: "active" },
     participant: [{ type: Schema.Types.ObjectId, ref: "UserTask", required: true, unique: true }],
     visitLink: { type: String },
@@ -36,12 +36,12 @@ const taskSchema = new Schema<ITask>(
       ]
     ,
     poll:{
-      question: { type: String, required: true },
+      question: { type: String},
       options: [{
-        value: { type: String, required: true },
-        votes: { type: Number, required: true },
+        value: { type: String},
+        votes: { type: Number},
       }],
-      correctAnswer: { type: String, required: true },
+      correctAnswer: { type: String},
     },
     reward: { type: Number, required: true },
   },
@@ -52,4 +52,4 @@ const taskSchema = new Schema<ITask>(
 
 const Task = model<ITask>("Task", taskSchema);
 
-export { Task };
+export default Task;

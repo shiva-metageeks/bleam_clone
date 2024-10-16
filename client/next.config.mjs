@@ -20,6 +20,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "pbs.twimg.com",
+      },
+      {
+        protocol: "https",
         hostname: "shiva-twitter-clone-bucket.s3.ap-south-1.amazonaws.com",
       },
     ],

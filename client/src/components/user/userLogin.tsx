@@ -1,70 +1,24 @@
-"use client"
-import React, { useState } from "react";
-import { googleLogin,twitterLogin,facebookLogin, emailPasswordLogin } from "@/utils/firebase/loginOption";
-import { FcGoogle } from "react-icons/fc";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaLinkedin,FaFacebook } from "react-icons/fa";
-import Image from "next/image";
-import Link from "next/link";
+import React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { icons } from '@/utils/imports/config'
+import { loginFormType } from '@/types/user/user';
 
-const LoginPage = () => {
-  const [loginForm,setLoginForm] = useState({
-    email:"",
-    password:""
-  })
-
-    const handleGoogleLogin = async () => {
-        try {
-            const user = await googleLogin();
-            console.log('User signed in with Google:', user);
-        } catch (error:any) {
-            console.error('Error signing in with Google:', error.message);
-        }
-    }
-
-    const handleEmailPasswordLogin = async () => {
-        try {
-            const user = await emailPasswordLogin(loginForm.email,loginForm.password);
-            console.log('User signed in with Email and Password:', user);
-        } catch (error:any) {
-            console.error('Error signing in with Email and Password:', error.message);
-        }
-    }
-
-    const handleTwitterLogin = async () => {
-        try {
-            const user = await twitterLogin();
-            console.log('User signed in with Twitter:', user);
-        } catch (error:any) {
-            console.error('Error signing in with Twitter:', error.message);
-        }
-    }
-
-    const handleFacebookLogin = async () => {
-        try {
-            const user = await facebookLogin();
-            console.log('User signed in with Facebook:', user);
-        } catch (error:any) {
-            console.error('Error signing in with Facebook:', error.message);
-        }
-    }
-
-    const handleLinkedinLogin = async () => {
-        try {
-            // const user = await linkedinLogin();
-            // console.log('User signed in with LinkedIn:', user);
-        } catch (error:any) {
-            console.error('Error signing in with LinkedIn:', error.message);
-        }
-    }
-
-
-
+const {FcGoogle,FaFacebook,FaLinkedin,FaXTwitter} = icons;
+const UserLogin = ({ loginForm, setLoginForm, handleEmailPasswordLogin, handleGoogleLogin, handleTwitterLogin, handleFacebookLogin, handleLinkedinLogin }: {
+  loginForm: loginFormType;
+  setLoginForm: React.Dispatch<React.SetStateAction<loginFormType>>;
+  handleEmailPasswordLogin: () => void;
+  handleGoogleLogin: () => void;
+  handleTwitterLogin: () => void;
+  handleFacebookLogin: () => void;
+  handleLinkedinLogin: () => void;
+}) => {
   return (
     <div className="w-full flex sm:flex-row flex-col-reverse justify-center items-center min-h-screen text-black">
       <section className="sm:w-1/2 w-full h-[100vh] bg-white">
       <div className="flex justify-start items-center uppercase font-bold text-md px-4 py-2" >HyPd</div>
-        <div className="flex flex-col items-center justify-center mx-8 p-6">
+        <div className="flex items-center justify-center mx-8 p-6">
           <div className="w-full bg-white sm:max-w-md">
             <div className="space-y-2 md:space-y-4">
               <div className="text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl">
@@ -176,7 +130,7 @@ const LoginPage = () => {
       </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default UserLogin;

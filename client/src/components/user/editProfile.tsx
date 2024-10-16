@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { icons } from "@/utils/imports/config";
-import { useUpdateUser } from "@/hooks/user";
-
+import { useGetCurrentUser, useUpdateUser } from "@/hooks/user";
+import { QueryClient } from "@tanstack/react-query";
 const {
     FaInstagram,
     FaTwitter,
@@ -12,7 +12,9 @@ const {
   } = icons;
 
 const EditProfilePage = () => {
-  
+  const queryClient = new QueryClient();
+  const {user} = useGetCurrentUser();
+  console.log("user",user);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { mutate: updateUser, data } = useUpdateUser();
   const [updateFormData, setUpdateFormData] = useState({
@@ -22,13 +24,14 @@ const EditProfilePage = () => {
     profileImageUrl: "",
   });
 
-  const handleUpdateUser = () => {
+  const handleUpdateUser = async () => {
     updateUser({
-      name: updateFormData.name,
-      bio: updateFormData.bio,
-      email: updateFormData.email,
-      profileImageUrl: updateFormData.profileImageUrl,
+      name: updateFormData.name?updateFormData.name:user?.name,
+      bio: updateFormData.bio?updateFormData.bio:user?.bio,
+      email: updateFormData.email?updateFormData.email:user?.email,
+      profileImageUrl: updateFormData.profileImageUrl?updateFormData.profileImageUrl:user?.profileImageUrl,
     });
+    await queryClient.refetchQueries({ queryKey: ["currentUser"] });
     setIsEditModalOpen(!isEditModalOpen);
   };
 

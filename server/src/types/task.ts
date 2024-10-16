@@ -2,7 +2,6 @@ import { ICompetition } from "./competition";
 import { IBrand } from "./brand";
 import { IUser } from "./user";
 
-
 export interface IUserTask {
     user: IUser;
     task: ITask;
@@ -31,8 +30,8 @@ export interface ITask {
     image?: string;
     tags?: string[];
     type: string;
-    creator: IBrand;
-    competition: ICompetition;
+    creator?: IBrand;
+    competition?: ICompetition;
     status: string;
     participant: IUser[];
     visitLink?: string;
@@ -66,3 +65,32 @@ export interface ITask {
     },
     reward: number;
 }
+
+export interface CreateTaskInput {
+    name: string;
+    taskId: string;
+    description: string;
+    reward: number;
+    media?: string;
+    type: string;
+}
+
+export interface ITaskCategory {
+    name: string;
+    description: string;
+    image: string;
+}
+
+export interface CreateTaskCategory {
+    name: string;
+    description: string;
+    image: string;
+}
+
+export interface UpdateTaskCategory {
+    _id: string;
+    name: string;
+    description: string;
+    image: string;
+}
+

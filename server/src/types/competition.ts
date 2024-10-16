@@ -2,6 +2,13 @@ import { IUser } from "./user";
 import { IBrand } from "./brand";
 import { ITask } from "./task";
 
+
+export interface ICreateCompetitionInput {
+    name: string;
+    description: string;
+    imageUrl: string;
+}
+
 export interface IParticipant {
     user: IUser;
     pointsEarned: number;
@@ -20,7 +27,7 @@ export interface ICompetition {
     _id: string;
     name: string;
     description: string;
-    image: string;
+    imageUrl: string;
     startDate: Date;
     endDate: Date;
     creator: IBrand;
