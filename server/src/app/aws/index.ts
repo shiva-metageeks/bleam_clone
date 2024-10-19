@@ -2,7 +2,6 @@ import AwsService from "@src/services/aws";
 import { Context } from "@src/types/types";
 import envConfig from "@src/utils/imports/env";
 
-
 export const awsQueries = `#graphql
     getPresignedUrl(fileName: String!, contentType: String!): String!
 `

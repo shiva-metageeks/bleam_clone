@@ -17,7 +17,9 @@ const UserSignUp = ({
   signUpForm: signUpFormType;
   setSignUpForm: React.Dispatch<React.SetStateAction<signUpFormType>>;
   loaders: signUpLoaderType;
-  handleEmailPasswordSignUp: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<void>;
+  handleEmailPasswordSignUp: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => Promise<void>;
   handleGoogleSignUp: () => void;
   handleTwitterSignUp: () => void;
   handleFacebookSignUp: () => void;
@@ -62,100 +64,15 @@ const UserSignUp = ({
           HyPd
         </div>
         <div className="flex flex-col items-center justify-center mx-8 p-6">
-          <div className="w-full bg-white sm:max-w-md">
-            <div className="space-y-2 md:space-y-4">
+            <div className="w-full bg-white sm:max-w-md space-y-2 md:space-y-4">
               <div className="text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl">
                 Sign Up
               </div>
               <div className="text-xs text-gray-500">
                 Welcome! Please enter your details
               </div>
-              <form className="space-y-2 md:space-y-4" action="#">
-                <div className="flex flex-col mb-2">
-                  <label
-                    htmlFor="email"
-                    className="block mb-1 text-xs font-semibold text-[#344054]"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={signUpForm.email}
-                    onChange={(e) => {
-                      setSignUpForm({ ...signUpForm, email: e.target.value });
-                    }}
-                    className="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 "
-                    placeholder="Enter your email"
-                    required
-                  />
-                </div>
-                <div className="flex flex-col gap-1 mb-2">
-                  <label
-                    htmlFor="password"
-                    className="block mb-2 text-xs font-semibold text-[#344054]"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    value={signUpForm.password}
-                    onChange={(e) => {
-                      setSignUpForm({
-                        ...signUpForm,
-                        password: e.target.value,
-                      });
-                    }}
-                    placeholder="Create a password"
-                    className="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 "
-                    required
-                  />
-                  <div className="text-xs text-gray-500">
-                    Password must be at least 8 characters long
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-start">
-                    <div className="flex items-center">
-                      <input
-                        id="terms"
-                        aria-describedby="terms"
-                        checked={signUpForm.term}
-                        onChange={(e) => {
-                          setSignUpForm({
-                            ...signUpForm,
-                            term: e.target.checked,
-                          });
-                        }}
-                        type="checkbox"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 "
-                        required
-                      />
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <Link
-                        href="#"
-                        className="text-gray-700 font-semibold underline"
-                      >
-                        I agree with with Terms & Condition
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  type="submit"
-                  onClick={handleEmailPasswordSignUp}
-                  className="w-full text-white font-semibold bg-gradient-to-r from-[#FF4E50] to-[#F9D423] rounded-lg text-sm px-4 py-2 text-center "
-                >
-                  {loaders.signUp ? "Loading..." : "Getting Started"}
-                </button>
-                <div className="flex justify-center flex-col">
-                  <div className="text-gray-500 text-center ">OR</div>
-                </div>
-                <div className="flex justify-center gap-2 items-center">
+              <div className="flex flex-col">
+                <div className="flex justify-center gap-2 items-center mb-4">
                   <button
                     type="button"
                     onClick={() => {
@@ -190,18 +107,112 @@ const UserSignUp = ({
                     <FaLinkedin className="text-blue-600" />
                   </button>
                 </div>
-                <p className="text-sm font-light text-black">
+                <div className="flex justify-center flex-col">
+                  <div className="text-gray-500 text-center ">OR</div>
+                </div>
+                <form className="space-y-2 md:space-y-4 mb-4" action="#">
+                  <div className="flex flex-col mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block mb-1 text-xs font-semibold text-[#344054]"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      value={signUpForm.email}
+                      onChange={(e) => {
+                        setSignUpForm({ ...signUpForm, email: e.target.value });
+                      }}
+                      className="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 "
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1 mb-2">
+                    <label
+                      htmlFor="password"
+                      className="block mb-2 text-xs font-semibold text-[#344054]"
+                    >
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      value={signUpForm.password}
+                      onChange={(e) => {
+                        setSignUpForm({
+                          ...signUpForm,
+                          password: e.target.value,
+                        });
+                      }}
+                      placeholder="Create a password"
+                      className="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 "
+                      required
+                    />
+                    <div className="text-xs text-gray-500">
+                      Password must be at least 8 characters long
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-start">
+                      <div className="flex items-center">
+                        <input
+                          id="terms"
+                          aria-describedby="terms"
+                          checked={signUpForm.term}
+                          onChange={(e) => {
+                            setSignUpForm({
+                              ...signUpForm,
+                              term: e.target.checked,
+                            });
+                          }}
+                          type="checkbox"
+                          className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 "
+                          required
+                        />
+                      </div>
+                      <div className="ml-3 text-sm">
+                        <Link
+                          href="#"
+                          className="text-gray-700 font-semibold underline"
+                        >
+                          I agree with with Terms & Condition
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    onClick={handleEmailPasswordSignUp}
+                    className="w-full text-white font-semibold bg-gradient-to-r from-[#FF4E50] to-[#F9D423] rounded-lg text-sm px-4 py-2 text-center mb-2"
+                  >
+                    {loaders.signUp ? "Loading..." : "Getting Started"}
+                  </button>
+                </form>
+                <p className="text-sm font-light text-black mb-4">
                   Already have an account?
                   <Link
-                    href="/auth/login"
-                    className="font-medium text-blue-800 hover:underline"
+                    href="/auth/user/login"
+                    className="font-medium text-blue-800 hover:underline ml-2"
                   >
                     Login
                   </Link>
                 </p>
-              </form>
+                <div className="w-full text-sm font-light text-black mb-2 flex flex-col items-start">
+                <span>Are you a brand? Want to grow your business?</span>
+                <Link
+                    href="/auth/brand/signup"
+                    className="font-medium text-blue-800 hover:underline"
+                  >
+                    Sign up as a brand
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div>
         </div>
       </section>
     </div>

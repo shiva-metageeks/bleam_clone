@@ -1,12 +1,19 @@
 import { IUser } from "./user";
 import { IBrand } from "./brand";
 import { ITask } from "./task";
-
-
 export interface ICreateCompetitionInput {
     name: string;
     description: string;
     imageUrl: string;
+    terms: string;
+    startDate: string;
+    endDate: string;
+    prizes: {
+        rank: number;
+        title: string;
+        description: string;
+        points: number;
+    }[];
 }
 
 export interface IParticipant {
@@ -15,12 +22,11 @@ export interface IParticipant {
     rank: number;
 }
 
-export interface IGiveaway {
+export interface IPrizes {
     rank: number;
-    giveawayImage: string;
-    giveawayDescription: string;
-    giveawayLink: string;
-    giveawayName: string;
+    title: string;
+    description: string;
+    points: number;
 }
 
 export interface ICompetition {
@@ -28,12 +34,13 @@ export interface ICompetition {
     name: string;
     description: string;
     imageUrl: string;
-    startDate: Date;
-    endDate: Date;
-    creator: IBrand;
+    terms: string;
+    startDate: string;
+    endDate: string;
+    brand: IBrand;
     participants: IParticipant[];
     tasks: ITask[];
-    giveaways: IGiveaway[];
+    prizes: IPrizes[];
 }
 
 export interface IUserCompetition {

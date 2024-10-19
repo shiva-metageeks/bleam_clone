@@ -79,9 +79,9 @@ userSchema.methods.comparePassword = async function (
 userSchema.methods.generateAuthToken = function (): string {
   const user = this as IUser;
   const token = jwt.sign(
-    { _id: user._id, email: user.email, username: user.username },
+    { id: user._id, firebaseUid: user.firebaseUid,role:"user" },
     JWT_SECRET,
-    { expiresIn: "7d" } // Token expires in 7 days
+    { algorithm: "HS256", expiresIn: "7d" }
   );
   return token;
 };

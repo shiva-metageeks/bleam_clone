@@ -4,16 +4,10 @@ import { Context } from "@src/types/types";
 
 const queries = {
   getCompetitions: async (parent: any, args: any, context: Context) => {
-    // if (!context.user) {
-    //   throw new Error("Unauthorized");
-    // }
-    return await CompetitionService.getCompetitions();
+    return await CompetitionService.getCompetitions(context);
   },
   getCompetition: async (parent: any, args: { id: string }, context: Context) => {
-    // if (!context.user) {
-    //   throw new Error("Unauthorized");
-    // }
-    return await CompetitionService.getCompetition(args.id);
+    return await CompetitionService.getCompetition(args.id, context);
   },
 };
 
@@ -23,10 +17,7 @@ const mutations = {
     args: { payload: ICreateCompetitionInput },
     context: Context
   ) => {
-    // if (!context.user) {
-    //   throw new Error("Unauthorized");
-    // }
-    return await CompetitionService.createCompetition(args.payload);
+    return await CompetitionService.createCompetition(args.payload, context);
   },
 };
 

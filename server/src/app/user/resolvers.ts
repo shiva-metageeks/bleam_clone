@@ -1,7 +1,6 @@
 import UserService from "@src/services/user";
 import { Context } from "@src/types/types";
 import { CreateUserInput, UpdateUserInput, LoginUserInput } from "@src/types/user";
-import JWTService from "@src/services/jwt";
 
 const queries = {
     getUser: async (parent: any, { identifier }: { identifier: string }, context: Context) => {
@@ -27,10 +26,10 @@ const queries = {
 const mutations = {
     createUser: async (parent: any, { payload }: { payload: CreateUserInput }) => {
         console.log("payload",payload);
-        const user = await UserService.createUser(payload);
-        console.log("user",user);
-        const token = await JWTService.generateTokenForUser({ id: user.id, firebaseUid: user.firebaseUid });
-        console.log("token",token);
+        const token = await UserService.createUser(payload);
+        if(!token){
+            throw new Error("User not created");
+        }
         return token;
     },
     updateUser: async (parent: any, { payload }: { payload: UpdateUserInput }, context: Context) => {
@@ -38,13 +37,11 @@ const mutations = {
         return user;
     },
     loginUser: async (parent: any, { payload }: { payload: LoginUserInput }) => {
-        const user = await UserService.loginUser(payload);
+        const token = await UserService.loginUser(payload);
 
-        if(!user){
+        if(!token){
             throw new Error("User not found");
         }
-        const token = await JWTService.generateTokenForUser({ id: user.id, firebaseUid: user.firebaseUid });
-        console.log("token",token);
         return token;
     }
 }

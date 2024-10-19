@@ -1,19 +1,34 @@
 export const  types = `#graphql
 
     input CreateBrandInput {
-        name: String!
+       name: String!
+       organizationName: String!
+       website: String!
+       email: String!
+       password: String!
+    }
+
+    input LoginBrandInput {
         email: String!
-        firebaseUid: String!
-        profileImageUrl: String!
-        bio: String!
+        password: String!
+    }
+
+    input UpdateBrandInput {
+        name: String
+        organizationName: String
+        website: String
+        bio: String
+        profileImageUrl: String
     }
 
     type Brand {
-        name: String!
-        email: String!
-        firebaseUid: String!
-        profileImageUrl: String!
-        bio: String!
+        _id: ID!
+        name: String
+        bio: String
+        email: String
+        website: String
+        profileImageUrl: String
+        organizationName: String
     }
 `
 

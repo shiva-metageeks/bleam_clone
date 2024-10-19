@@ -1,11 +1,14 @@
-import { FaInstagram, FaTwitter, FaFacebook, FaLinkedin, FaDiscord, FaTelegram } from "react-icons/fa";
+import { FaGift,FaInstagram, FaTwitter, FaFacebook, FaLinkedin, FaDiscord, FaTelegram,FaUserEdit,FaUserCircle,FaHome,FaEye,FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { FaXTwitter } from "react-icons/fa6";
-import { IoIosArrowDown } from 'react-icons/io';
+import { IoIosArrowDown,IoMdSettings,IoIosArrowForward } from 'react-icons/io';
 import { MdArrowOutward } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
-import { LuSearch } from "react-icons/lu";
+import { LuSearch,LuSettings2 } from "react-icons/lu";
 import { GoArrowUpRight } from "react-icons/go";
+import { IoArrowBackOutline } from "react-icons/io5";
+import { RiArrowRightSLine } from "react-icons/ri";
+import { TbShieldQuestion } from "react-icons/tb";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,7 +25,19 @@ export const icons = {
     MdArrowOutward,
     TbWorld,
     LuSearch,
-    GoArrowUpRight
+    GoArrowUpRight,
+    IoArrowBackOutline,
+    RiArrowRightSLine,
+    FaHome,
+    IoMdSettings,
+    FaUserCircle,
+    FaUserEdit,
+    FaEye,
+    FaEyeSlash,
+    FaGift,
+    LuSettings2,
+    TbShieldQuestion,
+    IoIosArrowForward
 }
 
 export const nextImports = {

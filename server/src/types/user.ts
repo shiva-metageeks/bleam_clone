@@ -20,7 +20,7 @@ export type UpdateUserInput = {
     email?: string
     profileImageUrl?: string
     bio?: string
-    phoneNumber?: string
+    password?: string
 }
 
 interface ISocialMedia {
@@ -54,6 +54,9 @@ export interface IUser {
     tasks?: IUserTask[];
     phoneNumber?: string;
     isEmailVerified?: boolean;
+    generateAuthToken: () => string;
+    comparePassword: (password: string) => boolean;
+
 }
 
 

@@ -4,14 +4,26 @@ export const types = `#graphql
         name: String!
         description: String!
         imageUrl: String
+        terms: String
+        startDate: String
+        endDate: String
+        prizes: [CreateCompetitionPrizeInput]
+    }
+
+    input CreateCompetitionPrizeInput {
+        rank: Int!
+        title: String!
+        description: String!
+        points: Int!
     }
 
     type Competition {
-        id: ID!
+        id: ID
         name: String!
         description: String
         imageUrl: String
-
+        terms: String
+        startDate: String
+        endDate: String
     }
-
 `

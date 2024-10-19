@@ -3,11 +3,9 @@ import { graphql } from "@/gql"
 
 export const getUserQuery = graphql(
     `#graphql
-    query GetUser($identifier: String!) {
+    query getUser($identifier: String!) {
         getUser(identifier: $identifier) {
-           
             name
-            
         }
     }
     `

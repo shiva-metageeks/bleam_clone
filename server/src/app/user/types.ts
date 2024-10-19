@@ -14,7 +14,9 @@ export const types = `#graphql
 
     input UpdateUserInput {
         name: String
+        username: String
         email: String
+        password: String
         profileImageUrl: String
         bio: String
     }

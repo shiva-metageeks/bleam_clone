@@ -3,4 +3,4 @@ import {resolvers} from "./resolvers"
 import { mutations } from "./mutation"
 import { queries } from "./queries" 
 
-export const Task = {  resolvers, mutations, queries,types}
+export const Brand = {  resolvers, mutations, queries,types}

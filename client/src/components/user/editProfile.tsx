@@ -1,238 +1,188 @@
-import React, { useState } from "react";
-import { icons } from "@/utils/imports/config";
-import { useGetCurrentUser, useUpdateUser } from "@/hooks/user";
-import { QueryClient } from "@tanstack/react-query";
-const {
-    FaInstagram,
-    FaTwitter,
-    FaFacebook,
-    FaLinkedin,
-    FaDiscord,
-    FaTelegram,
-  } = icons;
+"use client"
+import React from 'react'
+import { icons } from '@/utils/imports/config';
+import {editFormType } from '@/types/user/user';
+import { User } from '@/gql/graphql';
+import Breadcrumbs from '@/components/breadcrumbs';
+const { IoArrowBackOutline, LuSearch, RiArrowRightSLine } = icons;
 
-const EditProfilePage = () => {
-  const queryClient = new QueryClient();
-  const {user} = useGetCurrentUser();
-  console.log("user",user);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const { mutate: updateUser, data } = useUpdateUser();
-  const [updateFormData, setUpdateFormData] = useState({
-    name: "",
-    bio: "",
-    email: "",
-    profileImageUrl: "",
-  });
-
-  const handleUpdateUser = async () => {
-    updateUser({
-      name: updateFormData.name?updateFormData.name:user?.name,
-      bio: updateFormData.bio?updateFormData.bio:user?.bio,
-      email: updateFormData.email?updateFormData.email:user?.email,
-      profileImageUrl: updateFormData.profileImageUrl?updateFormData.profileImageUrl:user?.profileImageUrl,
-    });
-    await queryClient.refetchQueries({ queryKey: ["currentUser"] });
-    setIsEditModalOpen(!isEditModalOpen);
-  };
-
+const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader}:{
+    user:User,
+    handleUpdateUser:()=>void,
+    editForm:editFormType,
+    setEditForm:(editForm:editFormType)=>void,
+    loader:boolean
+}) => {
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setIsEditModalOpen(!isEditModalOpen)}
-        className="bg-orange-500 text-white px-4 py-2 rounded-full mb-4"
-      >
-        Edit Profile
-      </button>
-      <div
-        id="static-modal"
-        data-modal-backdrop="static"
-        tabIndex={-1}
-        aria-hidden="true"
-        className={`${
-          isEditModalOpen ? "block" : "hidden"
-        } overflow-y-auto overflow-x-hidden fixed z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
-      >
-        <div className="relative p-4 w-full max-w-xl max-h-full bg-gray-100 rounded-lg shadow ">
-          <div className="relative ">
-            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t ">
-              <h3 className="text-xl font-semibold text-gray-900 ">
-                Edit Profile
-              </h3>
-              <button
-                type="button"
-                onClick={() => setIsEditModalOpen(!isEditModalOpen)}
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
-                data-modal-hide="static-modal"
-              >
-                <svg
-                  className="w-3 h-3"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                  />
-                </svg>
-                <span className="sr-only">Close modal</span>
-              </button>
-            </div>
-            <div className="p-2 md:p-3 space-y-4 overflow-y-scroll max-h-[500px]">
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                  <label
-                    htmlFor="profile"
-                    className="text-sm font-medium text-gray-900"
-                  >
-                    Profile Picture
-                  </label>
-                  <input
-                    type="file"
-                    id="profile"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label
-                    htmlFor="name"
-                    className="text-sm font-medium text-gray-900"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={updateFormData.name}
-                    onChange={(e) =>
-                      setUpdateFormData({
-                        ...updateFormData,
-                        name: e.target.value,
-                      })
-                    }
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label
-                    htmlFor="bio"
-                    className="text-sm font-medium text-gray-900"
-                  >
-                    Bio
-                  </label>
-                  <textarea
-                    id="bio"
-                    value={updateFormData.bio}
-                    onChange={(e) =>
-                      setUpdateFormData({
-                        ...updateFormData,
-                        bio: e.target.value,
-                      })
-                    }
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-                    placeholder="I am a software engineer"
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label
-                    htmlFor="email"
-                    className="text-sm font-medium text-gray-900"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={updateFormData.email}
-                    onChange={(e) =>
-                      setUpdateFormData({
-                        ...updateFormData,
-                        email: e.target.value,
-                      })
-                    }
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-                    placeholder="JohnDoe@gmail.com"
-                  />
-                </div>
-                {/* <div className="flex flex-col gap-2">
-                        <label htmlFor="phone" className="text-sm font-medium text-gray-900">Phone</label>
-                        <input type="text" id="phone" value={updateFormData.phoneNumber} onChange={(e) => setUpdateFormData({ ...updateFormData, phoneNumber: e.target.value })} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5" placeholder="+91_ _ _ _ _ _ _ _ _ _" />
-                    </div> */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-medium text-gray-900">
-                    Connect with Social Media
-                  </label>
-                  <div className="flex justify-start items-center flex-wrap gap-2">
-                    <button className="text-sm text-nowrap font-medium bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-full flex justify-center items-center gap-2">
-                      <span>Connect with</span>
-                      <span>
-                        <FaInstagram />
-                      </span>
-                    </button>
-                    <button className="text-sm text-nowrap font-medium bg-zinc-800 hover:bg-zinc-900 text-white px-4 py-2 rounded-full flex justify-center items-center gap-2">
-                      <span>Connect with</span>{" "}
-                      <span>
-                        <FaTwitter />
-                      </span>
-                    </button>
-                    <button className="text-sm text-nowrap font-medium bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full flex justify-center items-center gap-2">
-                      <span>Connect with</span>{" "}
-                      <span>
-                        <FaFacebook />
-                      </span>
-                    </button>
-                    <button className="text-sm text-nowrap font-medium bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full flex justify-center items-center gap-2">
-                      <span>Connect with</span>
-                      <span>
-                        <FaLinkedin />
-                      </span>
-                    </button>
-                    <button className="text-sm text-nowrap font-medium bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-full flex justify-center items-center gap-2">
-                      <span>Connect with</span>{" "}
-                      <span>
-                        <FaDiscord />
-                      </span>
-                    </button>
-                    <button className="text-sm text-nowrap font-medium bg-[#25a2dc] hover:bg-[#25a2dc]/80 text-white px-4 py-2 rounded-full flex justify-center items-center gap-2">
-                      <span>Connect with</span>{" "}
-                      <span>
-                        <FaTelegram />
-                      </span>
-                    </button>
-                  </div>
-                </div>
+     <div className="w-full">
+      <div className="w-full">
+        <div className="h-52">
+          <img
+            src="https://t4.ftcdn.net/jpg/05/49/86/39/360_F_549863991_6yPKI08MG7JiZX83tMHlhDtd6XLFAMce.jpg"
+            className="w-full h-full object-cover"
+            alt="Background"
+          />
+        </div>
+
+        {/* Profile Section */}
+        <div className="flex  justify-between items-center py-4 lg:w-[90%] lg:m-auto sm:border-b lg:px-0 px-3 ">
+          {/* Left - Profile Info */}
+          <div className="flex items-center space-x-2 sm:flex-row flex-col ">
+            <div className="relative">
+              <img
+                src={editForm?.profileImageUrl || "/images/defaultProfilePic.png"}
+                className="lg:w-28 lg:h-28 w-24 h-24 object-cover rounded-full border-4 border-white -mt-14 "
+                alt={editForm?.name ?? ""}
+              />
+              <div className="absolute bottom-0 right-0  text-white p-1 rounded-full">
+                <img
+                  src="/images/Verified tick.svg"
+                  alt="Verified"
+                  className="h-7 w-7"
+                />
               </div>
             </div>
 
-            <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b ">
-              <button
-                data-modal-hide="static-modal"
-                type="button"
-                onClick={handleUpdateUser}
-                className="text-white bg-orange-600 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-              >
-                Update Profile
-              </button>
-              <button
-                data-modal-hide="static-modal"
-                type="button"
-                onClick={() => setIsEditModalOpen(!isEditModalOpen)}
-                className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 "
-              >
-                Cancel
-              </button>
+            <div className="flex flex-col gap-1">
+              <div className="lg:block hidden">
+               <Breadcrumbs BreadcrumbsArray={["Edit Profile"]}/>
+              </div>
+              <div>
+                <h1 className="text-xl font-semibold">{user?.name}</h1>
+                <p className="text-gray-500">@{user?.username}</p>
+              </div>
+            </div>
+          </div>
+          {/* for mobile and tab view */}
+          <div className="sm:hidden block">
+            <div className="flex gap-3 items-center cursor-pointer">
+              <IoArrowBackOutline className="h-8 w-8 mt-1" />
+              <h4 className="text-2xl font-semibold text-[#475467] ">Back</h4>
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
-};
+        {/* for mobile*/}
+         <div className="sm:hidden block">
+        <div className="flex gap-4 px-4">
+          <button className="px-4 py-2 border border-gray-300 text-gray-600 rounded-md hover:bg-gray-100">
+            Cancel
+          </button>
+          <button disabled={loader} onClick={handleUpdateUser} className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">
+            {loader ? "Saving..." : "Save"}
+          </button>
+        </div>
+        </div>
 
-export default EditProfilePage;
+      </div>
+
+      <div className=" lg:w-[50%] w-full m-auto my-6  lg:px-0 px-4 ">
+        <form className="bg-white w-full rounded-lg space-y-4">
+        {/* name and email */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b py-4">
+            <div className='flex flex-col gap-1'>
+              <label className="block text-sm font-medium text-gray-700">
+                Name
+              </label>
+              <input
+                type="text"
+                value={editForm?.name}
+                placeholder="Enter your name"
+                title="Enter your name"
+                onChange={(e)=>setEditForm({...editForm,name:e.target.value})}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md "
+              />
+            </div>
+             <div className="flex flex-col gap-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Email address
+              </label>
+              <input
+                type="email"
+                value={editForm?.email}
+                onChange={(e)=>setEditForm({...editForm,email:e.target.value})}
+                placeholder="Enter your email"
+                title="Enter your email"
+                className="block w-full px-3 py-2 border mt-1 border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+          {/* Profile Upload */}
+          <div className="flex sm:flex-row flex-col  sm:gap-8 gap-4 pb-4   border-b">
+            <img
+              className="inline-block h-20 w-20 rounded-full"
+              src={editForm?.profileImageUrl || "/images/defaultProfilePic.png"}
+              alt="profile"
+            />
+            <div className="w-full flex border justify-center py-5 rounded-xl">
+              <div className="flex flex-col justify-center gap-2">
+                <img
+                  src="/images/drop file.svg"
+                  alt=""
+                  className="h-16 w-16 self-center "
+                />
+
+                <label
+                  htmlFor="file-upload"
+                  className="block  cursor-pointer text-[#475467]"
+                >
+                  <span className="text-[#FFB604] font-semibold">
+                    Click to upload
+                  </span>{" "}
+                  or drag and drop
+                </label>
+                <p className="text-sm text-gray-500 text-center">
+                  SVG, PNG, JPG or GIF (max. 800x400px)
+                </p>
+                {/* Hidden file input */}
+                <input
+                  id="file-upload"
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Country */}
+          <div className="border-b pb-4">
+            <div className="relative ">
+              <label className="block text-sm font-medium text-gray-700" htmlFor='bio' >
+                Bio
+              </label>
+              <textarea
+                id='bio'
+                placeholder='Enter your bio'
+                title='Enter your bio'
+                name='bio'
+                value={editForm?.bio}
+                onChange={(e)=>setEditForm({...editForm,bio:e.target.value})}
+                className="block w-full px-8 py-2 font-semibold border mt-1 border-gray-300 rounded-md "
+              />
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex gap-4 justify-end">
+            <button
+              type="button"
+              className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loader}
+              onClick={handleUpdateUser}
+              className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+export default EditProfile;

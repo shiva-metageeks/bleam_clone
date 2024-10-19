@@ -1,6 +1,7 @@
 import JWT from "jsonwebtoken";
 import { JWTUser } from "@src/types/types";
-const JWT_SECRET = "mysecretkey";
+import env from "@src/utils/imports/env";
+const {JWT_SECRET} = env;
 
 class JWTService {
 
@@ -8,7 +9,8 @@ class JWTService {
         console.log("user",user);
         const payload: JWTUser = {
             id: user?.id,
-            firebaseUid: user?.firebaseUid
+            firebaseUid: user?.firebaseUid,
+            role: user?.role
         }
 
         const token = JWT.sign(payload, JWT_SECRET as string, { algorithm: "HS256" });
@@ -17,7 +19,6 @@ class JWTService {
     }
 
     public static verifyToken(token: string): JWTUser {
-
         const decoded = JWT.verify(token, JWT_SECRET as string, { algorithms: ["HS256"] });
         return decoded as JWTUser;
     }

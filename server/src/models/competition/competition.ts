@@ -5,20 +5,18 @@ const competitionSchema = new Schema<ICompetition>({
     name: { type: String, required: true },
     description: { type: String, required: true },
     imageUrl: { type: String, required: true},
-    startDate: { type: Date ,default: Date.now() },
-    endDate: { type: Date},
-    creator: { type: Types.ObjectId, ref: "Brand"},
+    terms: { type: String},
+    startDate: { type: String },
+    endDate: { type: String },
+    brand: { type: Types.ObjectId, ref: "Brand"},
     participants: [{ type: Types.ObjectId, ref: "UserCompetition" }],
     tasks: [{ type: Types.ObjectId, ref: "Task" }],
-    giveaways: [
-        {
-            rank: { type: Number, required: true},
-            giveawayImage: { type: String, required: true },
-            giveawayDescription: { type: String, required: true },
-            giveawayLink: { type: String, required: true },
-            giveawayName: { type: String, required: true },
-        }
-    ],
+    prizes: [{ 
+        rank: { type: Number, required: true},
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        points: { type: Number, required: true },
+    }],
 },
 { timestamps: true }
 );

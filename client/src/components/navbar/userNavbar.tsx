@@ -4,7 +4,7 @@ import { icons, nextImports } from "@/utils/imports/config";
 import { useGetCurrentUser } from "@/hooks/user";
 import { userLogout } from "@/utils/helper/logout";
 const { IoIosArrowDown } = icons;
-const { Link, Image } = nextImports;
+const { Link, Image  } = nextImports;
 import { useRouter } from "next/navigation";
 
 const UserNavbar = () => {
@@ -15,9 +15,9 @@ const UserNavbar = () => {
     <div className="w-full pt-2">
       <nav className="w-full bg-pink-50 py-5 px-6 rounded-full flex items-center justify-center ">
         <div className="flex justify-between items-center w-[95%]">
-          <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-500 ">
+          <Link href="/home" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-500 ">
             HYPD
-          </div>
+          </Link>
           {/* Links */}
           <div className="hidden md:flex space-x-8 justify-start items-center">
             <div className="flex justify-start space-x-10">
@@ -150,14 +150,14 @@ const UserNavbar = () => {
               </button>
             </div>
           ) : (
-            <div className="flex space-x-8">
+            <div className="flex items-center space-x-8">
               <Link
                 href="/auth/user/login"
                 className="hover:text-orange-500 font-semibold"
               >
                 Login
               </Link>
-              <Link href="/auth/user/signUp" 
+              <Link href="/auth/user/signup" 
               className="px-4 py-2 shadow-lg rounded-full bg-gradient-to-r from-orange-400 to-yellow-500 text-white hover:opacity-90">
                   Sign Up
               </Link>

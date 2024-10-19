@@ -5,6 +5,7 @@ dotenv.config();
 const envConfig = {
     PORT: process.env.PORT as string,
     NODE_ENV: process.env.NODE_ENV as string,
+    JWT_SECRET: process.env.JWT_SECRET as string,
     MONGO_URI: process.env.MONGO_URI as string,
     FIREBASE_TYPE: process.env.FIREBASE_TYPE as string,
     FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID as string,
@@ -21,7 +22,6 @@ const envConfig = {
     AWS_SECRET_KEY: process.env.AWS_SECRET_KEY as string,
     AWS_REGION: process.env.AWS_REGION as string,
     AWS_BUCKET: process.env.AWS_BUCKET as string,
-
 }
 
 export default envConfig;

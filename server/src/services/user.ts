@@ -9,7 +9,8 @@ class UserService {
             return exitingUser;
         }
         const user = await User.create(input);
-        return user;
+        const token = user.generateAuthToken();
+        return token;
     }
 
     public static async updateUser(input: UpdateUserInput, context: Context) {
@@ -23,7 +24,8 @@ class UserService {
         if(!user){
             throw new Error("User not found.Please signup first");
         }
-        return user;
+        const token = user.generateAuthToken();
+        return token;
     }
 
     public static async getUsers() {
