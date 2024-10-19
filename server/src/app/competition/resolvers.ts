@@ -6,8 +6,8 @@ const queries = {
   getCompetitions: async (parent: any, args: any, context: Context) => {
     return await CompetitionService.getCompetitions(context);
   },
-  getCompetition: async (parent: any, args: { id: string }, context: Context) => {
-    return await CompetitionService.getCompetition(args.id, context);
+  getCompetitionById: async (parent: any, args: { id: string }, context: Context) => {
+    return await CompetitionService.getCompetitionById(args.id, context);
   },
 };
 

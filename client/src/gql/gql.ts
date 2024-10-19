@@ -21,7 +21,8 @@ const documents = {
     "#graphql\n    mutation loginUser($payload: LoginUserInput) {\n        loginUser(payload: $payload)\n    }  ": types.LoginUserDocument,
     "#graphql\n    mutation updateUser($payload: UpdateUserInput) {\n        updateUser(payload: $payload){\n            name,\n            bio\n        }\n    }  ": types.UpdateUserDocument,
     "#graphql\n    query getCurrentBrand {\n        getCurrentBrand {\n            name\n            email\n            website\n            profileImageUrl\n            organizationName\n        }\n    }\n    ": types.GetCurrentBrandDocument,
-    "#graphql\n    query getCompetitions {\n        getCompetitions {\n            name,\n            description,\n            imageUrl,\n        }\n    }  ": types.GetCompetitionsDocument,
+    "\n    #graphql\n    query getCompetitions {\n      getCompetitions {\n        name\n        description\n        imageUrl\n      }\n    }\n  ": types.GetCompetitionsDocument,
+    "\n    #graphql\n    query getCompetitionById($id: ID!) {\n      getCompetitionById(id: $id) {\n        id\n        name\n        description\n        imageUrl\n        terms\n        startDate\n        endDate\n        brand {\n          name\n        }\n      }\n    }\n  ": types.GetCompetitionByIdDocument,
     "#graphql\n    query getUser($identifier: String!) {\n        getUser(identifier: $identifier) {\n            name\n        }\n    }\n    ": types.GetUserDocument,
     "#graphql\n    query getCurrentUser {\n        getCurrentUser {\n            username\n            name\n            email\n            profileImageUrl\n            bio\n        }\n    }\n    ": types.GetCurrentUserDocument,
 };
@@ -75,7 +76,11 @@ export function graphql(source: "#graphql\n    query getCurrentBrand {\n        
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "#graphql\n    query getCompetitions {\n        getCompetitions {\n            name,\n            description,\n            imageUrl,\n        }\n    }  "): (typeof documents)["#graphql\n    query getCompetitions {\n        getCompetitions {\n            name,\n            description,\n            imageUrl,\n        }\n    }  "];
+export function graphql(source: "\n    #graphql\n    query getCompetitions {\n      getCompetitions {\n        name\n        description\n        imageUrl\n      }\n    }\n  "): (typeof documents)["\n    #graphql\n    query getCompetitions {\n      getCompetitions {\n        name\n        description\n        imageUrl\n      }\n    }\n  "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    #graphql\n    query getCompetitionById($id: ID!) {\n      getCompetitionById(id: $id) {\n        id\n        name\n        description\n        imageUrl\n        terms\n        startDate\n        endDate\n        brand {\n          name\n        }\n      }\n    }\n  "): (typeof documents)["\n    #graphql\n    query getCompetitionById($id: ID!) {\n      getCompetitionById(id: $id) {\n        id\n        name\n        description\n        imageUrl\n        terms\n        startDate\n        endDate\n        brand {\n          name\n        }\n      }\n    }\n  "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

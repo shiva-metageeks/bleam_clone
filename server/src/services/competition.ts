@@ -25,7 +25,7 @@ class CompetitionService {
         const competitions = await Competition.find();
         return competitions;
     }
-    public static async getCompetition(id: string, context: Context) {
+    public static async getCompetitionById(id: string, context: Context) {
         const competition = await Competition.findById(id);
         return competition;
     }
