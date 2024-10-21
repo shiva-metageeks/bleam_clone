@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { loginFormType } from "@/types/user/brand";
-import { useLoginBrand } from "@/hooks/brand";
+import { useLoginBrand } from "@/hooks/brand/brand";
 import BrandLogin from "@/components/brand/BrandLogin";
 
 const BrandLoginPage = () => {
@@ -27,7 +27,8 @@ const BrandLoginPage = () => {
     loginBrand({email,password}, {
       onSuccess: (data) => {
         if (data?.loginBrand) {
-          localStorage.setItem("_hyped_token", data.loginBrand as string);
+          localStorage.setItem("_hypd_token", data.loginBrand as string);
+          localStorage.setItem("_hypd_user_type", "brand");
           router.push("/brand/profile");
         }
       },

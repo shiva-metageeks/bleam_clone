@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { graphqlClient } from "@/clients/api";
 import { createCompetitionMutation } from "@/graphql/mutation/competition";
-import { CreateCompetitionInput } from "@/gql/graphql";
+import { Competition, CreateCompetitionInput } from "@/gql/graphql";
 import { getCompetitionsQuery, getCompetitionByIdQuery } from "@/graphql/query/competition";
+import { CompetitionByIdQueryResult } from "./types";
 import { toast } from "react-hot-toast";
 
 export const useCreateCompetition = () => {
@@ -35,7 +36,7 @@ export const useGetCompetitions = () => {
 export const useGetCompetitionById = (id: string) => {
     const query = useQuery({
         queryKey: ["getCompetitionById", id],
-        queryFn: () => graphqlClient.request(getCompetitionByIdQuery, {id}),
+        queryFn: () => graphqlClient.request<CompetitionByIdQueryResult>(getCompetitionByIdQuery, {id}),
     })
     return {...query, competition: query.data?.getCompetitionById};
 }

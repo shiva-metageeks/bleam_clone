@@ -4,7 +4,7 @@ import {
   CompetitionPrize,
 } from "@/types/competition/competition";
 import {icons} from "@/utils/imports/config";
-const {IoIosArrowForward,IoIosArrowDown} = icons;
+const {IoIosArrowForward,IoIosArrowDown,CiImageOn} = icons;
 
 const competitionSteps = ({
   step,
@@ -12,7 +12,11 @@ const competitionSteps = ({
   setCompetitionFormData,
   handleToggle,
   handleInputChange,
-  expanded
+  expanded,
+  getRootProps,
+  getInputProps,
+  preview,
+  selectedFile
 }: {
   step: "basic" | "tasks" | "prize" | "terms";
   CompetitionFormData: CompetitionFormData;
@@ -24,6 +28,10 @@ const competitionSteps = ({
     value: string | number
   ) => void;
   expanded: number | null;
+  getRootProps: () => any;
+  getInputProps: () => any;
+  preview: string | null;
+  selectedFile: File | null;
 }) => {
   return (
     <div className="w-full p-4">
@@ -31,6 +39,10 @@ const competitionSteps = ({
         <BasicDetails
           CompetitionFormData={CompetitionFormData}
           setCompetitionFormData={setCompetitionFormData}
+          getRootProps={getRootProps}
+          getInputProps={getInputProps}
+          preview={preview}
+          selectedFile={selectedFile}
         />
       )}
       {step === "prize" && (
@@ -57,9 +69,17 @@ export default competitionSteps;
 const BasicDetails = ({
   CompetitionFormData,
   setCompetitionFormData,
+  getRootProps,
+  getInputProps,
+  preview,
+  selectedFile
 }: {
   CompetitionFormData: CompetitionFormData;
   setCompetitionFormData: (data: CompetitionFormData) => void;
+  getRootProps: () => any;
+  getInputProps: () => any;
+  preview: string | null;
+  selectedFile: File | null;
 }) => {
   return (
     <div className="w-full flex flex-col justify-start">
@@ -67,7 +87,7 @@ const BasicDetails = ({
         Fill in the basic details of the competition
       </div>
       <div className="w-full flex flex-col justify-center">
-        <div className="w-full flex flex-col justify-center gap-1 mb-2">
+        <div className="w-full flex flex-col justify-center gap-1 mb-4">
           <label
             htmlFor="competitionName"
             className="font-semibold text-gray-700 "
@@ -89,7 +109,57 @@ const BasicDetails = ({
             className="p-2 border-2 border-zinc-400 rounded-md"
           />
         </div>
-        <div className="w-full flex flex-col justify-center gap-1 mb-2">
+         <div className="w-full flex sm:flex-row flex-col sm:gap-4 gap-2 pb-4 mb-4 border-b">
+         {
+          preview ? (
+            <div className="w-1/4 flex justify-center items-center">
+              <img
+                className="inline-block h-20 w-20 rounded-full"
+              src={
+                preview ||
+                "/images/defaultProfilePic.png"
+              }
+                alt={selectedFile?.name || ""}
+              />
+            </div>
+          ) : (
+            <div className="w-1/4 flex justify-center items-center">
+              <CiImageOn className="text-4xl" />
+              </div>
+            )
+         }
+            
+            <div className="w-full flex border justify-center rounded-xl">
+              <div
+                {...getRootProps()}
+                className="flex flex-col justify-center gap-2 p-4 cursor-pointer w-full"
+              >
+                <img
+                  src="/images/drop file.svg"
+                  alt="verified"
+                  className="h-16 w-16 self-center "
+                />
+
+                <label
+                  htmlFor="file-upload"
+                  className="flex justify-center items-center gap-2 text-[#475467]"
+                >
+                  <span className="text-[#FFB604] font-semibold">
+                    Click to upload
+                  </span>{" "}
+                  or drag and drop
+                </label>
+                {/* Hidden file input */}
+                <input
+                  {...getInputProps()}
+                  id="file-upload"
+                  type="file"
+                  accept="image/*"
+                />
+              </div>
+            </div>
+          </div>
+        <div className="w-full flex flex-col justify-center gap-1 mb-4">
           <label
             htmlFor="competitionDescription"
             className="font-semibold text-gray-700 "

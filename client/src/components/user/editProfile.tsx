@@ -6,12 +6,18 @@ import { User } from '@/gql/graphql';
 import Breadcrumbs from '@/components/breadcrumbs';
 const { IoArrowBackOutline, LuSearch, RiArrowRightSLine } = icons;
 
-const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader}:{
+const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader,preview,getRootProps,getInputProps,isDragActive,selectedFile,setSelectedFile}:{
     user:User,
     handleUpdateUser:()=>void,
     editForm:editFormType,
     setEditForm:(editForm:editFormType)=>void,
-    loader:boolean
+    loader:boolean,
+    preview:string | null,
+    getRootProps:()=>any,
+    getInputProps:()=>any,
+    isDragActive:boolean,
+    selectedFile:File | null,
+    setSelectedFile:(file:File | null)=>void
 }) => {
   return (
      <div className="w-full">
@@ -25,7 +31,7 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader}:{
         </div>
 
         {/* Profile Section */}
-        <div className="flex  justify-between items-center py-4 lg:w-[90%] lg:m-auto sm:border-b lg:px-0 px-3 ">
+        <div className="flex justify-between items-center py-4 lg:w-[90%] lg:m-auto sm:border-b lg:px-0 px-3 ">
           {/* Left - Profile Info */}
           <div className="flex items-center space-x-2 sm:flex-row flex-col ">
             <div className="relative">
@@ -76,7 +82,7 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader}:{
       </div>
 
       <div className=" lg:w-[50%] w-full m-auto my-6  lg:px-0 px-4 ">
-        <form className="bg-white w-full rounded-lg space-y-4">
+        <form onSubmit={(e)=>{e.preventDefault();handleUpdateUser()}} className="bg-white w-full rounded-lg space-y-4">
         {/* name and email */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b py-4">
             <div className='flex flex-col gap-1'>
@@ -110,34 +116,35 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader}:{
           <div className="flex sm:flex-row flex-col  sm:gap-8 gap-4 pb-4   border-b">
             <img
               className="inline-block h-20 w-20 rounded-full"
-              src={editForm?.profileImageUrl || "/images/defaultProfilePic.png"}
-              alt="profile"
+              src={
+                preview ||
+                editForm?.profileImageUrl ||
+                "/images/defaultProfilePic.png"
+              }
+              alt={selectedFile?.name || editForm?.name}
             />
             <div className="w-full flex border justify-center py-5 rounded-xl">
-              <div className="flex flex-col justify-center gap-2">
+              <div className="flex flex-col justify-center gap-2 cursor-pointer w-full">
                 <img
                   src="/images/drop file.svg"
-                  alt=""
+                  alt="verified"
                   className="h-16 w-16 self-center "
                 />
 
                 <label
                   htmlFor="file-upload"
-                  className="block  cursor-pointer text-[#475467]"
+                  className="flex justify-center items-center gap-2 text-[#475467]"
                 >
                   <span className="text-[#FFB604] font-semibold">
                     Click to upload
                   </span>{" "}
                   or drag and drop
                 </label>
-                <p className="text-sm text-gray-500 text-center">
-                  SVG, PNG, JPG or GIF (max. 800x400px)
-                </p>
                 {/* Hidden file input */}
                 <input
+                  {...getInputProps()}
                   id="file-upload"
                   type="file"
-                  className="hidden"
                   accept="image/*"
                 />
               </div>
@@ -173,7 +180,6 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader}:{
             <button
               type="submit"
               disabled={loader}
-              onClick={handleUpdateUser}
               className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
             >
               Save

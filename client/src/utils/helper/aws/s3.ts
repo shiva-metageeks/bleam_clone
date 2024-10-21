@@ -26,3 +26,16 @@ export const getUploadUrl = async (fileName: string, contentType: string): Promi
     return null;
    }
 }
+
+export const uploadImageToS3 = async (presignedUrl: string, image: File): Promise<boolean> => {
+  try {
+    const response = await fetch(presignedUrl, {
+      method: 'PUT',
+      body: image,
+    });
+    return response.ok;
+  } catch (error) {
+    console.error("Error uploading image to S3:", error);
+    return false;
+  }
+}

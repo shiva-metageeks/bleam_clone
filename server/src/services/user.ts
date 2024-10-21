@@ -1,15 +1,16 @@
 import User from "@src/models/user/user";
-import { Context } from "@src/types/types";
+import { Context, JWTUser } from "@src/types/types";
 import { CreateUserInput, UpdateUserInput, LoginUserInput } from "@src/types/user";
+import JWTService from "@src/services/jwt";
 
 class UserService {
     public static async createUser(input: CreateUserInput) {
         const exitingUser = await User.findOne({ firebaseUid: input.firebaseUid });
         if(exitingUser){
-            return exitingUser;
+            throw new Error("User already exists . Please login instead");
         }
         const user = await User.create(input);
-        const token = user.generateAuthToken();
+        const token = await JWTService.generateToken({id:user._id,firebaseUid:user.firebaseUid,role:"user"} as JWTUser);        
         return token;
     }
 
@@ -24,6 +25,7 @@ class UserService {
         if(!user){
             throw new Error("User not found.Please signup first");
         }
+        console.log("user",user);
         const token = user.generateAuthToken();
         return token;
     }

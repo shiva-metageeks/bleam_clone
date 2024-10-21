@@ -4,6 +4,7 @@ import { icons } from "@/utils/imports/config";
 import { editFormType } from "@/types/user/brand";
 import { Brand } from "@/gql/graphql";
 import Breadcrumbs from "@/components/breadcrumbs";
+import { useRouter } from "next/navigation";
 const { IoArrowBackOutline, LuSearch, RiArrowRightSLine } = icons;
 
 const EditProfile = ({
@@ -31,6 +32,7 @@ const EditProfile = ({
   isDragActive: boolean;
   preview: string | null;
 }) => {
+  const router = useRouter();
   return (
     <div className="w-full">
       <div className="w-full">
@@ -43,7 +45,7 @@ const EditProfile = ({
         </div>
 
         {/* Profile Section */}
-        <div className="flex  justify-between items-center py-4 lg:w-[90%] lg:m-auto sm:border-b lg:px-0 px-3 ">
+        <div className="flex justify-between items-center py-4 lg:w-[90%] lg:m-auto sm:border-b lg:px-0 px-3 ">
           {/* Left - Profile Info */}
           <div className="flex items-center space-x-2 sm:flex-row flex-col ">
             <div className="relative">
@@ -171,7 +173,7 @@ const EditProfile = ({
               >
                 <img
                   src="/images/drop file.svg"
-                  alt=""
+                  alt="verified"
                   className="h-16 w-16 self-center "
                 />
 
@@ -211,7 +213,7 @@ const EditProfile = ({
                 onChange={(e) =>
                   setEditForm({ ...editForm, bio: e.target.value })
                 }
-                className="block w-full px-8 py-2 font-semibold border mt-1 border-gray-300 rounded-md "
+                className="block w-full px-4 py-2 text-sm border mt-1 border-gray-300 rounded-md "
               />
             </div>
           </div>
@@ -220,6 +222,7 @@ const EditProfile = ({
           <div className="flex gap-4 justify-end">
             <button
               type="button"
+              onClick={() => router.back()}
               className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100"
             >
               Cancel

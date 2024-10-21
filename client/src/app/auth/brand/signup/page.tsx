@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { signUpFormType, signUpLoaderType } from "@/types/user/brand";
 import BrandSignUp from "@/components/brand/BrandSignUp";
-import { useCreateBrand } from "@/hooks/brand";
+import { useCreateBrand } from "@/hooks/brand/brand";
 import { useRouter } from "next/navigation";
 
 const BrandSignUpPage = () => {
@@ -80,7 +80,8 @@ const BrandSignUpPage = () => {
 
           console.log("data", data);
           if (data?.createBrand) {
-            localStorage.setItem("_hyped_token", data.createBrand as string);
+            localStorage.setItem("_hypd_token", data.createBrand as string);
+            localStorage.setItem("_hypd_user_type", "brand");
             setLoaders({ signUp: false });
             router.push("/brand/profile");
           }

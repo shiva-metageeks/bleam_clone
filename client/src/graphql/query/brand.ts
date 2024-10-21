@@ -1,4 +1,5 @@
 import { graphql } from "@/gql"
+import { gql } from "graphql-request";
 
 // export const getBrandsQuery = graphql(
 //     `#graphql
@@ -29,6 +30,7 @@ import { graphql } from "@/gql"
 //         getBrandById(id: $id){
 //             name
 //             email
+//             bio
 //             website
 //             profileImageUrl
 //         }
@@ -36,19 +38,53 @@ import { graphql } from "@/gql"
 //     `
 // )
 
-export const getCurrentBrandQuery = graphql(
-    `#graphql
-    query getCurrentBrand {
-        getCurrentBrand {
+// export const getCurrentBrandQuery = graphql(
+//     `#graphql
+//     query getCurrentBrand {
+//         getCurrentBrand {
+//             _id
+//             name
+//             bio
+//             email
+//             website
+//             profileImageUrl
+//             organizationName
+//             competitions {
+//                 id
+//                 terms
+//                 name
+//                 imageUrl
+//                 startDate
+//                 endDate
+//                 description
+//             }
+//         }
+//     }
+//     `
+// )
+
+export const getCurrentBrandQuery = gql`
+query getCurrentBrand {
+    getCurrentBrand {
+       _id
             name
+            bio
             email
             website
-            profileImageUrl
+            profileImageUrl  
             organizationName
-        }
+            competitions {
+                id
+                terms
+                name
+                imageUrl
+                startDate
+                endDate
+                description
+            }
     }
-    `
-)
+}
+`
 
 
 

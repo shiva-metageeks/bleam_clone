@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { IUser } from "@src/types/user";
+import { JWTUser } from "@src/types/types";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret"; // Ensure you use environment variables for production
 
@@ -78,11 +79,13 @@ userSchema.methods.comparePassword = async function (
 
 userSchema.methods.generateAuthToken = function (): string {
   const user = this as IUser;
+  console.log("user in model",user);
   const token = jwt.sign(
-    { id: user._id, firebaseUid: user.firebaseUid,role:"user" },
+    { id: user._id, firebaseUid: user.firebaseUid,role:"user"},
     JWT_SECRET,
     { algorithm: "HS256", expiresIn: "7d" }
   );
+  console.log("token in model",token);
   return token;
 };
 

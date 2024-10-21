@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { ICompetition } from "./competition";
 import { ITask } from "./task";
+import { JWTUser } from "./types";
 
 export type CreateUserInput = {
     firebaseUid: string
@@ -56,7 +57,7 @@ export interface IUser {
     isEmailVerified?: boolean;
     generateAuthToken: () => string;
     comparePassword: (password: string) => boolean;
-
+    verifyToken: (token: string) => JWTUser;
 }
 
 

@@ -9,6 +9,7 @@ import { GoArrowUpRight } from "react-icons/go";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { TbShieldQuestion } from "react-icons/tb";
+import { CiImageOn } from "react-icons/ci";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -37,7 +38,8 @@ export const icons = {
     FaGift,
     LuSettings2,
     TbShieldQuestion,
-    IoIosArrowForward
+    IoIosArrowForward,
+    CiImageOn
 }
 
 export const nextImports = {

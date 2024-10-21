@@ -9,14 +9,6 @@ export const useCreateUser = () => {
     const queryClient = useQueryClient();
     const mutation = useMutation({
         mutationFn: (payload: CreateUserInput) => graphqlClient.request(createUserMutation, { payload }),
-        onMutate: (payload) => toast.loading("Creating user",{id:"1"}),
-        onSuccess: async (payload) => {
-            await queryClient.invalidateQueries({ queryKey: ["user"] })
-            toast.success("User created successfully",{id:"1"});
-        },
-        onError: (error) => {
-            toast.error("User created failed",{id:"1"});
-        }
     })
     return mutation;
 }

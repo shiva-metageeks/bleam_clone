@@ -1,16 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { icons, nextImports } from "@/utils/imports/config";
 import { useGetCurrentUser } from "@/hooks/user";
+import { useGetCurrentBrand } from "@/hooks/brand/brand";
 import { userLogout } from "@/utils/helper/logout";
 const { IoIosArrowDown } = icons;
 const { Link, Image  } = nextImports;
 import { useRouter } from "next/navigation";
 
 const UserNavbar = () => {
+  const [userType, setUserType] = useState<string | null>(null);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const router = useRouter();
   const { user } = useGetCurrentUser();
+  const { brand } = useGetCurrentBrand();
+  const router = useRouter();
+
+  useEffect(() => {
+    setUserType(localStorage.getItem("_hypd_user_type"));
+  }, []);
+
+
   return (
     <div className="w-full pt-2">
       <nav className="w-full bg-pink-50 py-5 px-6 rounded-full flex items-center justify-center ">
@@ -47,7 +56,7 @@ const UserNavbar = () => {
               </Link>
             </div>
           </div>
-          {user ? (
+          {user || brand ? (
             <div className=" flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
               <div className="relative">
                 <button
@@ -64,7 +73,7 @@ const UserNavbar = () => {
                     className={`w-8 h-8 rounded-full ${
                       isProfileMenuOpen ? "opacity-70" : "opacity-100"
                     }`}
-                    src={user.profileImageUrl as string}
+                    src={userType==="user" ? user?.profileImageUrl as string : brand?.profileImageUrl as string}
                     width={50}
                     height={50}
                     alt="user photo"
@@ -79,17 +88,17 @@ const UserNavbar = () => {
                 <div className="px-4 py-3">
                   <div className="flex flex-col justify-center items-center">
                     <span className="block text-sm text-gray-900 ">
-                      {user.name}
+                      {userType==="user" ? user?.name : brand?.name}
                     </span>
                     <span className="block text-xs font-bold text-zinc-900 truncate">
-                      {user.email}
+                      {userType==="user" ? user?.email : brand?.email}
                     </span>
                   </div>
                   </div>
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>
                       <Link
-                        href="/profile"
+                        href={userType==="user" ? "/profile" : "/brand/profile"}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                       >
                         Profile
@@ -97,7 +106,7 @@ const UserNavbar = () => {
                     </li>
                     <li>
                       <Link
-                        href="/competitions"
+                        href={userType==="user" ? "/competitions" : "/brand/competitions"}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                       >
                         My Competitions
@@ -152,12 +161,12 @@ const UserNavbar = () => {
           ) : (
             <div className="flex items-center space-x-8">
               <Link
-                href="/auth/user/login"
+                href={userType==="user" ? "/auth/user/login" : "/auth/brand/login"}
                 className="hover:text-orange-500 font-semibold"
               >
                 Login
               </Link>
-              <Link href="/auth/user/signup" 
+              <Link href={userType==="user" ? "/auth/user/signup" : "/auth/brand/signup"} 
               className="px-4 py-2 shadow-lg rounded-full bg-gradient-to-r from-orange-400 to-yellow-500 text-white hover:opacity-90">
                   Sign Up
               </Link>

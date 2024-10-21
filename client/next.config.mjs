@@ -26,6 +26,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "shiva-twitter-clone-bucket.s3.ap-south-1.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "hypd-bucket.s3.ap-south-1.amazonaws.com",
+      }
     ],
   },
 };

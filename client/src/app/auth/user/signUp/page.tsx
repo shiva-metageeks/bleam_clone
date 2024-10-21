@@ -50,7 +50,7 @@ const SignUpPage = () => {
           {
             onSuccess: (data) => {
               if (data?.createUser) {
-                localStorage.setItem("_hyped_token", data.createUser as string);
+                localStorage.setItem("_hypd_token", data.createUser as string);
                 router.push("/profile");
               }
             },
@@ -91,13 +91,13 @@ const SignUpPage = () => {
           {
             onSuccess: (data) => {
               if (data?.createUser) {
-                localStorage.setItem("_hyped_token", data.createUser as string);
+                localStorage.setItem("_hypd_token", data.createUser as string);
                 router.push("/profile");
               }
             },
-            onError: (error) => {
-              console.error("Error creating user:", error);
-              toast.error("Failed to create user. Please try again.");
+            onError: (error:any) => {
+              console.log("graphql error",error.response.errors[0].message);
+              toast.error(error.response.errors[0].message || "Failed to create user. Please try again.",{id:"1"})
             },
           }
         );
@@ -128,12 +128,13 @@ const SignUpPage = () => {
           {
             onSuccess: (data) => {
               if (data?.createUser) {
-                localStorage.setItem("_hyped_token", data.createUser as string);
+                localStorage.setItem("_hypd_token", data.createUser as string);
+                localStorage.setItem("_hypd_user_type", "user");
                 router.push("/profile");
               }
             },
             onError: (error) => {
-              console.error("Error creating user:", error);
+              console.error("Error creating user:", error.message);
               toast.error("Failed to create user. Please try again.");
             },
           }

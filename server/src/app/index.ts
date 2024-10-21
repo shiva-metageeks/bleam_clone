@@ -68,18 +68,19 @@ export async function initServer() {
     app.use('/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(graphqlServer, {
         context: async ({ req }: { req: any }) => {
             const authHeader = req.headers.authorization || '';
-            // console.log("authHeader", authHeader);
+            console.log("authHeader", authHeader);
             const token = authHeader.startsWith('Bearer ') ? authHeader.split('Bearer ')[1] : null;
             let user = null;
             let brand = null;
             if (token) {
                 try {
-                    // console.log("token", token);
-                    const decodedToken = JWTService.verifyToken(token as string);
+                    console.log("token", token);
+                    const decodedToken= JWTService.verifyToken(token as string);
+                    
                     if (!decodedToken) {
                         throw new Error('Invalid token');
                     }
-                    // console.log("decodedToken", decodedToken);
+                    console.log("decodedToken", decodedToken);
                     if(decodedToken.role==="user"){
                         const userObject = await UserModel.findOne({ firebaseUid: decodedToken?.firebaseUid });
                         if (!userObject) {
@@ -88,7 +89,7 @@ export async function initServer() {
                         user = userObject;
                     }
                     else if(decodedToken.role==="brand"){
-                        const brandObject = await BrandModel.findById(decodedToken?._id || decodedToken?.id);
+                        const brandObject = await BrandModel.findById(decodedToken?.id);
                         if (!brandObject) {
                             throw new Error('Brand not found');
                         }

@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { IBrand } from "@src/types/brand";
 import env from "@src/utils/imports/env";
 const {JWT_SECRET} = env;
+import { JWTBrand } from "@src/types/types";
 
 // Define the brand schema
 const brandSchema = new Schema<IBrand>(
@@ -72,6 +73,11 @@ brandSchema.methods.generateAuthToken = function (): string {
   );
   return token;
 };
+
+brandSchema.methods.verifyToken = function (token:string):JWTBrand{
+  const decoded = jwt.verify(token,JWT_SECRET,{algorithms:["HS256"]});
+  return decoded as JWTBrand;
+}
 
 brandSchema.pre("save", async function (next) {
   const brand = this as IBrand;

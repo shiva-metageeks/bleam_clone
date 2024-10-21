@@ -19,12 +19,11 @@ export const types = `#graphql
 
     type Competition {
         id: ID
-        name: String!
+        name: String
         description: String
         imageUrl: String
         terms: String
         startDate: String
         endDate: String
-        brand: Brand
     }
 `

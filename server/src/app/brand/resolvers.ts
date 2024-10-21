@@ -4,26 +4,19 @@ import { CreateBrandInput, IBrand, LoginBrandInput, UpdateBrandInput } from "@sr
 import CompetitionService from "@src/services/competition";
 import { ICompetition } from "@src/types/competition";
 const queries = {
-    // getBrands: async (parent: any, args: any, context: Context) => {
-    //     const brands = await BrandService.getBrands();
-    //     return brands;
-    // },
-    // getBrand: async (parent: any, { identifier }: { identifier: string }, context: Context) => {
-    //     if (!context.user) {
-    //         throw new Error("User not authenticated");
-    //     }
-    //     const brand = await BrandService.getBrand(identifier);
-    //     return brand;
-    // },
-    // getBrandById: async (parent: any, { id }: { id: string }, context: Context) => {
-    //     const brand = await BrandService.getBrandById(id);
-    //     return brand;
-    // },
     getCurrentBrand: async (parent: any, args: any, context: Context) => {
         if (!context.brand || !context.brand.id) {
             throw new Error("Brand not authenticated");
         }
         const brand = await BrandService.getBrandById(context.brand.id);
+        return brand;
+    },
+    getAllBrands: async (parent: any, args: any, context: Context) => {
+        const brands = await BrandService.getAllBrands();
+        return brands;
+    },
+    getBrandById: async (parent: any, { id }: { id: string }, context: Context) => {
+        const brand = await BrandService.getBrandById(id);
         return brand;
     }
 }

@@ -1,13 +1,12 @@
 "use client";
 import { icons,nextImports } from "@/utils/imports/config";
 import { useGetCurrentUser } from "@/hooks/user";
-
 const { Link,Image } = nextImports;
 const { FaInstagram, FaTwitter, FaFacebook, FaLinkedin, FaDiscord, FaTelegram } = icons;
 
 const ProfilePage = () => {
   const {user} = useGetCurrentUser();
-  // console.log("user",user);
+  console.log("user",user);
   return (
     <div className="w-full min-h-screen bg-white text-black">
       <div className="w-[90%] mx-auto p-4 flex justify-center items-start gap-4">
@@ -15,7 +14,7 @@ const ProfilePage = () => {
           <div className="flex flex-col justify-center items-center bg-white text-black rounded-sm p-4 shadow-md ">
             <div className="flex justify-center items-center">
               <Image
-                src={user?.profileImageUrl as string}
+                src={user?.profileImageUrl || ''}
                 className="rounded-full"
                 alt="profile"
                 width={200}

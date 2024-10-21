@@ -24,6 +24,7 @@ const LoginPage = () => {
                 if (data?.loginUser) {
                   console.log("token",data.loginUser);
                   localStorage.setItem("_hypd_token",data.loginUser as string);
+                  localStorage.setItem("_hypd_user_type", "user");
                   router.push("/profile");
                 }
               },

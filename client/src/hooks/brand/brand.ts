@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { graphqlClient } from "@/clients/api"
 import { createBrandMutation, loginBrandMutation, updateBrandMutation } from "@/graphql/mutation/brand"
-import { CreateBrandInput, LoginBrandInput, UpdateBrandInput } from "@/gql/graphql";
+import { Competition, CreateBrandInput, LoginBrandInput, UpdateBrandInput } from "@/gql/graphql";
 import { toast } from "react-hot-toast";
-import {getCurrentBrandQuery } from "@/graphql/query/brand";
+import { getCurrentBrandQuery } from "@/graphql/query/brand";
+import { CurrentBrandQueryResult } from "./types";
 
 export const useCreateBrand = () => {
     const queryClient = useQueryClient();
@@ -63,12 +64,13 @@ export const useUpdateBrand = () => {
 //     return query;
 // }
 
+
 export const useGetCurrentBrand = () => {
     const query = useQuery({
         queryKey: ["currentBrand"],
-        queryFn: () => graphqlClient.request(getCurrentBrandQuery),
+        queryFn: () => graphqlClient.request<CurrentBrandQueryResult>(getCurrentBrandQuery),
     })
-    // console.log("query current brand",query)
+    console.log("query current brand",query)
     return {...query,brand:query.data?.getCurrentBrand};
 }
 

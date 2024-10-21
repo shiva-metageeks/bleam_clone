@@ -18,7 +18,7 @@ const queries = {
         if (!context.user) {
             throw new Error("User not authenticated");
         }
-        const user = await UserService.getUserById(context.user.id);
+        const user = await UserService.getUserById(context.user?.id);
         return user;
     }
 }

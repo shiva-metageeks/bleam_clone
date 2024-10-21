@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useGetCompetitionById } from "@/hooks/competition";
+import { useGetCompetitionById } from "@/hooks/competition/competition";
 export default function CompetitionPage({params}: {params: {id: string}}) {
     const {id} = params;
     const {competition} = useGetCompetitionById(id);
