@@ -5,14 +5,14 @@ import { Context } from "@src/types/types";
 
 class CompetitionService {
     public static async createCompetition(input: ICreateCompetitionInput, context: Context) {
-        if(!context.brand || !context.brand.id){
+        if(!context.brand || typeof context.brand._id !== "string"){
             throw new Error("Unauthorized");
         }
-        const competition = await Competition.create({...input, brand: context.brand.id});
+        const competition = await Competition.create({...input, brand: context.brand._id});
         if(!competition){
             throw new Error("Failed to create competition");
         }
-        const brand = await Brand.findByIdAndUpdate(context.brand.id, {$push: {competitions: competition.id}});
+        const brand = await Brand.findByIdAndUpdate(context.brand._id, {$push: {competitions: competition._id}});
         if(!brand){
             throw new Error("Failed to update brand");
         }

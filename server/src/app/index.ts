@@ -2,7 +2,7 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import express from 'express';
-import { Context } from '@src/types/types';
+import { Context, JWTUser } from '@src/types/types';
 import connectDB from '@src/clients/db';
 import UserModel from '@src/models/user/user';
 import envConfig from '@src/utils/imports/env';
@@ -14,6 +14,8 @@ import { Competition } from '@src/app/competition';
 import { taskCategories } from '@src/app/taskCategories';
 import { Aws } from '@src/app/aws';
 import BrandModel from '@src/models/user/brand';
+import { IUser } from '@src/types/user';
+import { IBrand } from '@src/types/brand';
 const {MONGO_URI} =envConfig
 
 export async function initServer() {
@@ -65,34 +67,36 @@ export async function initServer() {
     });
     await graphqlServer.start();
 
-    app.use('/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(graphqlServer, {
-        context: async ({ req }: { req: any }) => {
+    app.use('/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware<Context>(graphqlServer, {
+        context: async ({ req }) => {
             const authHeader = req.headers.authorization || '';
             console.log("authHeader", authHeader);
             const token = authHeader.startsWith('Bearer ') ? authHeader.split('Bearer ')[1] : null;
-            let user = null;
-            let brand = null;
+            let user: IUser | undefined;
+            let brand: IBrand | undefined;
+
             if (token) {
                 try {
                     console.log("token", token);
-                    const decodedToken= JWTService.verifyToken(token as string);
+                    const decodedToken= JWTService.verifyToken(token as string)  as JWTUser;
                     
                     if (!decodedToken) {
                         throw new Error('Invalid token');
                     }
                     console.log("decodedToken", decodedToken);
                     if(decodedToken.role==="user"){
-                        const userObject = await UserModel.findOne({ firebaseUid: decodedToken?.firebaseUid });
+                        const userObject: IUser | null = await UserModel.findOne({ firebaseUid: decodedToken?.identifier });
                         if (!userObject) {
                             throw new Error('User not found');
                         }
                         user = userObject;
                     }
                     else if(decodedToken.role==="brand"){
-                        const brandObject = await BrandModel.findById(decodedToken?.id);
+                        const brandObject: IBrand | null = await BrandModel.findOne({email:decodedToken?.identifier});
                         if (!brandObject) {
                             throw new Error('Brand not found');
                         }
+                        console.log("brandObject", brandObject);
                         brand = brandObject;
                     }
                     else{

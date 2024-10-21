@@ -2,12 +2,12 @@ import Brand from "@src/models/user/brand";
 import { CreateBrandInput, LoginBrandInput, UpdateBrandInput} from "@src/types/brand";
 import { Context } from "@src/types/types";
 import JWTService from "@src/services/jwt";
-import { JWTBrand } from "@src/types/types";
+import { JWTUser } from "@src/types/types";
 
 class BrandService {
     public static async createBrand(input: CreateBrandInput) {
         const brand = await Brand.create(input);
-        const token = await JWTService.generateToken({id:brand._id,email:brand.email,role:"brand"} as JWTBrand);
+        const token = await JWTService.generateToken({id:brand._id,identifier:brand.email,role:"brand"} as JWTUser);
         return token;
     }
     public static async loginBrand(input: LoginBrandInput) {
@@ -23,10 +23,10 @@ class BrandService {
         return token;
     }
     public static async updateBrand(input: UpdateBrandInput, context: Context) {
-        if(!context.brand || !context.brand.id){
+        if(!context.brand || typeof context.brand._id !== "string"){
             throw new Error("Brand not found");
         }
-        const brand = await Brand.findByIdAndUpdate(context.brand.id, input, { new: true });
+        const brand = await Brand.findByIdAndUpdate(context.brand._id, input, { new: true });
         return brand;
     }
     public static async getBrandById(id: string) {

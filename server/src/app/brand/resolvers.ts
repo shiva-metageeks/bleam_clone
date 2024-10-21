@@ -5,10 +5,10 @@ import CompetitionService from "@src/services/competition";
 import { ICompetition } from "@src/types/competition";
 const queries = {
     getCurrentBrand: async (parent: any, args: any, context: Context) => {
-        if (!context.brand || !context.brand.id) {
+        if (!context.brand) {
             throw new Error("Brand not authenticated");
         }
-        const brand = await BrandService.getBrandById(context.brand.id);
+        const brand = await BrandService.getBrandById(context.brand._id as string);
         return brand;
     },
     getAllBrands: async (parent: any, args: any, context: Context) => {

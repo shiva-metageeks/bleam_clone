@@ -1,18 +1,18 @@
+import { IUser } from "@src/types/user";
+import { IBrand } from "@src/types/brand";
+
+
 export type Context = {
-    user?: JWTUser;
-    brand?: JWTBrand;
+    user?: IUser;
+    brand?: IBrand;
 };
 
 export type JWTUser = {
     id: string;
-    firebaseUid?: string;
+    identifier: string;
     role: string;
+   
 }
 
-export type JWTBrand = {
-    id: string;
-    email: string;
-    role: string;
-}
 
 

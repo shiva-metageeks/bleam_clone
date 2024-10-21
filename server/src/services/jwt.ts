@@ -1,13 +1,13 @@
 import JWT from "jsonwebtoken";
-import { JWTBrand, JWTUser } from "@src/types/types";
+import { JWTUser } from "@src/types/types";
 import env from "@src/utils/imports/env";
 const {JWT_SECRET} = env;
 
 class JWTService {
 
-    public static async generateToken(payload: JWTUser | JWTBrand): Promise<string> {
+    public static async generateToken(payload: JWTUser): Promise<string> {
         console.log("payload",payload);
-       
+        console.log("JWT_SECRET",JWT_SECRET);
         const token = JWT.sign(payload, JWT_SECRET as string, { algorithm: "HS256" });
         console.log("token",token);
         return token;

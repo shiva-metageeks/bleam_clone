@@ -10,13 +10,13 @@ class UserService {
             throw new Error("User already exists . Please login instead");
         }
         const user = await User.create(input);
-        const token = await JWTService.generateToken({id:user._id,firebaseUid:user.firebaseUid,role:"user"} as JWTUser);        
+        const token = await JWTService.generateToken({id:user._id,identifier:user.firebaseUid,role:"user"} as JWTUser);        
         return token;
     }
 
     public static async updateUser(input: UpdateUserInput, context: Context) {
         console.log("context", context);
-        const user = await User.findByIdAndUpdate(context.user?.id, input, { new: true });
+        const user = await User.findByIdAndUpdate(context.user?._id, input, { new: true });
         return user;
     }
 
@@ -26,7 +26,8 @@ class UserService {
             throw new Error("User not found.Please signup first");
         }
         console.log("user",user);
-        const token = user.generateAuthToken();
+        const token = await JWTService.generateToken({id:user._id,identifier:user.firebaseUid,role:"user"} as JWTUser);
+        
         return token;
     }
 
