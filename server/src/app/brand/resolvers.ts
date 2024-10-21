@@ -1,7 +1,8 @@
 import BrandService from "@src/services/brand";
 import { Context } from "@src/types/types";
-import { CreateBrandInput, LoginBrandInput, UpdateBrandInput } from "@src/types/brand";
-
+import { CreateBrandInput, IBrand, LoginBrandInput, UpdateBrandInput } from "@src/types/brand";
+import CompetitionService from "@src/services/competition";
+import { ICompetition } from "@src/types/competition";
 const queries = {
     // getBrands: async (parent: any, args: any, context: Context) => {
     //     const brands = await BrandService.getBrands();
@@ -45,7 +46,18 @@ const mutations = {
     }
 }
 
+const extraResolvers = {
+    Brand: {
+        competitions: async (parent: IBrand, args: any, context: Context) => {
+            return Promise.all(parent.competitions.map(async (competition: ICompetition) => {
+                return CompetitionService.getCompetitionById(competition._id.toString(), context);
+            }));
+        }
+    }
+}
+
 export const resolvers = {
     queries,
-    mutations
+    mutations,
+    extraResolvers
 }

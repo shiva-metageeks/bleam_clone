@@ -6,7 +6,7 @@ const { FaInstagram, FaTwitter, FaFacebook, FaLinkedin, FaDiscord, FaTelegram } 
 
 const BrandProfilePage = () => {
   const {brand} = useGetCurrentBrand();
-  // console.log("brand",brand);
+  console.log("brand",brand);
   return (
     <div className="w-full min-h-screen bg-white text-black">
       <div className="w-[90%] mx-auto p-4 flex justify-center items-start gap-4">

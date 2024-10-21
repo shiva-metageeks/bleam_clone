@@ -29,6 +29,7 @@ export const  types = `#graphql
         website: String
         profileImageUrl: String
         organizationName: String
+        competitions: [Competition]
     }
 `
 

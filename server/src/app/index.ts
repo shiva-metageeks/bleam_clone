@@ -58,7 +58,9 @@ export async function initServer() {
                 ...Competition.resolvers.mutations,
                 ...Task.resolvers.mutations,
                 ...taskCategories.resolvers.mutations,
+
             },
+            ...Brand.resolvers.extraResolvers
         },
     });
     await graphqlServer.start();
