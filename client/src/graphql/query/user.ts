@@ -1,6 +1,5 @@
-
 import { graphql } from "@/gql"
-
+import { gql } from "graphql-request"
 export const getUserQuery = graphql(
     `#graphql
     query getUser($identifier: String!) {
@@ -11,16 +10,31 @@ export const getUserQuery = graphql(
     `
 )
 
-export const getCurrentUserQuery = graphql(
-    `#graphql
-    query getCurrentUser {
+export const getCurrentUserQuery = gql
+    `query getCurrentUser {
         getCurrentUser {
-            username
+            _id
             name
+            firebaseUid
+            username
             email
             profileImageUrl
             bio
+            globalRank
+            platformPoints
+            isEmailVerified
+            coverPicture
+            socialMedia {
+                socialApp
+                socialId
+                socialUsername
+                socialProfilePicture
+                socialAccessToken
+                socialRefreshToken
+            }
+            phoneNumber
+            id  
         }
     }
     `
-)
+

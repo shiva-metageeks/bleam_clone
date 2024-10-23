@@ -4,6 +4,7 @@ import { createUserMutation, loginUserMutation, updateUserMutation } from "@/gra
 import { getCurrentUserQuery, getUserQuery } from "@/graphql/query/user";
 import { CreateUserInput, UpdateUserInput, LoginUserInput } from "@/gql/graphql";
 import { toast } from "react-hot-toast";
+import { CurrentUserResult } from "./types";
 
 export const useCreateUser = () => {
     const queryClient = useQueryClient();
@@ -57,7 +58,7 @@ export const useGetUser = (identifier: string) => {
 export const useGetCurrentUser = () => {
     const query = useQuery({
         queryKey: ["currentUser"],
-        queryFn: () => graphqlClient.request(getCurrentUserQuery),
+        queryFn: () => graphqlClient.request<CurrentUserResult>(getCurrentUserQuery),
     })
     console.log(query);
     return { ...query, user: query.data?.getCurrentUser};

@@ -6,8 +6,8 @@ const userCompetitionSchema = new Schema<IUserCompetition>(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     competition: { type: Schema.Types.ObjectId, ref: "Competition", required: true },
-    pointsEarned: { type: Number, required: true },
-    rank: { type: Number, required: true },
+    pointsEarned: { type: Number },
+    rank: { type: Number},
     completed: {
       type: String,
       enum: ["completed", "not completed"],

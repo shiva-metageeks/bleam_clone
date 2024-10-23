@@ -1,12 +1,38 @@
 "use client";
-import { icons,nextImports } from "@/utils/imports/config";
-import { useGetCurrentUser } from "@/hooks/user";
-const { Link,Image } = nextImports;
-const { FaInstagram, FaTwitter, FaFacebook, FaLinkedin, FaDiscord, FaTelegram } = icons;
+import { useState, useEffect } from "react";
+import { icons, nextImports } from "@/utils/imports/config";
+import { useGetCurrentUser } from "@/hooks/user/user";
+import { useTwitterAuth } from "@/hooks/twitter/twitter";
+const { Link, Image } = nextImports;
+const {
+  FaInstagram,
+  FaTwitter,
+  FaFacebook,
+  FaLinkedin,
+  FaDiscord,
+  FaTelegram,
+} = icons;
 
 const ProfilePage = () => {
-  const {user} = useGetCurrentUser();
-  console.log("user",user);
+  const [connectedSocialMedia, setConnectedSocialMedia] = useState<string[]>(
+    []
+  );
+  const { user } = useGetCurrentUser();
+  const { mutate: oAuth2WithTwitter } = useTwitterAuth();
+  console.log("user", user);
+
+  useEffect(() => {
+    if (user?.socialMedia && user?.socialMedia?.length > 0) {
+      user.socialMedia.forEach((item) => {
+        if(!connectedSocialMedia.includes(item.socialApp)){
+          setConnectedSocialMedia((prev) => [...prev, item.socialApp]);
+        }
+      });
+    }
+
+    console.log("connected app", connectedSocialMedia);
+  }, [user]);
+
   return (
     <div className="w-full min-h-screen bg-white text-black">
       <div className="w-[90%] mx-auto p-4 flex justify-center items-start gap-4">
@@ -14,7 +40,7 @@ const ProfilePage = () => {
           <div className="flex flex-col justify-center items-center bg-white text-black rounded-sm p-4 shadow-md ">
             <div className="flex justify-center items-center">
               <Image
-                src={user?.profileImageUrl || ''}
+                src={user?.profileImageUrl || ""}
                 className="rounded-full"
                 alt="profile"
                 width={200}
@@ -24,7 +50,20 @@ const ProfilePage = () => {
             <div className="text-lg font-bold">{user?.name}</div>
             <div className="text-zinc-700 text-sm mb-4">{user?.email}</div>
             <p className="text-zinc-700 text-sm mb-4">{user?.bio}</p>
-            <Link href="/edit-profile" className="px-4 py-2 bg-orange-500 text-white rounded-full">Edit Profile</Link>
+            <Link
+              href="/edit-profile"
+              className="px-4 py-2 bg-orange-500 text-white rounded-full mb-2"
+            >
+              Edit Profile
+            </Link>
+            {!connectedSocialMedia.includes("Twitter") && (
+              <button
+                onClick={() => oAuth2WithTwitter()}
+                className="px-4 py-2 text-white rounded-full bg-zinc-950 mb-2"
+              >
+                Connect to X
+              </button>
+            )}
             <div className="flex justify-center items-center gap-4 mb-4">
               <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full">
                 <div className="text-zinc-700 text-sm">100</div>

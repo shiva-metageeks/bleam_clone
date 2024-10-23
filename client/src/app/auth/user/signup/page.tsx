@@ -6,7 +6,7 @@ import {
   googleLogin,
   twitterLogin,
 } from "@/utils/firebase/loginOption";
-import { useCreateUser } from "@/hooks/user";
+import { useCreateUser } from "@/hooks/user/user";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import UserSignUp from "@/components/user/userSignUp";

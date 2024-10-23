@@ -3,7 +3,7 @@ import React from "react";
 import { icons } from "@/utils/imports/config";
 import { editFormType } from "@/types/user/brand";
 import { Brand } from "@/gql/graphql";
-import Breadcrumbs from "@/components/breadcrumbs";
+import Breadcrumbs from "@/components/helpers/breadcrumbs";
 import { useRouter } from "next/navigation";
 const { IoArrowBackOutline, LuSearch, RiArrowRightSLine } = icons;
 
@@ -14,10 +14,8 @@ const EditProfile = ({
   setEditForm,
   loader,
   selectedFile,
-  setSelectedFile,
   getRootProps,
   getInputProps,
-  isDragActive,
   preview,
 }: {
   brand: Brand;
@@ -26,10 +24,8 @@ const EditProfile = ({
   setEditForm: React.Dispatch<React.SetStateAction<editFormType>>;
   loader: boolean;
   selectedFile: File | null;
-  setSelectedFile: React.Dispatch<React.SetStateAction<File | null>>;
   getRootProps: () => any;
   getInputProps: () => any;
-  isDragActive: boolean;
   preview: string | null;
 }) => {
   const router = useRouter();
@@ -156,7 +152,7 @@ const EditProfile = ({
             </div>
           </div>
           {/* Profile Upload */}
-          <div className="flex sm:flex-row flex-col  sm:gap-8 gap-4 pb-4   border-b">
+          <div className="flex sm:flex-row flex-col sm:gap-8 gap-4 pb-4 border-b">
             <img
               className="inline-block h-20 w-20 rounded-full"
               src={
@@ -166,7 +162,7 @@ const EditProfile = ({
               }
               alt={selectedFile?.name || editForm?.name}
             />
-            <div className="w-full flex border justify-center py-5 rounded-xl">
+            <div className="w-full flex border justify-center py-4 rounded-xl">
               <div
                 {...getRootProps()}
                 className="flex flex-col justify-center gap-2 cursor-pointer w-full"
@@ -192,6 +188,7 @@ const EditProfile = ({
                   id="file-upload"
                   type="file"
                   accept="image/*"
+              
                 />
               </div>
             </div>

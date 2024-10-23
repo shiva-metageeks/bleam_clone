@@ -21,6 +21,15 @@ export const types = `#graphql
         bio: String
     }
 
+    type SocialMedia {
+        socialApp: String
+        socialId: String
+        socialUsername: String
+        socialProfilePicture: String
+        socialAccessToken: String
+        socialRefreshToken: String
+    }
+
     type User {
         _id: ID!
         name: String
@@ -30,7 +39,10 @@ export const types = `#graphql
         profileImageUrl: String
         bio: String
         globalRank: Int
-        points: Int
+        platformPoints: Int
         isEmailVerified: Boolean
+        coverPicture: String
+        socialMedia : [SocialMedia]
+        phoneNumber: String
     }
 `;

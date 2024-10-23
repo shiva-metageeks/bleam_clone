@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { googleLogin,twitterLogin,facebookLogin, emailPasswordLogin } from "@/utils/firebase/loginOption";
 import UserLogin from "@/components/user/userLogin";
-import { useLoginUser } from "@/hooks/user";
+import { useLoginUser } from "@/hooks/user/user";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { loginFormType } from "@/types/user/user";

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ICompetition } from "./competition";
+import { ICompetition, IUserCompetition } from "./competition";
 import { ITask } from "./task";
 import { JWTUser } from "./types";
 
@@ -51,7 +51,7 @@ export interface IUser {
     platformPoints?: number;
     socialMedia?: ISocialMedia[];
     coverPicture?: string;
-    joinedCompetitions?: { competition: ICompetition, completed: boolean }[];
+    joinedCompetitions?: IUserCompetition[];
     tasks?: IUserTask[];
     phoneNumber?: string;
     isEmailVerified?: boolean;

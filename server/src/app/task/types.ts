@@ -17,5 +17,4 @@ export const types = `#graphql
         media: String
         type: String!   
     }
-
 `

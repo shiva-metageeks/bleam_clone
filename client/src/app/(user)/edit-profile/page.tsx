@@ -1,16 +1,19 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import EditProfile from "@/components/user/editProfile";
-import { useGetCurrentUser, useUpdateUser } from "@/hooks/user";
+import { useGetCurrentUser, useUpdateUser } from "@/hooks/user/user";
 import { User } from "@/gql/graphql";
 import { editFormType } from "@/types/user/user";
 import { getUploadUrl, uploadImageToS3 } from "@/utils/helper/aws/s3";
 import { useDropzone } from "react-dropzone";
 import configEnv from "@/utils/imports/configEnv";
 import {toast} from "react-hot-toast"
+import { useRouter } from "next/navigation";
 
 const EditUserProfilePage = () => {
+  const router = useRouter();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const [preview, setPreview] = useState<string | null>(null);
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const filesWithPreview = acceptedFiles.map((file) => {
@@ -77,6 +80,7 @@ const EditUserProfilePage = () => {
       {
         onSuccess: () => {
           toast.success("User updated successfully");
+          router.push("/user/profile");
         },
         onError: (error) => {
           console.log("error", error);

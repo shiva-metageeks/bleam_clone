@@ -16,6 +16,13 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type AuthResponse = {
+  __typename?: 'AuthResponse';
+  message?: Maybe<Scalars['String']['output']>;
+  success: Scalars['Boolean']['output'];
+  url?: Maybe<Scalars['String']['output']>;
+};
+
 export type Brand = {
   __typename?: 'Brand';
   _id: Scalars['ID']['output'];
@@ -26,6 +33,15 @@ export type Brand = {
   organizationName?: Maybe<Scalars['String']['output']>;
   profileImageUrl?: Maybe<Scalars['String']['output']>;
   website?: Maybe<Scalars['String']['output']>;
+};
+
+export type CheckUserCompetitionResponse = {
+  __typename?: 'CheckUserCompetitionResponse';
+  completed?: Maybe<Scalars['String']['output']>;
+  joined?: Maybe<Scalars['Boolean']['output']>;
+  pointsEarned?: Maybe<Scalars['Int']['output']>;
+  rank?: Maybe<Scalars['Int']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type Competition = {
@@ -87,6 +103,22 @@ export type CreateUserInput = {
   profileImageUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type FollowResponse = {
+  __typename?: 'FollowResponse';
+  response?: Maybe<Scalars['String']['output']>;
+  success: Scalars['Boolean']['output'];
+};
+
+export type JoinCompetitionInput = {
+  competitionId: Scalars['String']['input'];
+};
+
+export type LikeResponse = {
+  __typename?: 'LikeResponse';
+  isLiked: Scalars['Boolean']['output'];
+  success: Scalars['Boolean']['output'];
+};
+
 export type LoginBrandInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -98,16 +130,26 @@ export type LoginUserInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  checkFollow: FollowResponse;
   createBrand?: Maybe<Scalars['String']['output']>;
   createCompetition?: Maybe<Competition>;
   createTask?: Maybe<Task>;
   createTaskCategory?: Maybe<TaskCategory>;
   createUser?: Maybe<Scalars['String']['output']>;
+  joinCompetition?: Maybe<Response>;
   loginBrand?: Maybe<Scalars['String']['output']>;
   loginUser?: Maybe<Scalars['String']['output']>;
+  oAuth2WithTwitter: AuthResponse;
+  oAuth2WithTwitterCallback: AuthResponse;
+  sendTweet: TweetResponse;
   updateBrand?: Maybe<Brand>;
   updateTaskCategory?: Maybe<TaskCategory>;
   updateUser?: Maybe<User>;
+};
+
+
+export type MutationCheckFollowArgs = {
+  targetUserName: Scalars['String']['input'];
 };
 
 
@@ -136,6 +178,11 @@ export type MutationCreateUserArgs = {
 };
 
 
+export type MutationJoinCompetitionArgs = {
+  payload?: InputMaybe<JoinCompetitionInput>;
+};
+
+
 export type MutationLoginBrandArgs = {
   payload?: InputMaybe<LoginBrandInput>;
 };
@@ -143,6 +190,17 @@ export type MutationLoginBrandArgs = {
 
 export type MutationLoginUserArgs = {
   payload?: InputMaybe<LoginUserInput>;
+};
+
+
+export type MutationOAuth2WithTwitterCallbackArgs = {
+  code: Scalars['String']['input'];
+  state: Scalars['String']['input'];
+};
+
+
+export type MutationSendTweetArgs = {
+  tweetBody: Scalars['String']['input'];
 };
 
 
@@ -162,6 +220,9 @@ export type MutationUpdateUserArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  checkTweetLike: LikeResponse;
+  checkTweetRetweet: RetweetResponse;
+  checkUserCompetition?: Maybe<CheckUserCompetitionResponse>;
   getAllBrands?: Maybe<Array<Maybe<Brand>>>;
   getBrandById?: Maybe<Brand>;
   getCompetitionById?: Maybe<Competition>;
@@ -174,6 +235,21 @@ export type Query = {
   getTaskCategory?: Maybe<TaskCategory>;
   getUser?: Maybe<User>;
   getUserById?: Maybe<User>;
+};
+
+
+export type QueryCheckTweetLikeArgs = {
+  tweetId: Scalars['String']['input'];
+};
+
+
+export type QueryCheckTweetRetweetArgs = {
+  tweetId: Scalars['String']['input'];
+};
+
+
+export type QueryCheckUserCompetitionArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -212,6 +288,28 @@ export type QueryGetUserByIdArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type Response = {
+  __typename?: 'Response';
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type RetweetResponse = {
+  __typename?: 'RetweetResponse';
+  isRetweeted: Scalars['Boolean']['output'];
+  success: Scalars['Boolean']['output'];
+};
+
+export type SocialMedia = {
+  __typename?: 'SocialMedia';
+  socialAccessToken?: Maybe<Scalars['String']['output']>;
+  socialApp?: Maybe<Scalars['String']['output']>;
+  socialId?: Maybe<Scalars['String']['output']>;
+  socialProfilePicture?: Maybe<Scalars['String']['output']>;
+  socialRefreshToken?: Maybe<Scalars['String']['output']>;
+  socialUsername?: Maybe<Scalars['String']['output']>;
+};
+
 export type Task = {
   __typename?: 'Task';
   description: Scalars['String']['output'];
@@ -228,6 +326,21 @@ export type TaskCategory = {
   description?: Maybe<Scalars['String']['output']>;
   image?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+};
+
+export type TweetResponse = {
+  __typename?: 'TweetResponse';
+  success: Scalars['Boolean']['output'];
+  tweet?: Maybe<Scalars['String']['output']>;
+};
+
+export type TwitterInfo = {
+  __typename?: 'TwitterInfo';
+  accessToken?: Maybe<Scalars['String']['output']>;
+  profileImageUrl?: Maybe<Scalars['String']['output']>;
+  refreshToken?: Maybe<Scalars['String']['output']>;
+  twitterId?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
 };
 
 export type UpdateBrandInput = {
@@ -258,13 +371,18 @@ export type User = {
   __typename?: 'User';
   _id: Scalars['ID']['output'];
   bio?: Maybe<Scalars['String']['output']>;
+  coverPicture?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   firebaseUid?: Maybe<Scalars['String']['output']>;
   globalRank?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['ID']['output'];
   isEmailVerified?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
-  points?: Maybe<Scalars['Int']['output']>;
+  phoneNumber?: Maybe<Scalars['String']['output']>;
+  platformPoints?: Maybe<Scalars['Int']['output']>;
   profileImageUrl?: Maybe<Scalars['String']['output']>;
+  socialMedia?: Maybe<Array<Maybe<SocialMedia>>>;
+  twitterInfo?: Maybe<TwitterInfo>;
   username?: Maybe<Scalars['String']['output']>;
 };
 
@@ -296,6 +414,26 @@ export type CreateCompetitionMutationVariables = Exact<{
 
 export type CreateCompetitionMutation = { __typename?: 'Mutation', createCompetition?: { __typename?: 'Competition', id?: string | null, name?: string | null, terms?: string | null, startDate?: string | null, imageUrl?: string | null, endDate?: string | null, description?: string | null } | null };
 
+export type JoinCompetitionMutationVariables = Exact<{
+  payload?: InputMaybe<JoinCompetitionInput>;
+}>;
+
+
+export type JoinCompetitionMutation = { __typename?: 'Mutation', joinCompetition?: { __typename?: 'Response', success?: boolean | null, message?: string | null } | null };
+
+export type OAuth2WithTwitterMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OAuth2WithTwitterMutation = { __typename?: 'Mutation', oAuth2WithTwitter: { __typename?: 'AuthResponse', success: boolean, message?: string | null, url?: string | null } };
+
+export type OAuth2WithTwitterCallbackMutationVariables = Exact<{
+  state: Scalars['String']['input'];
+  code: Scalars['String']['input'];
+}>;
+
+
+export type OAuth2WithTwitterCallbackMutation = { __typename?: 'Mutation', oAuth2WithTwitterCallback: { __typename?: 'AuthResponse', success: boolean, message?: string | null, url?: string | null } };
+
 export type CreateUserMutationVariables = Exact<{
   payload?: InputMaybe<CreateUserInput>;
 }>;
@@ -325,7 +463,7 @@ export type GetCurrentBrandQuery = { __typename?: 'Query', getCurrentBrand?: { _
 export type GetCompetitionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCompetitionsQuery = { __typename?: 'Query', getCompetitions?: Array<{ __typename?: 'Competition', name?: string | null, description?: string | null, imageUrl?: string | null } | null> | null };
+export type GetCompetitionsQuery = { __typename?: 'Query', getCompetitions?: Array<{ __typename?: 'Competition', id?: string | null, name?: string | null, description?: string | null, imageUrl?: string | null, terms?: string | null, startDate?: string | null, endDate?: string | null } | null> | null };
 
 export type GetCompetitionByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -333,6 +471,18 @@ export type GetCompetitionByIdQueryVariables = Exact<{
 
 
 export type GetCompetitionByIdQuery = { __typename?: 'Query', getCompetitionById?: { __typename?: 'Competition', id?: string | null, name?: string | null, description?: string | null, imageUrl?: string | null, terms?: string | null, startDate?: string | null, endDate?: string | null } | null };
+
+export type CheckUserCompetitionQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CheckUserCompetitionQuery = { __typename?: 'Query', checkUserCompetition?: { __typename?: 'CheckUserCompetitionResponse', success?: boolean | null, joined?: boolean | null, completed?: string | null, pointsEarned?: number | null, rank?: number | null } | null };
+
+export type GetTaskCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTaskCategoriesQuery = { __typename?: 'Query', getTaskCategories?: Array<{ __typename?: 'TaskCategory', _id?: string | null, name?: string | null, description?: string | null, image?: string | null } | null> | null };
 
 export type GetUserQueryVariables = Exact<{
   identifier: Scalars['String']['input'];
@@ -344,7 +494,7 @@ export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'Use
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser?: { __typename?: 'User', username?: string | null, name?: string | null, email?: string | null, profileImageUrl?: string | null, bio?: string | null } | null };
+export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser?: { __typename?: 'User', _id: string, name?: string | null, firebaseUid?: string | null, username?: string | null, email?: string | null, profileImageUrl?: string | null, bio?: string | null, globalRank?: number | null, platformPoints?: number | null, isEmailVerified?: boolean | null, coverPicture?: string | null, phoneNumber?: string | null, id: string, socialMedia?: Array<{ __typename?: 'SocialMedia', socialApp?: string | null, socialId?: string | null, socialUsername?: string | null, socialProfilePicture?: string | null, socialAccessToken?: string | null, socialRefreshToken?: string | null } | null> | null } | null };
 
 export type GetPresignedUrlQueryVariables = Exact<{
   fileName: Scalars['String']['input'];
@@ -359,12 +509,17 @@ export const CreateBrandDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const LoginBrandDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"loginBrand"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginBrandInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loginBrand"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}]}]}}]} as unknown as DocumentNode<LoginBrandMutation, LoginBrandMutationVariables>;
 export const UpdateBrandDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateBrand"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateBrandInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateBrand"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"organizationName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}},{"kind":"Field","name":{"kind":"Name","value":"website"}},{"kind":"Field","name":{"kind":"Name","value":"profileImageUrl"}}]}}]}}]} as unknown as DocumentNode<UpdateBrandMutation, UpdateBrandMutationVariables>;
 export const CreateCompetitionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createCompetition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateCompetitionInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createCompetition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"terms"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]} as unknown as DocumentNode<CreateCompetitionMutation, CreateCompetitionMutationVariables>;
+export const JoinCompetitionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"joinCompetition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"JoinCompetitionInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"joinCompetition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<JoinCompetitionMutation, JoinCompetitionMutationVariables>;
+export const OAuth2WithTwitterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"OAuth2WithTwitter"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"oAuth2WithTwitter"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]} as unknown as DocumentNode<OAuth2WithTwitterMutation, OAuth2WithTwitterMutationVariables>;
+export const OAuth2WithTwitterCallbackDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"OAuth2WithTwitterCallback"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"state"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"oAuth2WithTwitterCallback"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"state"},"value":{"kind":"Variable","name":{"kind":"Name","value":"state"}}},{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]} as unknown as DocumentNode<OAuth2WithTwitterCallbackMutation, OAuth2WithTwitterCallbackMutationVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}]}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const LoginUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"loginUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loginUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}]}]}}]} as unknown as DocumentNode<LoginUserMutation, LoginUserMutationVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
 export const GetCurrentBrandDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCurrentBrand"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCurrentBrand"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"website"}},{"kind":"Field","name":{"kind":"Name","value":"profileImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"organizationName"}},{"kind":"Field","name":{"kind":"Name","value":"competitions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"terms"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]} as unknown as DocumentNode<GetCurrentBrandQuery, GetCurrentBrandQueryVariables>;
-export const GetCompetitionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCompetitions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCompetitions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]} as unknown as DocumentNode<GetCompetitionsQuery, GetCompetitionsQueryVariables>;
+export const GetCompetitionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCompetitions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCompetitions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"terms"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}}]}}]}}]} as unknown as DocumentNode<GetCompetitionsQuery, GetCompetitionsQueryVariables>;
 export const GetCompetitionByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCompetitionById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCompetitionById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"terms"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}}]}}]}}]} as unknown as DocumentNode<GetCompetitionByIdQuery, GetCompetitionByIdQueryVariables>;
+export const CheckUserCompetitionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"checkUserCompetition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkUserCompetition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"joined"}},{"kind":"Field","name":{"kind":"Name","value":"completed"}},{"kind":"Field","name":{"kind":"Name","value":"pointsEarned"}},{"kind":"Field","name":{"kind":"Name","value":"rank"}}]}}]}}]} as unknown as DocumentNode<CheckUserCompetitionQuery, CheckUserCompetitionQueryVariables>;
+export const GetTaskCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getTaskCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTaskCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]} as unknown as DocumentNode<GetTaskCategoriesQuery, GetTaskCategoriesQueryVariables>;
 export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"identifier"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"identifier"},"value":{"kind":"Variable","name":{"kind":"Name","value":"identifier"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
-export const GetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"profileImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
+export const GetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"firebaseUid"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"profileImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}},{"kind":"Field","name":{"kind":"Name","value":"globalRank"}},{"kind":"Field","name":{"kind":"Name","value":"platformPoints"}},{"kind":"Field","name":{"kind":"Name","value":"isEmailVerified"}},{"kind":"Field","name":{"kind":"Name","value":"coverPicture"}},{"kind":"Field","name":{"kind":"Name","value":"socialMedia"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"socialApp"}},{"kind":"Field","name":{"kind":"Name","value":"socialId"}},{"kind":"Field","name":{"kind":"Name","value":"socialUsername"}},{"kind":"Field","name":{"kind":"Name","value":"socialProfilePicture"}},{"kind":"Field","name":{"kind":"Name","value":"socialAccessToken"}},{"kind":"Field","name":{"kind":"Name","value":"socialRefreshToken"}}]}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
 export const GetPresignedUrlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getPresignedUrl"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fileName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"contentType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getPresignedUrl"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"fileName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fileName"}}},{"kind":"Argument","name":{"kind":"Name","value":"contentType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"contentType"}}}]}]}}]} as unknown as DocumentNode<GetPresignedUrlQuery, GetPresignedUrlQueryVariables>;

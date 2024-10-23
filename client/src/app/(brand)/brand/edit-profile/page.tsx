@@ -108,8 +108,6 @@ const EditBrandProfilePage = () => {
       editForm={editForm}
       setEditForm={setEditForm}
       selectedFile={selectedFile}
-      setSelectedFile={setSelectedFile}
-      isDragActive={isDragActive}
       loader={loader}
       preview={preview}
       getRootProps={getRootProps}

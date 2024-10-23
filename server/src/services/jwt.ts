@@ -15,7 +15,7 @@ class JWTService {
 
     public static verifyToken(token: string): JWTUser {
         const decoded = JWT.verify(token, JWT_SECRET as string, { algorithms: ["HS256"] });
-        console.log("decoded",decoded);
+        // console.log("decoded",decoded);
         return decoded as JWTUser;
     }
 }

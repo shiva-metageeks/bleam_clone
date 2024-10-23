@@ -22,6 +22,9 @@ const envConfig = {
     AWS_SECRET_KEY: process.env.AWS_SECRET_KEY as string,
     AWS_REGION: process.env.AWS_REGION as string,
     AWS_BUCKET: process.env.AWS_BUCKET as string,
+    TWITTER_CLIENT_ID:process.env.TWITTER_CLIENT_ID as string,
+    TWITTER_SECRET_KEY:process.env.TWITTER_SECRET_KEY as string,
+    CLIENT_URL:process.env.CLIENT_URL as string
 }
 
 export default envConfig;

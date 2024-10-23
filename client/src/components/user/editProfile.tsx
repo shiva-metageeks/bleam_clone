@@ -3,7 +3,8 @@ import React from 'react'
 import { icons } from '@/utils/imports/config';
 import {editFormType } from '@/types/user/user';
 import { User } from '@/gql/graphql';
-import Breadcrumbs from '@/components/breadcrumbs';
+import Breadcrumbs from '@/components/helpers/breadcrumbs';
+import { useRouter } from 'next/navigation';
 const { IoArrowBackOutline, LuSearch, RiArrowRightSLine } = icons;
 
 const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader,preview,getRootProps,getInputProps,isDragActive,selectedFile,setSelectedFile}:{
@@ -19,6 +20,7 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader,preview,
     selectedFile:File | null,
     setSelectedFile:(file:File | null)=>void
 }) => {
+  const router = useRouter();
   return (
      <div className="w-full">
       <div className="w-full">
@@ -54,8 +56,9 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader,preview,
                <Breadcrumbs BreadcrumbsArray={["Edit Profile"]}/>
               </div>
               <div>
-                <h1 className="text-xl font-semibold">{user?.name}</h1>
-                <p className="text-gray-500">@{user?.username}</p>
+                 {user?.name && <h1 className="text-xl font-semibold">{user?.name}</h1>}
+                {user?.username && <p className="text-gray-500">@{user?.username}</p>}
+                {user?.email && <p className="text-gray-500">{user?.email}</p>}
               </div>
             </div>
           </div>
@@ -98,7 +101,7 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader,preview,
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md "
               />
             </div>
-             <div className="flex flex-col gap-1">
+             {/* <div className="flex flex-col gap-1">
               <label className="block text-sm font-medium text-gray-700">
                 Email address
               </label>
@@ -110,10 +113,10 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader,preview,
                 title="Enter your email"
                 className="block w-full px-3 py-2 border mt-1 border-gray-300 rounded-md"
               />
-            </div>
+            </div> */}
           </div>
           {/* Profile Upload */}
-          <div className="flex sm:flex-row flex-col  sm:gap-8 gap-4 pb-4   border-b">
+          <div className="flex sm:flex-row flex-col sm:gap-8 gap-4 pb-4 border-b">
             <img
               className="inline-block h-20 w-20 rounded-full"
               src={
@@ -123,8 +126,8 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader,preview,
               }
               alt={selectedFile?.name || editForm?.name}
             />
-            <div className="w-full flex border justify-center py-5 rounded-xl">
-              <div className="flex flex-col justify-center gap-2 cursor-pointer w-full">
+            <div className="w-full flex border justify-center py-4 rounded-xl">
+              <div {...getRootProps()} className="flex flex-col justify-center gap-2 cursor-pointer w-full">
                 <img
                   src="/images/drop file.svg"
                   alt="verified"
@@ -164,7 +167,7 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader,preview,
                 name='bio'
                 value={editForm?.bio}
                 onChange={(e)=>setEditForm({...editForm,bio:e.target.value})}
-                className="block w-full px-8 py-2 font-semibold border mt-1 border-gray-300 rounded-md "
+                className="block w-full px-4 py-2 border border-gray-300 rounded-md "
               />
             </div>
           </div>
@@ -173,6 +176,7 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader,preview,
           <div className="flex gap-4 justify-end">
             <button
               type="button"
+              onClick={()=>{router.back()}}
               className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-100"
             >
               Cancel
@@ -182,7 +186,7 @@ const EditProfile = ({user,handleUpdateUser,editForm,setEditForm,loader,preview,
               disabled={loader}
               className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
             >
-              Save
+              {loader ? "Saving..." : "Save"}
             </button>
           </div>
         </form>

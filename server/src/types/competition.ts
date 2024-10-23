@@ -16,6 +16,10 @@ export interface ICreateCompetitionInput {
     }[];
 }
 
+export interface IJoinCompetitionInput {
+    competitionId:string
+}
+
 export interface IParticipant {
     user: IUser;
     pointsEarned: number;

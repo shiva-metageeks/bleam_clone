@@ -1,5 +1,5 @@
 import CompetitionService from "@src/services/competition";
-import { ICreateCompetitionInput } from "@src/types/competition";
+import { ICreateCompetitionInput, IJoinCompetitionInput } from "@src/types/competition";
 import { Context } from "@src/types/types";
 
 const queries = {
@@ -9,6 +9,9 @@ const queries = {
   getCompetitionById: async (parent: any, args: { id: string }, context: Context) => {
     return await CompetitionService.getCompetitionById(args.id, context);
   },
+  checkUserCompetition: async (parent: any, args: { id: string }, context: Context) => {
+    return await CompetitionService.checkUserCompetition(args.id, context);
+  }
 };
 
 const mutations = {
@@ -19,6 +22,13 @@ const mutations = {
   ) => {
     return await CompetitionService.createCompetition(args.payload, context);
   },
+  joinCompetition : async (
+    parent: any,
+    args: { payload: IJoinCompetitionInput },
+    context: Context
+  )=>{
+    return await CompetitionService.joinCompetition(args.payload, context);
+  }
 };
 
 export const resolvers = {

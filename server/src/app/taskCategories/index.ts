@@ -3,7 +3,7 @@ import { types } from "./types";
 import { queries } from "./queries";
 import { mutations } from "./mutations";
 
-export const taskCategories = {
+export const TaskCategories = {
     types,
     queries,
     mutations,

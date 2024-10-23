@@ -17,6 +17,23 @@ export const types = `#graphql
         points: Int!
     }
 
+    input JoinCompetitionInput {
+        competitionId: String!
+    }
+
+    type Response {
+        success: Boolean
+        message: String
+    }
+
+    type CheckUserCompetitionResponse {
+        success: Boolean
+        joined: Boolean
+        completed: String
+        pointsEarned: Int
+        rank: Int
+    }
+
     type Competition {
         id: ID
         name: String

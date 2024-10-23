@@ -9,7 +9,7 @@ const LandingPage = () => {
         <div className="py-24 ">
           <div className="flex gap-8 justify-center items-center">
             <img src="/images/Group 2.png" alt="" className="w-32 h-10" />
-            <h1 className="text-2xl font-semibold">+10M Users Us This App</h1>
+            <h1 className="text-2xl font-semibold">+10M Users Use This App</h1>
           </div>
           <div className=" m-auto w-full space-y-7 ">
             <h1 className="mt-4 text-8xl font-bold text-center">

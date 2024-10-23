@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { graphqlClient } from "@/clients/api"
 import { createBrandMutation, loginBrandMutation, updateBrandMutation } from "@/graphql/mutation/brand"
-import { Competition, CreateBrandInput, LoginBrandInput, UpdateBrandInput } from "@/gql/graphql";
+import { CreateBrandInput, LoginBrandInput, UpdateBrandInput } from "@/gql/graphql";
 import { toast } from "react-hot-toast";
 import { getCurrentBrandQuery } from "@/graphql/query/brand";
 import { CurrentBrandQueryResult } from "./types";
@@ -12,7 +12,7 @@ export const useCreateBrand = () => {
         mutationFn: (payload: CreateBrandInput) => graphqlClient.request(createBrandMutation, { payload }),
         onMutate: (payload) => toast.loading("Signing up",{id:"1"}),
         onSuccess: async (payload) => {
-            await queryClient.invalidateQueries({ queryKey: ["brand"] })
+            await queryClient.invalidateQueries({ queryKey: ["currentBrand"] })
             toast.success("Brand created successfully",{id:"1"});
         },
         onError: (error) => {
@@ -29,7 +29,7 @@ export const useLoginBrand = () => {
         mutationFn: (payload: LoginBrandInput) => graphqlClient.request(loginBrandMutation, { payload }),
         onMutate: (payload) => toast.loading("Logging in",{id:"1"}),
         onSuccess: async (payload) => {
-            await queryClient.invalidateQueries({ queryKey: ["brand"] })
+            await queryClient.invalidateQueries({ queryKey: ["currentBrand"] })
             toast.success("Login successfully",{id:"1"});
         },
         onError: (error) => {
@@ -45,7 +45,7 @@ export const useUpdateBrand = () => {
         mutationFn: (payload: UpdateBrandInput) => graphqlClient.request(updateBrandMutation, { payload }),
         onMutate: (payload) => toast.loading("Updating brand",{id:"1"}),
         onSuccess: async (payload) => {
-            await queryClient.invalidateQueries({ queryKey: ["brand"] })
+            await queryClient.invalidateQueries({ queryKey: ["currentBrand"] })
             toast.success("Brand updated successfully",{id:"1"});
         },
         onError: (error) => {
@@ -54,16 +54,6 @@ export const useUpdateBrand = () => {
     })
     return mutation;
 }
-
-
-// export const useGetBrands = () => {
-//     const query = useQuery({
-//         queryKey: ["brands"],
-//         queryFn: () => graphqlClient.request(getBrandsQuery),
-//     })
-//     return query;
-// }
-
 
 export const useGetCurrentBrand = () => {
     const query = useQuery({
@@ -74,18 +64,3 @@ export const useGetCurrentBrand = () => {
     return {...query,brand:query.data?.getCurrentBrand};
 }
 
-// export const useGetBrandById = (id: string) => {
-//     const query = useQuery({
-//         queryKey: ["brandById", id],
-//         queryFn: () => graphqlClient.request(getBrandByIdQuery, { id }),
-//     })
-//     return query;
-// }
-
-// export const useGetBrand = (identifier: string) => {
-//     const query = useQuery({
-//         queryKey: ["brand", identifier],
-//         queryFn: () => graphqlClient.request(getBrandQuery, { identifier }),
-//     })
-//     return query;
-// }

@@ -2,8 +2,8 @@
 import React from 'react'
 const Filter = () => {
   return (
-      <div className="w-1/5 relative p-2 border-r-1 border-gray-500 shadow-sm ">
-          <div className="absolute top-0 left-0 bg-white p-2 rounded-lg h-full overflow-y-scroll ">
+      <div className="w-1/5 relative p-4 border-r-1 border-gray-500 shadow-sm rounded-lg">
+          <div className="absolute top-0 left-0 bg-slate-100 p-4 rounded-lg h-full overflow-y-scroll ">
             <h3 className="text-lg font-bold mb-2">Filters</h3>
             <p className="text-gray-500 mb-4">Apply filters to table data.</p>
             <div className="mb-4">

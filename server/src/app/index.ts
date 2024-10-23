@@ -10,8 +10,9 @@ import JWTService from '@src/services/jwt';
 import { User } from '@src/app/user';
 import { Brand } from '@src/app/brand';
 import {Task} from '@src/app/task';
+import {Twitter} from '@src/app/twitter'
 import { Competition } from '@src/app/competition';
-import { taskCategories } from '@src/app/taskCategories';
+import { TaskCategories } from '@src/app/taskCategories';
 import { Aws } from '@src/app/aws';
 import BrandModel from '@src/models/user/brand';
 import { IUser } from '@src/types/user';
@@ -28,21 +29,24 @@ export async function initServer() {
             ${Brand.types}
             ${Competition.types}
             ${Task.types}
-            ${taskCategories.types}
+            ${TaskCategories.types}
+            ${Twitter.types}
             type Query {
                 ${User.queries}
                 ${Brand.queries}
                 ${Competition.queries}
                 ${Task.queries}
-                ${taskCategories.queries}
+                ${TaskCategories.queries}
                 ${Aws.awsQueries}
+                ${Twitter.queries}
     }
             type Mutation {
                 ${User.mutations}
                 ${Brand.mutations}
                 ${Competition.mutations}
                 ${Task.mutations}
-                ${taskCategories.mutations}
+                ${TaskCategories.mutations}
+                ${Twitter.mutations}
             }
         `,
         resolvers: {
@@ -51,15 +55,17 @@ export async function initServer() {
                 ...Brand.resolvers.queries,
                 ...Competition.resolvers.queries,
                 ...Task.resolvers.queries,
-                ...taskCategories.resolvers.queries,
+                ...TaskCategories.resolvers.queries,
                 ...Aws.resolvers.queries,
+                ...Twitter.resolvers.queries
             },
             Mutation: {
                 ...User.resolvers.mutations,
                 ...Brand.resolvers.mutations,
                 ...Competition.resolvers.mutations,
                 ...Task.resolvers.mutations,
-                ...taskCategories.resolvers.mutations,
+                ...TaskCategories.resolvers.mutations,
+                ...Twitter.resolvers.mutations
 
             },
             ...Brand.resolvers.extraResolvers
@@ -70,20 +76,20 @@ export async function initServer() {
     app.use('/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware<Context>(graphqlServer, {
         context: async ({ req }) => {
             const authHeader = req.headers.authorization || '';
-            console.log("authHeader", authHeader);
+            // console.log("authHeader", authHeader);
             const token = authHeader.startsWith('Bearer ') ? authHeader.split('Bearer ')[1] : null;
             let user: IUser | undefined;
             let brand: IBrand | undefined;
 
             if (token) {
                 try {
-                    console.log("token", token);
+                    // console.log("token", token);
                     const decodedToken= JWTService.verifyToken(token as string)  as JWTUser;
                     
                     if (!decodedToken) {
                         throw new Error('Invalid token');
                     }
-                    console.log("decodedToken", decodedToken);
+                    // console.log("decodedToken", decodedToken);
                     if(decodedToken.role==="user"){
                         const userObject: IUser | null = await UserModel.findOne({ firebaseUid: decodedToken?.identifier });
                         if (!userObject) {
@@ -92,11 +98,11 @@ export async function initServer() {
                         user = userObject;
                     }
                     else if(decodedToken.role==="brand"){
-                        const brandObject: IBrand | null = await BrandModel.findOne({email:decodedToken?.identifier});
+                        const brandObject: IBrand | null = await BrandModel.findById(decodedToken.id);
+                        // console.log("brandObject", brandObject);
                         if (!brandObject) {
                             throw new Error('Brand not found');
                         }
-                        console.log("brandObject", brandObject);
                         brand = brandObject;
                     }
                     else{
