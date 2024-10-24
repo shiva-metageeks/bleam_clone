@@ -15,7 +15,7 @@ const queries = {
 
 const mutations = {
     createTask: async (parent: any, { payload }: { payload: CreateTaskInput }, context: Context) => {
-        const task = await TaskService.createTask(payload);
+        const task = await TaskService.createTask(payload,context);
         return task;
     }
 }

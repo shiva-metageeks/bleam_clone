@@ -33,8 +33,8 @@ const UserNavbar = () => {
           <div className="hidden md:flex space-x-8 justify-start items-center">
             <div className="flex justify-start space-x-10">
               <div className="flex gap-2 items-center ">
-                <Link href="#" className="hover:text-orange-500 font-semibold">
-                  App
+                <Link href="/competitions" className="hover:text-orange-500 font-semibold">
+                  Competitions
                 </Link>
                 <IoIosArrowDown />
               </div>
@@ -117,7 +117,7 @@ const UserNavbar = () => {
                         href={
                           userType === "user"
                             ? "/competitions"
-                            : "/brand/competitions"
+                            : "/brand/my-competitions"
                         }
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                       >
@@ -181,8 +181,8 @@ const UserNavbar = () => {
               <Link
                 href={
                   userType === "user"
-                    ? "/auth/user/signup"
-                    : "/auth/brand/signup"
+                    ? "/auth/user/sign-up"
+                    : "/auth/brand/sign-up"
                 }
                 className="px-4 py-2 shadow-lg rounded-full bg-gradient-to-r from-orange-400 to-yellow-500 text-white hover:opacity-90"
               >

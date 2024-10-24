@@ -18,13 +18,23 @@ export const getCompetitionsQuery = gql
 export const getCompetitionByIdQuery = gql`
 query getCompetitionById($id: ID!) {
   getCompetitionById(id: $id) {
-        id
-        name
-        description
-        imageUrl
-        terms
-        startDate
-        endDate
+          id
+    name
+    description
+    imageUrl
+    terms
+    startDate
+    endDate
+    tasks {
+      title
+      type
+      twitter {
+        userFollow
+        tweetText
+        tweetLink
+      }
+      visitLink
+    }
   }
 }
 `

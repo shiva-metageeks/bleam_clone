@@ -7,19 +7,13 @@ const TaskCategories = ({
   selectedCategory,
   setSelectedCategory,
 }: {
-  selectedCategory: TaskCategory[];
-  setSelectedCategory: React.Dispatch<React.SetStateAction<TaskCategory[]>>;
+  selectedCategory: string;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const { taskCategories } = useGetTaskCategories();
 
-  const handleCategoryClick = (category: TaskCategory) => {
-    if (selectedCategory.includes(category)) {
-      setSelectedCategory(
-        selectedCategory.filter((cat: TaskCategory) => cat.name !== category.name)
-      );
-    } else {
-      setSelectedCategory([...selectedCategory, category]);
-    }
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
   };
   return (
     <div className="w-full h-full p-4">
@@ -30,9 +24,9 @@ const TaskCategories = ({
       <div className="grid grid-cols-3 gap-4 p-4">
         {taskCategories?.map((category: TaskCategory) => (
           <div
-            onClick={() => handleCategoryClick(category)}
+            onClick={() => handleCategoryClick(category.name)}
             className={`flex items-center gap-2 border-2 ${
-              selectedCategory.includes(category)
+              selectedCategory===category.name
                 ? "bg-orange-500 text-white"
                 : "text-black bg-slate-100"
             } shadow-md  rounded-full p-2 cursor-pointer`}

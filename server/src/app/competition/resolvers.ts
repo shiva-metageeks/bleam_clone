@@ -1,6 +1,9 @@
 import CompetitionService from "@src/services/competition";
-import { ICreateCompetitionInput, IJoinCompetitionInput } from "@src/types/competition";
+import { ICompetition, ICreateCompetitionInput, IJoinCompetitionInput } from "@src/types/competition";
 import { Context } from "@src/types/types";
+import { Competition } from ".";
+import { ITask } from "@src/types/task";
+import TaskService from "@src/services/task";
 
 const queries = {
   getCompetitions: async (parent: any, args: any, context: Context) => {
@@ -31,7 +34,19 @@ const mutations = {
   }
 };
 
+const extraResolvers = {
+    Competition: {
+        tasks: async (parent: ICompetition, args: any, context: Context) => {
+            return Promise.all(parent.tasks.map(async (task:ITask)=>{
+              return TaskService.getTaskById(task._id as string,context);
+            })
+            )
+        }
+    }
+}
+
 export const resolvers = {
   queries,
   mutations,
+  extraResolvers
 };

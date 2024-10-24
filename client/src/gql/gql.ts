@@ -20,6 +20,7 @@ const documents = {
     "\n  mutation joinCompetition($payload: JoinCompetitionInput) {\n    joinCompetition(payload: $payload) {\n      success\n      message\n    }\n  }\n": types.JoinCompetitionDocument,
     "\nmutation OAuth2WithTwitter {\n  oAuth2WithTwitter{\n    success\n    message\n    url\n  }\n}\n": types.OAuth2WithTwitterDocument,
     "\nmutation OAuth2WithTwitterCallback($state: String!, $code: String!) {\n  oAuth2WithTwitterCallback(state: $state, code: $code) {\n    success\n    message\n    url\n  }\n}\n": types.OAuth2WithTwitterCallbackDocument,
+    "\nmutation sendTweet($tweetBody: String!) {\n  sendTweet(tweetBody: $tweetBody) {\n    success\n    message\n  }\n}\n": types.SendTweetDocument,
     "#graphql\n    mutation createUser($payload: CreateUserInput) {\n        createUser(payload: $payload)\n    }  ": types.CreateUserDocument,
     "#graphql\n    mutation loginUser($payload: LoginUserInput) {\n        loginUser(payload: $payload)\n    }  ": types.LoginUserDocument,
     "#graphql\n    mutation updateUser($payload: UpdateUserInput) {\n        updateUser(payload: $payload){\n            name,\n            bio\n        }\n    }  ": types.UpdateUserDocument,
@@ -28,6 +29,8 @@ const documents = {
     "\nquery getCompetitionById($id: ID!) {\n  getCompetitionById(id: $id) {\n        id\n        name\n        description\n        imageUrl\n        terms\n        startDate\n        endDate\n  }\n}\n": types.GetCompetitionByIdDocument,
     "\nquery checkUserCompetition($id: ID!) {\n  checkUserCompetition(id: $id) {\n    success\n    joined\n    completed\n    pointsEarned\n    rank\n  }\n}\n": types.CheckUserCompetitionDocument,
     "\nquery getTaskCategories {\n    getTaskCategories {\n         _id\n        name\n        description\n        image\n    }\n}\n": types.GetTaskCategoriesDocument,
+    "\nquery checkTweetLike($tweetId: String!) {\n  checkTweetLike(tweetId: $tweetId) {\n    success\n    isLiked\n    message\n  }\n}\n": types.CheckTweetLikeDocument,
+    "\nquery checkTweetRetweet($tweetId: String!) {\n  checkTweetRetweet(tweetId: $tweetId) {\n    success\n    isRetweeted\n    message\n  }\n}\n": types.CheckTweetRetweetDocument,
     "#graphql\n    query getUser($identifier: String!) {\n        getUser(identifier: $identifier) {\n            name\n        }\n    }\n    ": types.GetUserDocument,
     "query getCurrentUser {\n        getCurrentUser {\n            _id\n            name\n            firebaseUid\n            username\n            email\n            profileImageUrl\n            bio\n            globalRank\n            platformPoints\n            isEmailVerified\n            coverPicture\n            socialMedia {\n                socialApp\n                socialId\n                socialUsername\n                socialProfilePicture\n                socialAccessToken\n                socialRefreshToken\n            }\n            phoneNumber\n            id  \n        }\n    }\n    ": types.GetCurrentUserDocument,
     "\nquery getPresignedUrl($fileName: String!, $contentType: String!) {\n  getPresignedUrl(fileName: $fileName, contentType: $contentType)\n}\n": types.GetPresignedUrlDocument,
@@ -78,6 +81,10 @@ export function graphql(source: "\nmutation OAuth2WithTwitterCallback($state: St
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\nmutation sendTweet($tweetBody: String!) {\n  sendTweet(tweetBody: $tweetBody) {\n    success\n    message\n  }\n}\n"): (typeof documents)["\nmutation sendTweet($tweetBody: String!) {\n  sendTweet(tweetBody: $tweetBody) {\n    success\n    message\n  }\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "#graphql\n    mutation createUser($payload: CreateUserInput) {\n        createUser(payload: $payload)\n    }  "): (typeof documents)["#graphql\n    mutation createUser($payload: CreateUserInput) {\n        createUser(payload: $payload)\n    }  "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -107,6 +114,14 @@ export function graphql(source: "\nquery checkUserCompetition($id: ID!) {\n  che
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\nquery getTaskCategories {\n    getTaskCategories {\n         _id\n        name\n        description\n        image\n    }\n}\n"): (typeof documents)["\nquery getTaskCategories {\n    getTaskCategories {\n         _id\n        name\n        description\n        image\n    }\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nquery checkTweetLike($tweetId: String!) {\n  checkTweetLike(tweetId: $tweetId) {\n    success\n    isLiked\n    message\n  }\n}\n"): (typeof documents)["\nquery checkTweetLike($tweetId: String!) {\n  checkTweetLike(tweetId: $tweetId) {\n    success\n    isLiked\n    message\n  }\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nquery checkTweetRetweet($tweetId: String!) {\n  checkTweetRetweet(tweetId: $tweetId) {\n    success\n    isRetweeted\n    message\n  }\n}\n"): (typeof documents)["\nquery checkTweetRetweet($tweetId: String!) {\n  checkTweetRetweet(tweetId: $tweetId) {\n    success\n    isRetweeted\n    message\n  }\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

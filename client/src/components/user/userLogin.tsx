@@ -144,7 +144,7 @@ const UserLogin = ({
                 <p className="text-sm font-light text-black">
                   Don’t have an account yet?{" "}
                   <Link
-                    href="/auth/user/signup"
+                    href="/auth/user/sign-up"
                     className="font-medium text-blue-800 hover:underline"
                   >
                     Sign up

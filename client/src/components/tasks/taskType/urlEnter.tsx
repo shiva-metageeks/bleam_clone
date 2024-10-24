@@ -1,9 +1,11 @@
 import React from 'react'
-import { ExpandForm } from "@/types/task/task";
+import { ExpandForm,TaskFormData } from "@/types/task/task";
 import { icons } from "@/utils/imports/config";
 const {IoIosArrowDown,IoIosArrowForward}=icons;
 
-const UrlEnter = ({expand,setExpand}:{
+const UrlEnter = ({newTask,setNewTask,expand,setExpand}:{
+    newTask:TaskFormData
+    setNewTask:React.Dispatch<React.SetStateAction<TaskFormData>>;
     expand:ExpandForm,
     setExpand:React.Dispatch<React.SetStateAction<ExpandForm>>}) => {
   return (

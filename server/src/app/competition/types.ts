@@ -42,5 +42,6 @@ export const types = `#graphql
         terms: String
         startDate: String
         endDate: String
+        tasks:[Task]
     }
 `

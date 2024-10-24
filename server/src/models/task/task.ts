@@ -3,21 +3,17 @@ import type { ITask } from "@src/types/task";
 
 const taskSchema = new Schema<ITask>(
   {
-    taskId: { type: String, required: true, unique: true },
-    name: { type: String, required: true },
-    description: { type: String, required: true },
-    image: { type: String },
-    tags: [{ type: String }],
+    title: { type: String, required: true },
+    description: { type: String},
     type: { type: String, required: true },
     creator: { type: Schema.Types.ObjectId, ref: "Brand" },
     competition :{ type: Schema.Types.ObjectId, ref: "Competition"},
     status: { type: String, enum: ["active", "inactive"], default: "active" },
-    participant: [{ type: Schema.Types.ObjectId, ref: "UserTask", required: true, unique: true }],
+    participant: [{ type: Schema.Types.ObjectId, ref: "UserTask"}],
     visitLink: { type: String },
     twitter: {
       tweetLink: { type: String },
       tweetText: { type: String },
-      tweetMedia: { type: String },
       userFollow: { type: String },
     },
     discord: {
@@ -27,14 +23,11 @@ const taskSchema = new Schema<ITask>(
       channelLink: { type: String },
     },  
     quiz: 
-      [
         {
-          question: { type: String, required: true },
-          options: [{ type: String, required: true }],
-          correctAnswer: { type: String, required: true },
+          question: { type: String},
+          options: [{ type: String}],
+          correctAnswer: { type: String},
         },
-      ]
-    ,
     poll:{
       question: { type: String},
       options: [{
@@ -43,7 +36,7 @@ const taskSchema = new Schema<ITask>(
       }],
       correctAnswer: { type: String},
     },
-    reward: { type: Number, required: true },
+    points:{type:Number,default:0},
   },
   {
     timestamps: true,

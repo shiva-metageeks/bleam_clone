@@ -92,11 +92,11 @@ const BrandProfilePage = () => {
               <div className="w-full flex flex-wrap justify-start items-center gap-2 p-4 bg-gray-50 shadow-sm rounded-md">
                 {
                   brand?.competitions.map((competition) => (
-                    <Link href={`/brand/competition/${competition.id}`} className="flex flex-col justify-start items-start h-full gap-2 px-4 py-2 rounded-lg border-1 border-zinc-700 bg-white border shadow-sm">
-                      <div className="w-full flex justify-center items-center max-h-[100px]" >
-                      <img src={competition?.imageUrl} alt="competition" width={100} height={100} />
+                    <Link href={`/brand/competition/${competition.id}`} className="flex flex-col justify-center items-start h-full gap-2 rounded-lg border-zinc-700 bg-white border shadow-sm">
+                      <div className="w-full h-20 flex justify-center items-center rounded-lg overflow-hidden" >
+                      <img src={competition?.imageUrl} alt="competition" className="w-full h-full object-cover" />
                       </div>
-                      <div className="text-zinc-900 text-sm font-semibold ">{competition.name}</div>
+                      <div className="text-zinc-900 text-sm font-semibold p-4">{competition.name}</div>
                     </Link>
                   ))
                 }

@@ -68,7 +68,8 @@ export async function initServer() {
                 ...Twitter.resolvers.mutations
 
             },
-            ...Brand.resolvers.extraResolvers
+            ...Brand.resolvers.extraResolvers,
+            ...Competition.resolvers.extraResolvers
         },
     });
     await graphqlServer.start();

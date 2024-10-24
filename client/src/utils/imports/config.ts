@@ -10,6 +10,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { TbShieldQuestion } from "react-icons/tb";
 import { CiImageOn } from "react-icons/ci";
+import { RxCross1 } from "react-icons/rx";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -39,7 +40,8 @@ export const icons = {
     LuSettings2,
     TbShieldQuestion,
     IoIosArrowForward,
-    CiImageOn
+    CiImageOn,
+    RxCross1
 }
 
 export const nextImports = {

@@ -280,7 +280,7 @@ const BrandSignUp = ({
               <div className="w-full text-sm font-light text-black mb-2 flex flex-col items-start">
                 <span>Want to earn exciting rewards and giveaways?</span>
                 <Link
-                  href="/auth/user/signup"
+                  href="/auth/user/sign-up"
                   className="font-medium text-blue-800 hover:underline"
                 >
                   Sign up as a User

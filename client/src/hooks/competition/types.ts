@@ -1,3 +1,4 @@
+import { ITask } from "@/types/task/task";
 export type Competition = {
     id: string;
     name: string;
@@ -6,6 +7,7 @@ export type Competition = {
     terms: string;
     startDate: string;
     endDate: string;
+    tasks: ITask[];
 }
 
 export type CreateCompetitionResponse={

@@ -205,7 +205,7 @@ const UserSignUp = ({
                 <div className="w-full text-sm font-light text-black mb-2 flex flex-col items-start">
                 <span>Are you a brand? Want to grow your business?</span>
                 <Link
-                    href="/auth/brand/signup"
+                    href="/auth/brand/sign-up"
                     className="font-medium text-blue-800 hover:underline"
                   >
                     Sign up as a brand
